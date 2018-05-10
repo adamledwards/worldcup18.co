@@ -1,0 +1,69 @@
+.TeamSelect {
+  color: #ffffff;
+  padding: 55px 0;
+  z-index: 1;
+  position: relative;
+}
+
+.TeamSelect h2 { 
+  font-size: 2em;
+  margin: 0;
+  transition: color 300ms;
+}
+
+.TeamSelect-team {
+  display: block;
+  text-decoration: none;
+  color: currentColor;
+  transition: color 300ms;
+}
+
+.TeamSelect-team:visited { 
+  color: currentColor;
+}
+
+.TeamSelect-Grid {
+  flex-direction: column;
+  margin: 78px 0 0 0;
+  font-size: 1.5em;
+  line-height: 1.66;
+  font-weight: bold;
+}
+
+@media (min-width: 64em) {
+  .TeamSelect-inner {
+    display: flex;
+    flex-direction: row;
+    width: 1232px;
+    margin: 0 auto;
+    padding: 0;
+    align-items: center;
+  }
+
+  .TeamSelect-Grid{
+    flex-direction: row;
+    font-size: 1em;
+    font-weight: normal;
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .TeamSelect .Grid-cell {
+    padding: 0 1.9867549668%;
+  }
+
+  .TeamSelect h2 { 
+    font-size: 2em;
+  }
+}
+
+@media (min-width: 75.5em) {
+  .TeamSelect h2 { 
+    font-size: 2.625em;
+  }
+
+  .TeamSelect-Grid{
+    font-size: 1.25em;
+    line-height: 2;
+  }
+}

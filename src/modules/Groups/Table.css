@@ -1,0 +1,34 @@
+
+.Table-team,
+.Table-head {
+    font-weight: bold;
+    font-size: 1.125em;
+    line-height: 2;
+}
+
+.Table-header {
+    font-size: 1.5em;
+    line-height: 1.333;
+}
+
+
+.Table-header:after {
+    display: block;
+    content: "\2014";
+    white-space: pre-wrap;
+}
+
+
+.Group.selectedTeam .Table{
+  opacity: 0.3;
+}
+
+.Group.selectedTeam .Table.Table-active{
+  opacity: 1;
+}
+
+
+
+.Table-row.Table-row-active {
+  color: #1735FC;
+}

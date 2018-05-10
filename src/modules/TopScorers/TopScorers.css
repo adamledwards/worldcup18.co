@@ -1,0 +1,64 @@
+.TopScorers {
+    font-size: 1.125em; 
+    font-weight: bold;
+    line-height: 1.5em;
+}
+
+.TopScorers-goals,
+.TopScorers-team,
+.TopScorers-app {
+    display: block;
+    font-weight: normal;
+}
+
+.TopScorers-goals,
+.TopScorers-app {
+    text-align: center;
+}
+
+.TopScorers-row {
+    margin-top: 1.5em;
+}
+
+.TopScorers-team {
+    display: none;
+}
+
+.TopScorers-name .TopScorers-team {
+    display: block;
+}
+
+.TopScorers-header {
+    text-align: center;
+}
+
+.TopScorers-header .full {
+    display: none;
+}
+
+@media (min-width: 75.5em) {
+    .TopScorers {
+        padding-top: 117px; 
+        font-size: 1.5em; 
+        font-weight: bold;
+        line-height: 3.25em;
+    }
+    .TopScorers h2{ 
+        margin: 0;
+    }
+
+    .TopScorers-row {
+        margin-top: 0;
+    }
+
+    .TopScorers-name .TopScorers-team {
+        display: none;
+    }
+    .TopScorers-team {
+        display: block;
+    }
+
+    .TopScorers-header .full {
+        display: inline;
+    }
+}

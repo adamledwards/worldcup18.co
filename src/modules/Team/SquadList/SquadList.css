@@ -1,0 +1,46 @@
+.SquadList {
+  padding: 120px 0; 
+}
+
+.SquadList-header {
+  font-size: 2em;
+}
+
+.SquadList-section-header h3{
+  margin: 0 0 35px 0;
+}
+
+.SquadList-player {
+  font-weight: bold;
+  line-height: 2;
+}
+
+.SquadList-section {
+  margin-top: 50px;
+}
+
+
+.SquadList-desktop {
+  display: none;
+}
+
+.SquadList-section-role {
+  margin-top: 0;
+  margin-bottom: 0;  
+}
+
+.SquadList-section-header .Grid-cell span {
+  display: none;
+}
+
+@media (min-width: 64em) {
+  .SquadList-mobile {
+    display: none;
+  }
+  .SquadList-desktop {
+    display: block;
+  }
+  .SquadList-section-header .Grid-cell span {
+    display: inline;
+  }
+}

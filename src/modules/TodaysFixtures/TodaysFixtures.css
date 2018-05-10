@@ -1,0 +1,51 @@
+.TodaysFixtures {
+  background: #000000;
+  color: #fff;
+  padding-top: 0.4375;
+  padding-bottom: 8.0625em;
+}
+
+.TodaysFixtures h2 {
+  font-size: 2em;
+  margin: 115px 0 0 0;
+}
+
+.TodaysFixtures-seperator {
+  margin-top: 48px;
+  margin-bottom: 54px;
+}
+.TodaysFixtures-seperator .bar {
+  width: 40px;
+  height: 3px;
+  background-color: #fff;
+  display: block;
+}
+
+@media (min-width: 75.5em) {
+  .TodaysFixtures {
+    display: flex;
+    padding-top: 88px;
+  }
+  .TodaysFixtures-wrapper {
+    width: 1232px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+  }
+  .TodaysFixtures-wrapper .Grid {
+    width: auto;
+    margin: 0;
+  }
+  .TodaysFixtures-wrapper .Grid-cell {
+    padding: 0 1.9867549668%;
+  }
+  .TodaysFixtures h2 {
+    font-size: 2em;
+    margin: 0;
+  }
+
+  .TodaysFixtures-seperator {
+    margin-top: 51px;
+    margin-bottom: 47px;
+  }
+}

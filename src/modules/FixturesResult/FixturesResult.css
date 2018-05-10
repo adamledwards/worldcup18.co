@@ -1,0 +1,15 @@
+.FixturesResult {
+  margin-top: 42px; 
+}
+
+.FixturesResult h2 {
+  font-size: 2em;
+  margin: 115px 0 0 0;
+}
+
+@media (min-width: 75.5em) {
+  .FixturesResult h2 {
+    font-size: 2.5em;
+  }
+
+}

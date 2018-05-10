@@ -1,0 +1,27 @@
+.Fixture {
+    margin-top: 42px; 
+}
+.Fixture h3 {
+    font-size: 1.25em;
+    line-height: 1.875em;
+    margin: 0;
+}
+
+.Fixture-timeDate,
+.Fixture-venue {
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.5;
+    color: #808080;
+}
+
+@media (min-width: 75.5em) {
+    .Fixture {
+        width: 100%;
+    }
+    .Fixture h3 {
+        font-size: 1.25em;
+        line-height: 2em;
+        margin: 0 0 0.75em 0;
+    }
+}

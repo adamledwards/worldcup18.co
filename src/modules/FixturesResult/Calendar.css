@@ -1,0 +1,84 @@
+.Calendar {
+  padding: 0 0 147px 0;
+}
+.Calendar .filler{
+  opacity: 0.2;
+}
+.Calendar-dayofmonth {
+  font-weight: bold;
+  font-size: 1.375em;
+  margin-bottom: 39px;
+  display: block;
+}
+.Calendar-day-of-week {
+  font-weight: bold;
+  font-size: 1.125em;
+  margin-bottom: 39px;
+  
+}
+
+.Calendar-day-of-week span:after {
+  display: block;
+  content: "\A\2014";
+  white-space: pre-wrap;
+}
+
+.Calendar-header {
+  font-size: 1.25em;
+  line-height: 1.875em;
+  margin: 0 0 100px 0;
+}
+.Calendar-header--withSpace {
+  margin: 100px 0 100px 0;
+}
+
+.day-short,
+.Calendar-fixture {
+  display: none;
+}
+
+@media (min-width: 75.5em) {
+  .day-min {
+    display: none;
+  }
+  
+  .day-short {
+    display: block;
+  }
+  .Calendar-date {
+    margin-bottom: 80px;
+    
+  }
+  .Calendar-day-of-week {
+    margin-bottom: 69px;
+  }
+
+  .Calendar-dayofmonth {
+    font-size: 2.5em;
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .Calendar-header {
+    font-size: 2em;
+    line-height: 1.75em;
+  }
+
+  .Calendar-fixture {
+    display: block;
+    margin-top: 28px;
+  }
+
+  .Calendar-fixture-match {
+    font-weight: bold;
+    font-size: 1.125em;
+    display: block;
+    line-height: 1.55;
+  }
+  .Calendar-fixture-time {
+    font-weight: normal;
+    font-size: 1em;
+    display: block;
+    line-height: 1.75;
+  }
+}

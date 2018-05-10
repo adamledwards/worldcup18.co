@@ -49,8 +49,7 @@ class TodaysFixtures extends Component {
     } else if (fixtures.upcoming) {
       fixture = this.renderFixtures('Upcoming Fixtures', fixtures.upcoming)
     }
-    const latest =
-      fixtures.latest && this.renderFixtures('Latest Results', fixtures.latest)
+    const latest = fixtures.latest && this.renderFixtures('Latest Results', fixtures.latest)
 
     return (
       <section className="TodaysFixtures">

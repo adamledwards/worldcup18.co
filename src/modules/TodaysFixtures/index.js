@@ -1,1 +1,1 @@
-export { default } from "./TodaysFixtures.js";
+export { default } from './TodaysFixtures.js'

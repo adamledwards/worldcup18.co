@@ -9,22 +9,25 @@ class Groups extends Component {
     super(props)
     this.state = {
       querySnapshot: {
-        docs: []
-      }
+        docs: [],
+      },
     }
   }
   componentDidMount() {
     const { db } = this.props.app
-    
-    db.collection('/groupStandings').get().then(querySnapshot => this.setState({querySnapshot}))
+
+    db
+      .collection('/groupStandings')
+      .get()
+      .then(querySnapshot => this.setState({ querySnapshot }))
   }
   render() {
     const { team } = this.props
 
     const { querySnapshot } = this.state
-    
+
     return (
-      <div className={classNames('Group', {selectedTeam: team})}>
+      <div className={classNames('Group', { selectedTeam: team })}>
         <div className="Grid">
           <h2 className="Group-heading Grid-cell">Group Standings</h2>
         </div>

@@ -23,12 +23,12 @@ class TopScorers extends Component {
         </div>
         <div className="Grid TopScorers-header">
           <span className="Grid-cell s-1of7 push-s-5of7 push-lg-10of14 lg-1of14">
-            A<span className='full'>pps</span>
+            A<span className="full">pps</span>
           </span>
           <span className="Grid-cell s-1of7 lg-1of14">
-            G<span className='full'>oals</span>
+            G<span className="full">oals</span>
           </span>
-      </div>
+        </div>
         {Array.from({ length: 10 }, (_, idx) => this.renderRow(idx))}
       </div>
     )

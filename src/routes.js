@@ -22,10 +22,10 @@ const routes = [
 ]
 
 function resolveRoute(context, params) {
-  if(typeof context.route.Component === 'function') {
+  if (typeof context.route.Component === 'function') {
     return {
       Component: context.route.Component,
-      params
+      params,
     }
   }
 }

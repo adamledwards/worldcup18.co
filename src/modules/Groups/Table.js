@@ -7,24 +7,22 @@ export default class Table extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      ...this.props.db
+      ...this.props.db,
     }
   }
-  componentDidMount() {
-    
-  }
+  componentDidMount() {}
   renderRow(row) {
     const { selectedTeam } = this.props
     const selectedTeamId = (selectedTeam && selectedTeam.id) === row.team_id
     let style = {}
-    if(selectedTeamId){
+    if (selectedTeamId) {
       style = {
-        color: teams[selectedTeam.key].groupHighlightColour
+        color: teams[selectedTeam.key].groupHighlightColour,
       }
     }
     return (
       <div
-        className={classNames('Grid Table-row', {'Table-row-active': selectedTeamId})}
+        className={classNames('Grid Table-row', { 'Table-row-active': selectedTeamId })}
         style={style}
         key={row.team_id}
       >
@@ -41,7 +39,7 @@ export default class Table extends Component {
     const teamInTable = (selectedTeam && teamIds[selectedTeam.id]) || false
 
     return (
-      <div className={classNames('Table', {'Table-active': teamInTable})}>
+      <div className={classNames('Table', { 'Table-active': teamInTable })}>
         <div className="Grid">
           <h3 className="Grid-cell Table-header">{group}</h3>
         </div>

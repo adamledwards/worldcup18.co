@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import Button from '../../../core/Button';
+import React, { Component } from 'react'
+import Button from '../../../core/Button'
 import Nav from '../../../core/Nav'
-import firebase from 'firebase';
+import firebase from 'firebase'
 import { withContext } from '../../../Context'
 import teams from '../../../teams'
 import Granim from '../../../core/Granim'
-import './TeamHeader.css';
+import './TeamHeader.css'
 
 class TeamHeader extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -14,8 +14,8 @@ class TeamHeader extends Component {
     return {
       style: {
         color: teamColours.headerTextColour,
-        background: `linear-gradient(${teamColours.gradient})`
-      }
+        background: `linear-gradient(${teamColours.gradient})`,
+      },
     }
   }
   render() {
@@ -23,36 +23,32 @@ class TeamHeader extends Component {
     const { style } = this.state
     const { history } = this.props.app
     return (
-        <div className="TeamHeader" style={style}>
-          <Nav history={history}/>
-          <div className="Grid Grid-vertical-center">
-            <h1 className="TeamHeader-intro Grid-cell s-7of7 lg-10of14">
-              {team.name}
-            </h1>
-            <div className="TeamHeader-info Grid-cell s-7of7 lg-4of14">
-              <dl className="TeamHeader-detail">
-                  <dt>Head Coach</dt>
-                  <dd>{team.coach}</dd>
-                  <dt>Fifa Rank</dt>
-                  <dd>{team.fifaranking && team.fifaranking.position}</dd>
-              </dl>
-              <Button className="TeamHeader-button" style={{color: style.color}} >
-                Team Website
-              </Button>
-            </div>
-          </div>
-          <div className="Grid">
-            <h3 className="TeamHeader-group Grid-cell">
-              &mdash; {team.group}
-            </h3>
+      <div className="TeamHeader" style={style}>
+        <Nav history={history} />
+        <div className="Grid Grid-vertical-center">
+          <h1 className="TeamHeader-intro Grid-cell s-7of7 lg-10of14">{team.name}</h1>
+          <div className="TeamHeader-info Grid-cell s-7of7 lg-4of14">
+            <dl className="TeamHeader-detail">
+              <dt>Head Coach</dt>
+              <dd>{team.coach}</dd>
+              <dt>Fifa Rank</dt>
+              <dd>{team.fifaranking && team.fifaranking.position}</dd>
+            </dl>
+            <Button className="TeamHeader-button" style={{ color: style.color }}>
+              Team Website
+            </Button>
           </div>
         </div>
-    );
+        <div className="Grid">
+          <h3 className="TeamHeader-group Grid-cell">&mdash; {team.group}</h3>
+        </div>
+      </div>
+    )
   }
 }
 
 TeamHeader.defaultProps = {
-  team: {}
+  team: {},
 }
 
-export default withContext(TeamHeader);
+export default withContext(TeamHeader)

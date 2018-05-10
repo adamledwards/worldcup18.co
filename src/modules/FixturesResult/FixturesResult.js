@@ -7,18 +7,19 @@ class FixturesResult extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      fixtures: []
+      fixtures: [],
     }
   }
 
   componentWillMount() {
     const { db } = this.props.app
-    db.collection('fixtures')
+    db
+      .collection('fixtures')
       .orderBy('start')
       .get()
       .then(querySnapshot => {
         this.setState({
-          fixtures: querySnapshot.docs.map(q => q.data())
+          fixtures: querySnapshot.docs.map(q => q.data()),
         })
       })
   }
@@ -29,7 +30,7 @@ class FixturesResult extends Component {
         <div className="Grid">
           <h2 className="Grid-cell s-7of7">Fixtures &amp; Results</h2>
         </div>
-        <Calendar fixtures={fixtures}/>
+        <Calendar fixtures={fixtures} />
       </div>
     )
   }

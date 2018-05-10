@@ -1,14 +1,14 @@
-import moment from 'moment';
+import moment from 'moment'
 const dateArgs = [
   'start',
   '>',
   moment()
     .startOf('day')
-    .toDate()
-];
+    .toDate(),
+]
 
 export function getLatestFixture(db, isTeam) {
-  const fixturesRef = db.collection('fixtures');
+  const fixturesRef = db.collection('fixtures')
   // Today
   const today = fixturesRef
     .where(...dateArgs)
@@ -22,10 +22,10 @@ export function getLatestFixture(db, isTeam) {
     .get()
     .then(todayRef => {
       if (todayRef.empty) {
-        return null;
+        return null
       }
-      return todayRef;
-    });
+      return todayRef
+    })
 
   //UpComing
   const upcoming = fixturesRef
@@ -35,23 +35,23 @@ export function getLatestFixture(db, isTeam) {
     .get()
     .then(upcomingRef => {
       if (upcomingRef.empty) {
-        return null;
+        return null
       }
-      const startMatchRef = upcomingRef.docs[0];
-      let method = 'endAt';
+      const startMatchRef = upcomingRef.docs[0]
+      let method = 'endAt'
       let arg = moment(startMatchRef.data().start)
         .endOf('day')
-        .toDate();
+        .toDate()
       if (isTeam) {
-        method = 'limit';
-        arg = 2;
+        method = 'limit'
+        arg = 2
       }
       return fixturesRef
         .orderBy('start')
         .startAt(startMatchRef)
         [method](arg)
-        .get();
-    });
+        .get()
+    })
 
   const latest = fixturesRef
     .where(
@@ -66,9 +66,9 @@ export function getLatestFixture(db, isTeam) {
     .get()
     .then(latestRef => {
       if (latestRef.empty) {
-        return null;
+        return null
       }
-      const startMatchRef = latestRef.docs[0];
+      const startMatchRef = latestRef.docs[0]
       return fixturesRef
         .orderBy('start')
         .startAt(startMatchRef)
@@ -77,16 +77,14 @@ export function getLatestFixture(db, isTeam) {
             .endOf('day')
             .toDate()
         )
-        .get();
-    });
+        .get()
+    })
 
-  return Promise.all([today, latest, upcoming]).then(
-    ([today, latest, upcoming]) => {
-      return {
-        today: today && today.docs.map(d => d.data()),
-        upcoming: upcoming && upcoming.docs.map(d => d.data()),
-        latest: latest && latest.docs.map(d => d.data())
-      };
+  return Promise.all([today, latest, upcoming]).then(([today, latest, upcoming]) => {
+    return {
+      today: today && today.docs.map(d => d.data()),
+      upcoming: upcoming && upcoming.docs.map(d => d.data()),
+      latest: latest && latest.docs.map(d => d.data()),
     }
-  );
+  })
 }

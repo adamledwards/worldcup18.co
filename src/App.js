@@ -1,4 +1,7 @@
 import React, { Component, Fragment } from 'react'
+import { CSSTransition } from 'react-transition-group'
+import { TweenLite } from 'gsap'
+import 'gsap/CSSPlugin'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import Header from './modules/Header'
@@ -6,10 +9,10 @@ import TodaysFixtures from './modules/TodaysFixtures'
 import FixturesResult from './modules/FixturesResult'
 import Groups from './modules/Groups'
 import TopScorers from './modules/TopScorers'
-import createHistory from 'history/createBrowserHistory'
-import routes from './routes'
+import Modal from './modules/Modal'
+import './App.css'
+import routes, { history } from './routes'
 import Context from './Context'
-const history = createHistory()
 
 const config = {
   apiKey: 'AIzaSyAWwEuc4ZzZAbYprl2zmMaJgifNwv608m4',
@@ -26,6 +29,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isModalActive: false,
       db: firebase.firestore(),
       route: {
         Component: () => null,
@@ -41,21 +45,61 @@ class App extends Component {
     this.goToRoute(location.pathname)
   }
 
+  componentDidUpdate() {
+    const { isModalActive } = this.state
+    const bodyEl = document.getElementsByTagName('body')[0]
+    if (isModalActive) {
+      bodyEl.style.position = 'fixed'
+    } else {
+      bodyEl.style.position = ''
+    }
+  }
+
   goToRoute(pathname) {
     return routes.resolve({ pathname }).then(route => {
-      this.setState({ route })
+      this.setState(state => {
+        return {
+          route: {
+            ...state.route,
+            ...route,
+          },
+        }
+      })
     })
   }
 
   render() {
-    const { Component, params } = this.state.route
+    const { route, isModalActive } = this.state
+    const { Component, params, ModalComponent, isModal } = route
     const db = this.state.db
 
     return (
       <Fragment>
         {db ? (
           <Context.Provider value={{ history, db, params }}>
-            <Component db={db} params={params} />
+            {Component && <Component db={db} params={params} />}
+            <CSSTransition
+              in={isModal}
+              unmountOnExit
+              classNames={'Modal'}
+              timeout={300}
+              onExit={() => {
+                this.setState({
+                  isModalActive: false,
+                })
+              }}
+              onEntered={() => {
+                this.setState({
+                  isModalActive: true,
+                })
+              }}
+            >
+              {() => (
+                <Modal db={db} params={params} isModalActive={isModalActive}>
+                  <ModalComponent />
+                </Modal>
+              )}
+            </CSSTransition>
           </Context.Provider>
         ) : null}
       </Fragment>

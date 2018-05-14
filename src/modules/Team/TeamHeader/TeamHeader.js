@@ -21,12 +21,13 @@ class TeamHeader extends Component {
   render() {
     const { team } = this.props
     const { style } = this.state
-    const { history } = this.props.app
     return (
       <div className="TeamHeader" style={style}>
-        <Nav history={history} />
+        <Nav />
         <div className="Grid Grid-vertical-center">
-          <h1 className="TeamHeader-intro Grid-cell s-7of7 lg-10of14">{team.name}</h1>
+          <h1 className="TeamHeader-intro Grid-cell s-7of7 lg-10of14">
+            {team.name}
+          </h1>
           <div className="TeamHeader-info Grid-cell s-7of7 lg-4of14">
             <dl className="TeamHeader-detail">
               <dt>Head Coach</dt>
@@ -34,7 +35,10 @@ class TeamHeader extends Component {
               <dt>Fifa Rank</dt>
               <dd>{team.fifaranking && team.fifaranking.position}</dd>
             </dl>
-            <Button className="TeamHeader-button" style={{ color: style.color }}>
+            <Button
+              className="TeamHeader-button"
+              style={{ color: style.color }}
+            >
               Team Website
             </Button>
           </div>
@@ -51,4 +55,4 @@ TeamHeader.defaultProps = {
   team: {},
 }
 
-export default withContext(TeamHeader)
+export default TeamHeader

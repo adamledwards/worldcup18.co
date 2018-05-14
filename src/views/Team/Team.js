@@ -6,19 +6,37 @@ import FixturesResult from '../../modules/FixturesResult'
 import Groups from '../../modules/Groups'
 
 class Team extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      team: null,
-      querySnapshot: null,
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { params } = nextProps
+    if (params.team && params.team !== prevState.teamName) {
+      return {
+        teamName: params.team,
+        team: null,
+        querySnapshot: null,
+      }
     }
+    return null
   }
 
+  state = {
+    teamName: '',
+    team: null,
+    querySnapshot: null,
+  }
   componentDidMount() {
-    const { db, params } = this.props
+    this.fetchData()
+  }
+
+  componentDidUpdate() {
+    this.fetchData()
+  }
+
+  fetchData() {
+    const { db } = this.props
+    const { teamName } = this.state
     db
       .collection('/teams')
-      .doc(params.team)
+      .doc(teamName)
       .get()
       .then(querySnapshot => {
         if (querySnapshot.exists) {
@@ -31,7 +49,8 @@ class Team extends Component {
   }
 
   render() {
-    const { querySnapshot, team } = this.state
+    const { querySnapshot, teamName, team } = this.state
+
     if (!team) {
       return null
     }

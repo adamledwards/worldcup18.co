@@ -1,18 +1,27 @@
 import React, { Component } from 'react'
-import mobileMenu from '../../core/icons/mobile-menu.svg'
 import { withContext } from '../../Context'
+import { history } from '../../routes'
 
 class Link extends Component {
   goToLink = e => {
-    const { history } = this.props.app
     e.preventDefault()
-    history.push(e.target.pathname)
+    const { href } = this.props
+    history.push(href)
+  }
+
+  goBack = e => {
+    e.preventDefault()
+    history.goBack()
   }
 
   render() {
-    const { app, ...rest } = this.props
-    return <a onClick={this.goToLink} {...rest} />
+    const { app, back, ...rest } = this.props
+    let action = this.goToLink
+    if (back) {
+      action = this.goBack
+    }
+    return <a onClick={action} style={{ cursor: 'pointer' }} {...rest} />
   }
 }
 
-export default withContext(Link)
+export default Link

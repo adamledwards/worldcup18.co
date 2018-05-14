@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import TeamSelect from '../../modules/TeamSelect'
-import Modal from '../../modules/Modal'
 import Granim from '../../core/Granim'
 
 class TeamSelection extends Component {
@@ -16,10 +15,10 @@ class TeamSelection extends Component {
   render() {
     const { gradientState } = this.state
     return (
-      <Modal>
+      <Fragment>
         <Granim colourState={gradientState} />
         <TeamSelect changeGradientState={this.changeGradientState} />
-      </Modal>
+      </Fragment>
     )
   }
 }

@@ -19,6 +19,7 @@
     "moment": "^2.20.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
+    "react-transition-group": "^2.3.1",
     "universal-router": "^6.0.0"
   },
   "scripts": {
@@ -26,7 +27,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prettier":
-      "prettier --print-width 100 --no-semi --single-quote --trailing-comma es5 --write src/**/*.js"
+    "prettier": "prettier --print-width 100 --no-semi --single-quote --trailing-comma es5 --write src/**/*.js"
   }
 }

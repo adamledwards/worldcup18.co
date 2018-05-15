@@ -32,7 +32,9 @@ class Groups extends Component {
           <h2 className="Group-heading Grid-cell">Group Standings</h2>
         </div>
         <div className="Group-table">
-          {querySnapshot.docs.map(doc => <Table selectedTeam={team} {...doc.data()} />)}
+          {querySnapshot.docs.map(doc => (
+            <Table key={doc.id} selectedTeam={team} {...doc.data()} />
+          ))}
         </div>
       </div>
     )

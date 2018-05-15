@@ -15,7 +15,10 @@ class Calendar extends Component {
     const startOfWeekDiff = date.diff(startOfWeek, 'days')
     for (let ix = 0; ix < startOfWeekDiff; ix++) {
       filler.push(
-        <span className="Calendar-date Grid-cell s-1of7 filler">
+        <span
+          key={`filler-${ix}`}
+          className="Calendar-date Grid-cell s-1of7 filler"
+        >
           <span className="Calendar-dayofmonth">
             {moment(startOfWeek)
               .add(ix, 'days')
@@ -44,7 +47,7 @@ class Calendar extends Component {
 
   renderFixture(fixture) {
     return (
-      <span className="Calendar-fixture">
+      <span className="Calendar-fixture" key={fixture.id}>
         <span className="Calendar-fixture-match">
           {fixture.localTeam.team_name} vs<br />
           {fixture.visitorTeam.team_name}{' '}
@@ -61,7 +64,10 @@ class Calendar extends Component {
   renderCalendar() {
     const days = endDate.diff(startDate, 'days')
     const fixtures = this.formatData()
-    let calendarEL = [<CalendarHeader month={moment.months(5)} />, ...this.getFillerDays(startDate)]
+    let calendarEL = [
+      <CalendarHeader key="header" month={moment.months(5)} />,
+      ...this.getFillerDays(startDate),
+    ]
 
     for (let i = 0; i <= days; i++) {
       const nextDay = moment(startDate).add(i, 'days')
@@ -75,6 +81,7 @@ class Calendar extends Component {
           <CalendarHeader
             className="Calendar-header--withSpace"
             month={moment.months(nextDay.month())}
+            key={`header-${i}`}
           />
         )
         //get start of week filler days
@@ -83,7 +90,7 @@ class Calendar extends Component {
       const key = nextDay.valueOf()
       const fixturesEL = (fixtures[key] || []).map(this.renderFixture)
       calendarEL.push(
-        <span className="Calendar-date Grid-cell s-1of7">
+        <span key={`day-${i}`} className="Calendar-date Grid-cell s-1of7">
           <span
             className="Calendar-dayofmonth"
             onClick={() => this.renderMobileView(fixtures[key], nextDay)}

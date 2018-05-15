@@ -37,7 +37,7 @@ class TodaysFixtures extends Component {
         <div className="Grid-cell s-7of7 TodaysFixtures-seperator">
           <span className="bar" />
         </div>
-        {data.map(props => <Fixture {...props} key={data.id} />)}
+        {data.map(props => <Fixture {...props} key={props.id} />)}
       </div>
     )
   }
@@ -49,7 +49,8 @@ class TodaysFixtures extends Component {
     } else if (fixtures.upcoming) {
       fixture = this.renderFixtures('Upcoming Fixtures', fixtures.upcoming)
     }
-    const latest = fixtures.latest && this.renderFixtures('Latest Results', fixtures.latest)
+    const latest =
+      fixtures.latest && this.renderFixtures('Latest Results', fixtures.latest)
 
     return (
       <section className="TodaysFixtures">

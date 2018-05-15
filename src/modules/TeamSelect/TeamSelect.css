@@ -9,7 +9,7 @@
   font-size: 2em;
   margin: 0;
   transition: color 300ms;
-  animation: 500ms ease-in 0s 1 forwards TeamSelectfadeInUp;
+  animation: 500ms ease-in 0s 1 forwards TeamSelectfadeIn;
   opacity: 0;
 }
 
@@ -82,6 +82,8 @@
     position: fixed;
     top: 50%;
     font-size: 2em;
+    animation: 500ms ease-in 0s 1 forwards TeamSelectfadeInUp;
+    opacity: 0;
   }
 }
 

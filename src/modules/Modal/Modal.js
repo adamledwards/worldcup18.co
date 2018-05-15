@@ -21,11 +21,11 @@ export default class Modal extends Component {
       <section ref={forwardedRef} className="Modal">
         <div className="Modal-container">
           <nav className="Grid Modal-nav">
-            <Link className="Grid-cell s-1of7 Modal-back">
+            <Link back className="Grid-cell s-1of7 Modal-back">
               <i className="material-icons">arrow_back</i>
             </Link>
             <Link
-              back
+              href="/"
               className="Grid-cell s-1of7 push-lg-13of14 lg-1of14 push-s-5of7 Modal-close"
             >
               <i className="material-icons">close</i>

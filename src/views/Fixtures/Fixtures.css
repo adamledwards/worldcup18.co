@@ -1,0 +1,17 @@
+.FixturesScreen h2.Modal-h2 {
+  line-height: 1.25;
+}
+.FixturesScreen-item {
+  font-size: 1.25em;
+  line-height: 1.4;
+  margin-bottom: 1em;
+}
+.FixturesScreen-item-match {
+  display: block;
+  font-weight: bold;
+}
+
+.FixturesScreen-item-time {
+  font-size: 0.9em;
+  color: #808080;
+}

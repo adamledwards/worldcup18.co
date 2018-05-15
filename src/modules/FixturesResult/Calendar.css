@@ -1,7 +1,7 @@
 .Calendar {
   padding: 0 0 147px 0;
 }
-.Calendar .filler{
+.Calendar .filler {
   opacity: 0.2;
 }
 .Calendar-dayofmonth {
@@ -14,12 +14,11 @@
   font-weight: bold;
   font-size: 1.125em;
   margin-bottom: 39px;
-  
 }
 
 .Calendar-day-of-week span:after {
   display: block;
-  content: "\A\2014";
+  content: '\A\2014';
   white-space: pre-wrap;
 }
 
@@ -37,17 +36,30 @@
   display: none;
 }
 
+.Calendar-date {
+  position: relative;
+}
+
+.Calendar-fixture-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 @media (min-width: 75.5em) {
+  .Calendar-fixture-link {
+    display: none;
+  }
   .day-min {
     display: none;
   }
-  
+
   .day-short {
     display: block;
   }
   .Calendar-date {
     margin-bottom: 80px;
-    
   }
   .Calendar-day-of-week {
     margin-bottom: 69px;

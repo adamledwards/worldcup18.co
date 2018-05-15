@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
+import Link from '../../core/Link'
+import { urls } from '../../routes'
 import CalendarHeader from './CalendarHeader'
 import settings from '../../settings'
 import './Calendar.css'
@@ -8,6 +10,11 @@ const startDate = moment(settings.date.start)
 const endDate = moment(settings.date.end)
 
 class Calendar extends Component {
+  goToFixtures(fixtures, nextDay) {
+    if (fixtures.length) {
+      urls
+    }
+  }
   getFillerDays(date) {
     //get start of week filler days
     const filler = []
@@ -91,13 +98,14 @@ class Calendar extends Component {
       const fixturesEL = (fixtures[key] || []).map(this.renderFixture)
       calendarEL.push(
         <span key={`day-${i}`} className="Calendar-date Grid-cell s-1of7">
-          <span
-            className="Calendar-dayofmonth"
-            onClick={() => this.renderMobileView(fixtures[key], nextDay)}
-          >
-            {nextDay.format('DD')}
-          </span>
+          <span className="Calendar-dayofmonth">{nextDay.format('DD')}</span>
           {fixturesEL}
+          {fixturesEL.length > 0 && (
+            <Link
+              className="Calendar-fixture-link"
+              href={urls('fixtures', { date: nextDay.format('DD-MM-YYYY') })}
+            />
+          )}
         </span>
       )
     }

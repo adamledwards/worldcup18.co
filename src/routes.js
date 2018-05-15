@@ -2,6 +2,7 @@ import Home from './views/Home'
 import TeamSelection from './views/TeamSelection'
 import Team from './views/Team'
 import Menu from './views/Menu'
+import Fixtures from './views/Fixtures'
 import UniversalRouter from 'universal-router'
 import generateUrls from 'universal-router/generateUrls'
 import createHistory from 'history/createBrowserHistory'
@@ -26,6 +27,11 @@ const routes = [
     name: 'menu',
     path: '/menu',
     ModalComponent: Menu,
+  },
+  {
+    name: 'fixtures',
+    path: '/fixtures/:date',
+    ModalComponent: Fixtures,
   },
 ]
 

@@ -11,7 +11,7 @@ class FixturesResult extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { db } = this.props.app
     db
       .collection('fixtures')
@@ -23,6 +23,7 @@ class FixturesResult extends Component {
         })
       })
   }
+
   render() {
     const { fixtures } = this.state
     return (

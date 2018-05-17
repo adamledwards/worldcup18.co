@@ -5,19 +5,28 @@ import Granim from '../../core/Granim'
 class TeamSelection extends Component {
   constructor(props) {
     super(props)
+    const { team } = props
     this.state = {
       gradientState: void 0,
+      defaultStateName: (team && team.key) || void 0,
     }
   }
   changeGradientState = gradientState => {
     this.setState({ gradientState })
   }
   render() {
-    const { gradientState } = this.state
+    const { gradientState, defaultStateName } = this.state
+    const { team } = this.props
     return (
       <Fragment>
-        <Granim colourState={gradientState} />
-        <TeamSelect changeGradientState={this.changeGradientState} />
+        <Granim
+          colourState={gradientState}
+          defaultStateName={defaultStateName}
+        />
+        <TeamSelect
+          teamKey={team && team.key}
+          changeGradientState={this.changeGradientState}
+        />
       </Fragment>
     )
   }

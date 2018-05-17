@@ -8,16 +8,29 @@ import Granim from '../../../core/Granim'
 import './TeamHeader.css'
 
 class TeamHeader extends Component {
+  state = {
+    key: null,
+    style: {
+      color: null,
+      background: null,
+    },
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     const { team } = nextProps
     const teamColours = teams[team.key]
-    return {
-      style: {
-        color: teamColours.headerTextColour,
-        background: `linear-gradient(${teamColours.gradient})`,
-      },
+    if (nextProps.key !== prevState.key) {
+      return {
+        key: team.key,
+        style: {
+          color: teamColours.headerTextColour,
+          background: `linear-gradient(${teamColours.gradient})`,
+        },
+      }
     }
+    return null
   }
+
   render() {
     const { team } = this.props
     const { style } = this.state

@@ -11,7 +11,7 @@ export class Gradient extends Component {
 
     if (!nextProps.colourState) {
       return {
-        colourState: 'default-state',
+        colourState: nextProps.defaultStateName || 'default-state',
       }
     }
 

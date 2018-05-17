@@ -13,6 +13,12 @@ import Modal from './modules/Modal'
 import './App.css'
 import routes, { history } from './routes'
 import Context from './Context'
+import teams from 'teams.json'
+
+if (process.env.NODE_ENV !== 'production') {
+  const { whyDidYouUpdate } = require('why-did-you-update')
+  whyDidYouUpdate(React)
+}
 
 const config = {
   apiKey: 'AIzaSyAWwEuc4ZzZAbYprl2zmMaJgifNwv608m4',
@@ -29,6 +35,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      team: null,
       isModalActive: false,
       db: firebase.firestore(),
       route: {
@@ -50,15 +57,31 @@ class App extends Component {
     const bodyEl = document.getElementsByTagName('body')[0]
     if (isModalActive) {
       bodyEl.style.position = 'fixed'
+      bodyEl.style.height = '100%'
+      bodyEl.style.width = '100%'
+      bodyEl.style.overflow = 'hidden'
     } else {
       bodyEl.style.position = ''
+      bodyEl.style.height = ''
+      bodyEl.style.width = ''
+      bodyEl.style.overflow = ''
     }
   }
 
   goToRoute(pathname) {
     return routes.resolve({ pathname }).then(route => {
       this.setState(state => {
+        let team = null
+        if (teams[route.params.team]) {
+          team = {
+            key: route.params.team,
+            ...teams[route.params.team],
+          }
+        } else if (route.isModal) {
+          team = state.team
+        }
         return {
+          team,
           route: {
             ...state.route,
             ...route,
@@ -69,39 +92,42 @@ class App extends Component {
   }
 
   render() {
-    const { route, isModalActive } = this.state
+    const { route, isModalActive, team } = this.state
     const { Component, params, ModalComponent, isModal } = route
     const db = this.state.db
 
     return (
       <Fragment>
-        {db ? (
-          <Context.Provider value={{ history, db, params }}>
-            {Component && <Component db={db} params={params} />}
-            <CSSTransition
-              in={isModal}
-              unmountOnExit
-              classNames={'Modal'}
-              timeout={300}
-              onExit={() => {
-                this.setState({
-                  isModalActive: false,
-                })
-              }}
-              onEntered={() => {
-                this.setState({
-                  isModalActive: true,
-                })
-              }}
-            >
-              {() => (
-                <Modal db={db} params={params} isModalActive={isModalActive}>
-                  <ModalComponent />
-                </Modal>
-              )}
-            </CSSTransition>
-          </Context.Provider>
-        ) : null}
+        <Context.Provider value={{ history, db, params }}>
+          {Component && <Component db={db} params={params} />}
+          <CSSTransition
+            in={isModal}
+            unmountOnExit
+            classNames={'Modal'}
+            timeout={300}
+            onExit={() => {
+              this.setState({
+                isModalActive: false,
+              })
+            }}
+            onEntered={() => {
+              this.setState({
+                isModalActive: true,
+              })
+            }}
+          >
+            {() => (
+              <Modal
+                team={team}
+                db={db}
+                params={params}
+                isModalActive={isModalActive}
+              >
+                <ModalComponent team={team} />
+              </Modal>
+            )}
+          </CSSTransition>
+        </Context.Provider>
       </Fragment>
     )
   }

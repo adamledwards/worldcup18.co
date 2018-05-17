@@ -28,7 +28,7 @@
 }
 
 .Modal .Navigation a {
-  color: #fff;
+  color: currentColor;
   text-decoration: none;
 }
 

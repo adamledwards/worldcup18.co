@@ -16,13 +16,32 @@ const TeamLink = ({ team, name, hover, index }) => (
     {name}
   </Link>
 )
+
 class TeamSelect extends Component {
-  state = {
-    style: {},
+  static getDerivedStateFromProps(nextProps, nextState) {
+    if (nextProps.teamKey && !nextState.style) {
+      return {
+        style: {
+          color: teams[nextProps.teamKey].headerTextColour,
+        },
+      }
+    }
+    return null
   }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      style: {
+        color:
+          (props.teamKey && teams[props.teamKey].headerTextColour) || '#FFF',
+      },
+    }
+  }
+
   hover = key => {
     this.props.changeGradientState(key)
-    let style = {}
+    let style
     if (teams[key]) {
       style = {
         color: teams[key].headerTextColour,

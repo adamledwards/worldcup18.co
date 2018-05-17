@@ -1,3 +1,9 @@
+.FixturesScreen {
+  padding-bottom: 30px;
+}
+.FixturesScreen-item {
+  transform: translateZ(0);
+}
 .FixturesScreen h2.Modal-h2 {
   line-height: 1.25;
 }

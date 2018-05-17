@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 import './Table.css'
 import teams from '../../teams'
 
-export default class Table extends Component {
+export default class Table extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -22,13 +22,17 @@ export default class Table extends Component {
     }
     return (
       <div
-        className={classNames('Grid Table-row', { 'Table-row-active': selectedTeamId })}
+        className={classNames('Grid Table-row', {
+          'Table-row-active': selectedTeamId,
+        })}
         style={style}
         key={row.team_id}
       >
         <div className="Grid-cell Table-team s-4of7">{row.team_name}</div>
         <div className="Grid-cell Table-point s-1of7">{row.games_played}</div>
-        <div className="Grid-cell Table-point s-1of7">{row.goal_difference}</div>
+        <div className="Grid-cell Table-point s-1of7">
+          {row.goal_difference}
+        </div>
         <div className="Grid-cell Table-point s-1of7">{row.points}</div>
       </div>
     )

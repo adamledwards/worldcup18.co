@@ -48,7 +48,9 @@ class Fixtures extends Component {
   }
 
   componentDidUpdate() {
-    this.fetchFixtures()
+    if (this.state.fixtures === null) {
+      this.fetchFixtures()
+    }
   }
 
   renderFixtures() {

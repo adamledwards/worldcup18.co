@@ -24,11 +24,15 @@ class Team extends Component {
     querySnapshot: null,
   }
   componentDidMount() {
-    this.fetchData()
+    if (this.state.querySnapshot === null) {
+      this.fetchData()
+    }
   }
 
   componentDidUpdate() {
-    this.fetchData()
+    if (this.state.querySnapshot === null) {
+      this.fetchData()
+    }
   }
 
   fetchData() {

@@ -27,11 +27,13 @@ const routes = [
     name: 'menu',
     path: '/menu',
     ModalComponent: Menu,
+    isModal: true,
   },
   {
     name: 'fixtures',
     path: '/fixtures/:date',
     ModalComponent: Fixtures,
+    isModal: true,
   },
 ]
 

@@ -10,27 +10,19 @@ const startDate = moment(settings.date.start)
 const endDate = moment(settings.date.end)
 
 class Calendar extends Component {
-  goToFixtures(fixtures, nextDay) {
-    if (fixtures.length) {
-      urls
-    }
-  }
   getFillerDays(date) {
     //get start of week filler days
     const filler = []
     const startOfWeek = moment(date).startOf('isoWeek')
     const startOfWeekDiff = date.diff(startOfWeek, 'days')
     for (let ix = 0; ix < startOfWeekDiff; ix++) {
+      const weekMoment = moment(startOfWeek).add(ix, 'days')
       filler.push(
         <span
-          key={`filler-${ix}`}
+          key={`filler-${weekMoment.unix()}`}
           className="Calendar-date Grid-cell s-1of7 filler"
         >
-          <span className="Calendar-dayofmonth">
-            {moment(startOfWeek)
-              .add(ix, 'days')
-              .format('DD')}
-          </span>
+          <span className="Calendar-dayofmonth">{weekMoment.format('DD')}</span>
         </span>
       )
     }
@@ -91,13 +83,20 @@ class Calendar extends Component {
             key={`header-${i}`}
           />
         )
+        calendarEL = [...calendarEL, ...this.getFillerDays(nextDay)]
+
         //get start of week filler days
-        calendarEL.concat(this.getFillerDays(nextDay))
+        // calendarEL.concat(this.getFillerDays(nextDay))
       }
       const key = nextDay.valueOf()
       const fixturesEL = (fixtures[key] || []).map(this.renderFixture)
       calendarEL.push(
-        <span key={`day-${i}`} className="Calendar-date Grid-cell s-1of7">
+        <span
+          key={`day-${i}`}
+          className={`Calendar-date Grid-cell s-1of7${
+            fixturesEL.length ? '' : ' filler'
+          } `}
+        >
           <span className="Calendar-dayofmonth">{nextDay.format('DD')}</span>
           {fixturesEL}
           {fixturesEL.length > 0 && (

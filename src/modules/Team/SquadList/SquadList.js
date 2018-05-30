@@ -1,11 +1,30 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
+import teams from '../../../teams'
 import './SquadList.css'
 
-const roles = ['Goalkeepers', 'Defenders', 'Midfielders', 'Forwards']
+const roles = ['Goalkeeper', 'Defender', 'Midfielder', 'Attacker']
+
+const Player = ({ name, goals, appearences }) => (
+  <Fragment>
+    <span className="Grid-cell s-5of7 push-lg-5of14 lg-5of14 SquadList-player">
+      {name}
+    </span>
+    <span className="Grid-cell s-1of7 lg-1of14 text-center">
+      {appearences || 0}
+    </span>
+    <span className="Grid-cell s-1of7 lg-1of14 text-center">{goals || 0}</span>
+  </Fragment>
+)
+
 export class SquadList extends Component {
   render() {
+    const { team } = this.props
+    if (!team) {
+      return null
+    }
+    const { bodyTextColour } = teams[team.key]
     return (
-      <div className="SquadList">
+      <div className="SquadList" style={{ color: bodyTextColour }}>
         <div className="Grid">
           <h2 className="Grid-cell s-7of7 SquadList-header">Squad list</h2>
         </div>
@@ -13,7 +32,7 @@ export class SquadList extends Component {
           <div className="SquadList-section">
             <div className="SquadList-section-header Grid">
               <h3 className="Grid-cell s-5of7 SquadList-section-role SquadList-mobile">
-                &mdash; {role}
+                &mdash; {role}s
               </h3>
               {i === 0 && [
                 <span className="Grid-cell s-1of7 lg-1of14 push-lg-10of14 text-center">
@@ -26,26 +45,23 @@ export class SquadList extends Component {
             </div>
             <div className="Grid">
               <h3 className="Grid-cell s-5of7 lg-3of14 push-lg-2of14 SquadList-section-role SquadList-desktop">
-                &mdash; {role}
+                &mdash; {role}s
               </h3>
-              <span className="Grid-cell s-5of7 lg-5of14 SquadList-player">Player One</span>
-              <span className="Grid-cell s-1of7 lg-1of14 text-center">3</span>
-              <span className="Grid-cell s-1of7 lg-1of14 text-center">0</span>
-            </div>
-            <div className="Grid">
-              <span className="Grid-cell s-5of7 lg-5of14 push-lg-5of14 SquadList-player">
-                Player One
+              <span className="Grid-cell s-5of7 lg-5of14 SquadList-player">
+                {team.squad[role][0].name}
               </span>
-              <span className="Grid-cell s-1of7 lg-1of14 text-center">3</span>
-              <span className="Grid-cell s-1of7 lg-1of14 text-center">0</span>
-            </div>
-            <div className="Grid">
-              <span className="Grid-cell s-5of7 lg-5of14 push-lg-5of14 SquadList-player">
-                Player One
+              <span className="Grid-cell s-1of7 lg-1of14 text-center">
+                {team.squad[role][0].appearences || 0}
               </span>
-              <span className="Grid-cell s-1of7 lg-1of14 text-center">3</span>
-              <span className="Grid-cell s-1of7 lg-1of14 text-center">0</span>
+              <span className="Grid-cell s-1of7 lg-1of14 text-center">
+                {team.squad[role][0].goals || 0}
+              </span>
             </div>
+            {team.squad[role].slice(1).map(props => (
+              <div className="Grid">
+                <Player key={props.id} {...props} />
+              </div>
+            ))}
           </div>
         ))}
       </div>

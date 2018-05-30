@@ -1,86 +1,217 @@
 .Header {
-    padding: 30px 0; 
-    background-image: linear-gradient(-180deg, #000000 0%, #333333 100%);
-    color: #fff;
-    overflow: hidden;
+  padding: 30px 0;
+  background-image: linear-gradient(-180deg, #000000 0%, #333333 100%);
+  color: #fff;
+  overflow: hidden;
 }
 
 .Header-site {
-    font-size: 16px;
-    margin: 0;
-    font-weight: bold;
+  font-size: 16px;
+  margin: 0;
+  font-weight: bold;
 }
 
 .Header-intro {
-    font-size: 40px;
-    line-height: 52px;
-    margin-top: 70px;
+  font-size: 40px;
+  line-height: 52px;
+  margin-top: 70px;
 }
 
 .Header-subintro {
-    font-size: 28px;
-    font-weight: normal;
-    color: #808080;
+  font-size: 28px;
+  font-weight: normal;
+  color: #808080;
 }
 
 .Header-date {
-    font-weight: normal;
-    font-size: 18px;
-    text-align: center;
-    margin-top: 100px;
-    margin: 0;
+  font-weight: normal;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 100px;
+  margin: 0;
 }
 
 .Header-seperator {
-    margin-top: 35px;
-    margin-bottom: 35px;
+  margin-top: 35px;
+  margin-bottom: 35px;
 }
 .Header-seperator .bar {
-    width: 40px;
-    height: 3px;
-    background-color: #fff;
-    display: block;
+  width: 40px;
+  height: 3px;
+  background-color: #fff;
+  display: block;
 }
 
 .Header-nav {
-    display: none;
+  display: none;
 }
 
-@media (min-width: 75.5em) {
-    .Header {
-        padding-top: 30px; 
-        padding-bottom: 40px; 
-    }
-    .Header-intro {
-        font-size: 75px;
-        line-height: 80px;
-        margin-top: 200px;
-    }
-    .Header-subintro {
-        font-size: 32px;
-        line-height: 56px;
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-    .Header-date {
-        font-weight: normal;
-        font-size: 18px;
-        text-align: left;
-        margin-top: 145px;
-    }
+.LiveScoresHeader-items {
+  margin-top: 190px;
+}
 
-    .Header-seperator {
-        margin-top: 45px;
-        margin-bottom: 30px;
-    }
-    .Header-nav {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        justify-content: space-between;
-    }
-    .Header-burger {
-        display: none;
-    }
+.LiveScoresHeader-item {
+  margin-top: 23px;
+}
+
+.LiveScoresHeader-team {
+  display: block;
+  font-size: 2.25em;
+  line-height: 1.3888888889;
+}
+
+.LiveScoresHeader-goals {
+  display: block;
+  font-size: 2.8125em;
+  line-height: 1.1111111111;
+  text-align: center;
+}
+
+.LiveScoresHeader-players {
+  font-size: 0.8125em;
+  line-height: 2.4615384615;
+}
+
+.LiveScoresHeader-stats {
+  display: block;
+  font-size: 0.8125em;
+  line-height: 2.4615384615;
+  margin-top: 120px;
+  text-align: center;
+}
+
+.slick-dots {
+  display: flex;
+}
+.LiveScoresHeader-dots li {
+  margin: 0 5px;
+}
+
+.LiveScoresHeader-dots {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  list-style: none;
+}
+
+.LiveScoresHeader-dot {
+  height: 20px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.LiveScoresHeader-dot span {
+  display: block;
+  height: 8px;
+  width: 8px;
+  border: 1px solid #808080;
+  border-radius: 50%;
+  font-size: 0;
+  color: transparent;
+}
+
+.slick-active .LiveScoresHeader-dot span {
+  border: 1px solid #fff;
+  background: #fff;
+}
+.LiveScoresHeader-navigation {
+  display: flex;
+  padding: 0 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.LiveScoresHeader-navigation button {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0;
+  margin: 0;
+}
+@media (min-width: 64em) {
+  .LiveScoresHeader-items {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+  }
+  .LiveScoresHeader-items .LiveScoresHeader-item:nth-child(3) {
+    flex-direction: row-reverse;
+  }
+
+  .LiveScoresHeader-items .LiveScoresHeader-item:nth-child(1) {
+    text-align: right;
+  }
+
+  .LiveScoresHeader-separator {
+    display: block;
+    font-size: 2.8125em;
+    line-height: 1.111;
+    align-self: center;
+    text-align: center;
+  }
+}
+@media (min-width: 75.5em) {
+  .Header {
+    padding-top: 30px;
+    padding-bottom: 40px;
+  }
+  .Header-intro {
+    font-size: 75px;
+    line-height: 80px;
+    margin-top: 200px;
+  }
+  .Header-subintro {
+    font-size: 32px;
+    line-height: 56px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .Header-date {
+    font-weight: normal;
+    font-size: 18px;
+    text-align: left;
+    margin-top: 145px;
+  }
+
+  .Header-seperator {
+    margin-top: 45px;
+    margin-bottom: 30px;
+  }
+  .Header-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: space-between;
+  }
+  .Header-burger {
+    display: none;
+  }
+
+  .LiveScoresHeader-team {
+    font-size: 3.125em;
+  }
+
+  .LiveScoresHeader-goals {
+    font-size: 4.0625em;
+    line-height: 1.3076923077;
+  }
+
+  .LiveScoresHeader-players {
+    font-size: 1em;
+    line-height: 2;
+  }
+  .LiveScoresHeader-navigation {
+    justify-content: center;
+  }
+
+  .LiveScoresHeader-navigation button {
+  }
 }

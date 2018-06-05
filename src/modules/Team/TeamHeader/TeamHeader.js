@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Button from '../../../core/Button'
+import Link from '../../../core/Link'
 import Nav from '../../../core/Nav'
 import firebase from 'firebase'
 import { withContext } from '../../../Context'
@@ -38,22 +38,27 @@ class TeamHeader extends Component {
       <div className="TeamHeader" style={style}>
         <Nav />
         <div className="Grid Grid-vertical-center">
-          <h1 className="TeamHeader-intro Grid-cell s-7of7 lg-10of14">
-            {team.name}
-          </h1>
+          <div className="Grid-cell s-7of7 lg-10of14">
+            <h1 className="TeamHeader-intro">{team.name}</h1>
+            <span className="TeamHeader-ranking">
+              &mdash; FIFA World Ranking /{' '}
+              {team.fifaranking && team.fifaranking.position}
+            </span>
+          </div>
           <div className="TeamHeader-info Grid-cell s-7of7 lg-4of14">
             <dl className="TeamHeader-detail">
               <dt>Head Coach</dt>
               <dd>{team.coach}</dd>
-              <dt>Fifa Rank</dt>
-              <dd>{team.fifaranking && team.fifaranking.position}</dd>
+              <dt>Captain</dt>
+              <dd>{team.captain}</dd>
+              <dt>World Cup History</dt>
+              <dd>{team.history}</dd>
+              {team.teamWebsite && (
+                <dd className="TeamHeader-website">
+                  <Link>{team.teamWebsite}</Link>
+                </dd>
+              )}
             </dl>
-            <Button
-              className="TeamHeader-button"
-              style={{ color: style.color }}
-            >
-              Team Website
-            </Button>
           </div>
         </div>
         <div className="Grid">

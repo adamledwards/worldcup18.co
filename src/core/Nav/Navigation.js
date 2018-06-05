@@ -8,7 +8,9 @@ class Navigation extends Component {
         <li>
           <Link href="/">Home</Link>
         </li>
-        <li>Timezones</li>
+        <li>
+          <Link href="/timezones">Timezones</Link>
+        </li>
         <li>
           <Link href="/teams">Teams</Link>
         </li>

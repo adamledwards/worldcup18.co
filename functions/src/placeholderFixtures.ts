@@ -1,5 +1,4 @@
 import * as functions from 'firebase-functions'
-import setting from './constants'
 import admin from './admin'
 
 type Fixtures = {

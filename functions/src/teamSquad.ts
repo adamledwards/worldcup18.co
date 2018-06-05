@@ -3,11 +3,15 @@ import setting from './constants'
 import admin from './admin'
 
 function parseSquad(data: SportmonksResponse.SquadResponse.Datum[]) {
+  if (!data.length) {
+    return null
+  }
   return data
     .map(playerData => {
+      const name = playerData.player.data.fullname.split(' ')
       return {
         id: playerData.player_id,
-        name: playerData.player.data.common_name,
+        name: `${name[0]} ${name[name.length - 1]}`,
         position: playerData.position.data.name,
         appearences: playerData.appearences,
         goals: playerData.goals,
@@ -37,18 +41,22 @@ function getSquad(team_id) {
 }
 
 export default functions.https.onRequest((req, res) => {
-  admin
+  return admin
     .firestore()
     .collection('teams')
     .get()
     .then(data => {
-      return data.forEach(doc => {
-        getSquad(doc.data().id).then(squad => {
-          doc.ref.update({
-            squad,
+      const promises = []
+      data.forEach(doc => {
+        promises.push(
+          getSquad(doc.data().id).then(squad => {
+            return doc.ref.update({
+              squad,
+            })
           })
-        })
+        )
       })
+      return Promise.all(promises)
     })
     .then(() => res.send('done'))
 })

@@ -10,7 +10,7 @@ export default class Table extends PureComponent {
       ...this.props.db,
     }
   }
-  componentDidMount() {}
+
   renderRow(row) {
     const { selectedTeam } = this.props
     const selectedTeamId = (selectedTeam && selectedTeam.id) === row.team_id

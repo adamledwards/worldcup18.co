@@ -3,6 +3,7 @@ import Navigation from './Navigation'
 import Link from '../Link'
 import MobileMenu from '../../core/icons/MobileMenu.svg'
 import './Nav.css'
+
 class Nav extends Component {
   render() {
     return (

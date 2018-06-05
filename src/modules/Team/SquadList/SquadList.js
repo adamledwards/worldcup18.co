@@ -2,7 +2,12 @@ import React, { Fragment, Component } from 'react'
 import teams from '../../../teams'
 import './SquadList.css'
 
-const roles = ['Goalkeeper', 'Defender', 'Midfielder', 'Attacker']
+const roles = {
+  Goalkeeper: 'Goalkeepers',
+  Defender: 'Defenders',
+  Midfielder: 'Midfielders',
+  Attacker: 'Fowards',
+}
 
 const Player = ({ name, goals, appearences }) => (
   <Fragment>
@@ -19,7 +24,8 @@ const Player = ({ name, goals, appearences }) => (
 export class SquadList extends Component {
   render() {
     const { team } = this.props
-    if (!team) {
+
+    if (!team.squad) {
       return null
     }
     const { bodyTextColour } = teams[team.key]
@@ -28,11 +34,11 @@ export class SquadList extends Component {
         <div className="Grid">
           <h2 className="Grid-cell s-7of7 SquadList-header">Squad list</h2>
         </div>
-        {roles.map((role, i) => (
+        {Object.keys(roles).map((role, i) => (
           <div className="SquadList-section">
             <div className="SquadList-section-header Grid">
               <h3 className="Grid-cell s-5of7 SquadList-section-role SquadList-mobile">
-                &mdash; {role}s
+                &mdash; {roles[role]}
               </h3>
               {i === 0 && [
                 <span className="Grid-cell s-1of7 lg-1of14 push-lg-10of14 text-center">
@@ -45,7 +51,7 @@ export class SquadList extends Component {
             </div>
             <div className="Grid">
               <h3 className="Grid-cell s-5of7 lg-3of14 push-lg-2of14 SquadList-section-role SquadList-desktop">
-                &mdash; {role}s
+                &mdash; {roles[role]}
               </h3>
               <span className="Grid-cell s-5of7 lg-5of14 SquadList-player">
                 {team.squad[role][0].name}

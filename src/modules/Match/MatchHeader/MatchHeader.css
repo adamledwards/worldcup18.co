@@ -1,0 +1,36 @@
+.MatchHeader {
+}
+
+.MatchHeader h2 {
+  font-size: 1.5em;
+  line-height: 2.16;
+  margin: 0;
+}
+
+.MatchHeader-divider {
+  margin: 0 0.5em 0 0.5em;
+}
+
+.MatchHeader-detail {
+  font-size: 0.9375em;
+  line-height: 1.67;
+}
+
+.MatchHeader-detail .MatchHeader-divider:last-of-type {
+  display: block;
+  font-size: 0;
+}
+
+@media (min-width: 64em) {
+  .MatchHeader h2 {
+    font-size: 1.5em;
+  }
+  .MatchHeader-detail {
+    font-size: 0.8125em;
+    line-height: 2.15;
+  }
+  .MatchHeader-detail .MatchHeader-divider:last-of-type {
+    display: inline;
+    font-size: 1em;
+  }
+}

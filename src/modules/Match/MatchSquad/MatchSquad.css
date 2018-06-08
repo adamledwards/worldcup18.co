@@ -1,0 +1,104 @@
+.MatchSquad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 38px 0 0 0;
+}
+.MatchSquad-team {
+  display: block;
+  font-size: 1.25em;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.4;
+  margin-bottom: 1.8em;
+}
+
+.MatchSquad-players {
+  display: flex;
+  font-size: 0.9375em;
+  line-height: 1.6;
+  align-items: center;
+}
+
+.MatchSquad-players-detail {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+.MatchSquad-players-number {
+  text-align: right;
+  width: 40px;
+}
+
+.MatchSquad-players-number + .MatchSquad-players-detail {
+  margin-left: 1.6em;
+}
+
+.MatchSquad-players-cards {
+  display: flex;
+  margin-left: 16px;
+}
+.MatchSquad-players-cards span {
+  height: 12px;
+  width: 8px;
+  display: block;
+  margin-right: 8px;
+}
+
+.MatchSquad-players-cards .yellow {
+  background: #fffd00;
+}
+
+.MatchSquad-players-cards .secondYellow {
+  background: #fd0000;
+  position: relative;
+}
+.MatchSquad-players-cards .secondYellow::after {
+  content: '';
+  display: block;
+  position: absolute;
+  background: #fffd00;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.MatchSquad-players-cards .red {
+  background: #fd0000;
+}
+
+.MatchSquad-list {
+}
+
+.subbed .MatchSquad-players-name {
+  color: #808080;
+}
+
+.MatchSquad-players .material-icons {
+  font-size: 0.8em;
+  width: 2em;
+  text-align: center;
+}
+
+.MatchSquad-players .material-icons.down {
+  color: #ff0000;
+}
+
+.MatchSquad-players .material-icons.up {
+  color: #00df1b;
+}
+
+@media (min-width: 64em) {
+  .MatchSquad {
+    margin: 35px 0 0 0;
+  }
+  .MatchSquad-wrapper {
+    display: flex;
+    width: 560px;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+}

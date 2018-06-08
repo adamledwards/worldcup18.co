@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import { withContext } from '../../Context'
+import { urls, history } from '../../routes'
 import './Fixtures.css'
 
 class Fixtures extends Component {
@@ -21,6 +22,10 @@ class Fixtures extends Component {
   state = {
     fixtures: null,
     date: false,
+  }
+
+  goToFixture(matchId) {
+    history.push(urls('match', { matchId }))
   }
 
   fetchFixtures() {
@@ -56,7 +61,11 @@ class Fixtures extends Component {
   renderFixtures() {
     const { fixtures } = this.state
     return fixtures.map(fixture => (
-      <div className="s-7of7 FixturesScreen-item" key={fixture.id}>
+      <div
+        className="s-7of7 FixturesScreen-item"
+        key={fixture.id}
+        onClick={() => this.goToFixture(fixture.id)}
+      >
         <span className="FixturesScreen-item-match">
           {fixture.localTeam.team_name} vs {fixture.visitorTeam.team_name}
         </span>

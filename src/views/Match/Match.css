@@ -1,0 +1,33 @@
+.Match {
+  padding-bottom: 70px;
+}
+
+.MatchNav {
+  font-size: 0.9375em;
+  line-height: 1.86;
+  margin-top: 27px;
+}
+
+.MatchNav span {
+  cursor: pointer;
+}
+
+.MatchNav span.active {
+  font-weight: bold;
+  cursor: default;
+}
+
+.MatchNav span.active:after {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: #fff;
+  content: '';
+}
+
+@media (min-width: 64em) {
+  .MatchNav {
+    margin-top: 4px;
+    font-size: 0.8125em;
+  }
+}

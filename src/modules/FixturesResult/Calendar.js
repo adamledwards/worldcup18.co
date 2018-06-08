@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import Link from '../../core/Link'
-import { urls } from '../../routes'
+import { urls, history } from '../../routes'
 import CalendarHeader from './CalendarHeader'
 import settings from '../../settings'
 import './Calendar.css'
@@ -44,9 +44,17 @@ class Calendar extends Component {
     }, {})
   }
 
+  goToFixture(matchId) {
+    history.push(urls('match', { matchId }))
+  }
+
   renderFixture(fixture) {
     return (
-      <span className="Calendar-fixture" key={fixture.id}>
+      <span
+        className="Calendar-fixture"
+        key={fixture.id}
+        onClick={() => this.goToFixture(fixture.id)}
+      >
         <span className="Calendar-fixture-match">
           {fixture.localTeam.team_name} vs<br />
           {fixture.visitorTeam.team_name}{' '}
@@ -89,7 +97,9 @@ class Calendar extends Component {
         // calendarEL.concat(this.getFillerDays(nextDay))
       }
       const key = nextDay.valueOf()
-      const fixturesEL = (fixtures[key] || []).map(this.renderFixture)
+      const fixturesEL = (fixtures[key] || []).map(fixture =>
+        this.renderFixture(fixture)
+      )
       calendarEL.push(
         <span
           key={`day-${i}`}

@@ -1,0 +1,8 @@
+export { default as Goals } from './Goals'
+export { default as BallPossession } from './BallPossession'
+export { default as Corner } from './Corner'
+export { default as Fouls } from './Fouls'
+export { default as OffSide } from './OffSide'
+export { default as ShotsOnGoals } from './ShotsOnGoals'
+export { default as ShotsOffTarget } from './ShotsOffTarget'
+export { default as ShotsOnTarget } from './ShotsOnTarget'

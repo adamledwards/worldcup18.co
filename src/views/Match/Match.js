@@ -6,7 +6,6 @@ import MatchSquad from '../../modules/Match/MatchSquad'
 import { withContext } from '../../Context'
 
 import './Match.css'
-import mock from '../../modules/Match/mock'
 
 class Match extends Component {
   state = {
@@ -47,7 +46,6 @@ class Match extends Component {
   }
 
   render() {
-    const { data } = mock
     const { match, toggleNav } = this.state
 
     if (!match) {

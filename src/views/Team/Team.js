@@ -2,8 +2,10 @@ import React, { Component, Fragment } from 'react'
 import TeamHeader from '../../modules/Team/TeamHeader'
 import SquadList from '../../modules/Team/SquadList'
 import TodaysFixtures from '../../modules/TodaysFixtures'
-import FixturesResult from '../../modules/FixturesResult'
 import Groups from '../../modules/Groups'
+import Footer from '../../modules/Footer'
+import teams from '../../teams'
+import AppStyles from '../../core/styles/AppStyles'
 
 class Team extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -60,10 +62,12 @@ class Team extends Component {
     }
     return (
       <Fragment>
+        <AppStyles styles={teams[teamName]} />
         <TeamHeader team={team} />
         <TodaysFixtures teamRef={querySnapshot.ref} />
         <SquadList team={team} />
         <Groups team={team} />
+        <Footer />
       </Fragment>
     )
   }

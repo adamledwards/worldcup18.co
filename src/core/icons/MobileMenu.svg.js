@@ -3,7 +3,7 @@ import React from 'react'
 const MobileMenu = props => (
   <svg width={27} height={17} {...props}>
     <g
-      stroke="#FFF"
+      stroke="currentColor"
       strokeWidth={2}
       fill="none"
       fillRule="evenodd"

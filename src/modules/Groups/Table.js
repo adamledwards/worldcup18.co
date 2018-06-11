@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 import './Table.css'
 import teams from '../../teams'
+import { urls } from '../../routes'
+import Link from '../../core/Link'
 
 export default class Table extends PureComponent {
   constructor(props) {
@@ -21,12 +23,13 @@ export default class Table extends PureComponent {
       }
     }
     return (
-      <div
-        className={classNames('Grid Table-row', {
+      <Link
+        className={classNames(`Grid Table-row Table-row-${row.key}`, {
           'Table-row-active': selectedTeamId,
         })}
         style={style}
         key={row.team_id}
+        href={urls('team', { team: row.key })}
       >
         <div className="Grid-cell Table-team s-4of7">{row.team_name}</div>
         <div className="Grid-cell Table-point s-1of7">{row.games_played}</div>
@@ -34,7 +37,7 @@ export default class Table extends PureComponent {
           {row.goal_difference}
         </div>
         <div className="Grid-cell Table-point s-1of7">{row.points}</div>
-      </div>
+      </Link>
     )
   }
 

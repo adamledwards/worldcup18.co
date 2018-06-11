@@ -1,34 +1,165 @@
-
 .Table-team,
 .Table-head {
-    font-weight: bold;
-    font-size: 1.125em;
-    line-height: 2;
+  font-weight: bold;
+  font-size: 1.125em;
+  line-height: 2;
 }
 
 .Table-header {
-    font-size: 1.5em;
-    line-height: 1.333;
+  font-size: 1.5em;
+  line-height: 1.333;
 }
-
 
 .Table-header:after {
-    display: block;
-    content: "\2014";
-    white-space: pre-wrap;
+  display: block;
+  content: '\2014';
+  white-space: pre-wrap;
 }
 
-
-.Group.selectedTeam .Table{
-  opacity: 0.3;
+.Group.selectedTeam .Table {
+  display: none;
 }
 
-.Group.selectedTeam .Table.Table-active{
+.Group.selectedTeam .Table.Table-active {
   opacity: 1;
 }
 
+.Table-row {
+  text-decoration: none;
+  color: currentColor;
+}
 
+.Table-row-argentina:hover {
+  color: #73ace1;
+}
 
-.Table-row.Table-row-active {
-  color: #1735FC;
+.Table-row-australia:hover {
+  color: #e6e400;
+}
+
+.Table-row-belgium:hover {
+  color: #f30000;
+}
+
+.Table-row-brazil:hover {
+  color: #fff000;
+}
+
+.Table-row-colombia:hover {
+  color: #fff000;
+}
+
+.Table-row-costa-rica:hover {
+  color: #ff0017;
+}
+
+.Table-row-croatia:hover {
+  color: #cd000e;
+}
+
+.Table-row-denmark:hover {
+  color: #cb001b;
+}
+
+.Table-row-egypt:hover {
+  color: #cb001b;
+}
+
+.Table-row-england:hover {
+  color: #aaf0f7;
+}
+
+.Table-row-france:hover {
+  color: #1735fc;
+}
+
+.Table-row-germany:hover {
+  color: #b4b27f;
+}
+
+.Table-row-iceland:hover {
+  color: #39a0e4;
+}
+
+.Table-row-iran:hover {
+  color: #8ec89b;
+}
+
+.Table-row-japan:hover {
+  color: #1735fc;
+}
+
+.Table-row-korea-republic:hover {
+  color: #cb001b;
+}
+
+.Table-row-mexico:hover {
+  color: #206d00;
+}
+
+.Table-row-morocco:hover {
+  color: #009973;
+}
+
+.Table-row-nigeria:hover {
+  color: #4cad77;
+}
+
+.Table-row-panama:hover {
+  color: #ff0017;
+}
+
+.Table-row-peru:hover {
+  color: #cb001b;
+}
+
+.Table-row-poland:hover {
+  color: #ff0017;
+}
+
+.Table-row-portugal:hover {
+  color: #cb001b;
+}
+
+.Table-row-russia:hover {
+  color: #891e39;
+}
+
+.Table-row-saudi-arabia:hover {
+  color: #006000;
+}
+
+.Table-row-senegal:hover {
+  color: #04b200;
+}
+
+.Table-row-serbia:hover {
+  color: #cb001b;
+}
+
+.Table-row-spain:hover {
+  color: #cb001b;
+}
+
+.Table-row-sweden:hover {
+  color: #fff000;
+}
+
+.Table-row-switzerland:hover {
+  color: #cb001b;
+}
+
+.Table-row-tunisia:hover {
+  color: #cb001b;
+}
+
+.Table-row-uruguay:hover {
+  color: #72b8fc;
+}
+
+@media (min-width: 64em) {
+  .Group.selectedTeam .Table {
+    opacity: 0.3;
+    display: block;
+  }
 }

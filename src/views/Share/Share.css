@@ -1,0 +1,47 @@
+.Share {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin-top: 100px;
+}
+.Share ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.facebook svg {
+  width: 40px;
+  height: 80px;
+}
+
+.twitter svg {
+  width: 38px;
+  height: 80px;
+}
+
+.googleplus svg {
+  width: 48px;
+  height: 80px;
+}
+
+.email svg {
+  width: 36px;
+  height: 80px;
+}
+
+@media (min-width: 64em) {
+  .Share {
+    margin-top: 130px;
+  }
+  .Share ul {
+    width: 300px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

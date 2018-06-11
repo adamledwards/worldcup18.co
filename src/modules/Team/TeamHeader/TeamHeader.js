@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import Link from '../../../core/Link'
 import Nav from '../../../core/Nav'
-import firebase from 'firebase'
-import { withContext } from '../../../Context'
 import teams from '../../../teams'
-import Granim from '../../../core/Granim'
 import './TeamHeader.css'
 
 class TeamHeader extends Component {
@@ -14,6 +11,7 @@ class TeamHeader extends Component {
       color: null,
       background: null,
     },
+    highlight: null,
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -55,7 +53,7 @@ class TeamHeader extends Component {
               <dd>{team.history}</dd>
               {team.teamWebsite && (
                 <dd className="TeamHeader-website">
-                  <Link>{team.teamWebsite}</Link>
+                  <Link href={team.teamWebsite}>Team Website</Link>
                 </dd>
               )}
             </dl>

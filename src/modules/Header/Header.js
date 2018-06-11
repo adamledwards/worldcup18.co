@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Nav from '../../core/Nav'
 import DefaultHeader from './DefaultHeader'
-import LiveScoresHeader from './LiveScoresHeader'
+//import LiveScoresHeader from './LiveScoresHeader'
 import './Header.css'
 
 class Header extends Component {

@@ -3,7 +3,7 @@ import Header from '../../modules/Header'
 import TodaysFixtures from '../../modules/TodaysFixtures'
 import FixturesResult from '../../modules/FixturesResult'
 import Groups from '../../modules/Groups'
-import TopScorers from '../../modules/TopScorers'
+import Footer from '../../modules/Footer'
 
 class Home extends Component {
   render() {
@@ -13,7 +13,8 @@ class Home extends Component {
         <TodaysFixtures />
         <FixturesResult />
         <Groups />
-        <TopScorers />
+        {/* <TopScorers /> */}
+        <Footer />
       </Fragment>
     )
   }

@@ -16,8 +16,8 @@ const MatchPlayer = ({ name, number, cards, subbed }) => {
         <div className="MatchSquad-players-detail">
           <span className="MatchSquad-players-name">{name}</span>
           <span className="MatchSquad-players-cards">
-            {cards.yellowcards == 1 && <span className="yellow" />}
-            {cards.yellowcards == 2 && <span className="secondYellow" />}
+            {cards.yellowcards === 1 && <span className="yellow" />}
+            {cards.yellowcards === 2 && <span className="secondYellow" />}
             {cards.redcards > 0 && <span className="red" />}
           </span>
         </div>
@@ -31,8 +31,8 @@ const MatchPlayer = ({ name, number, cards, subbed }) => {
               {subbed.player_name} ({subbed.minute}')
             </span>
             <span className="MatchSquad-players-cards">
-              {cards.yellowcards == 1 && <span className="yellow" />}
-              {cards.yellowcards == 2 && <span className="secondYellow" />}
+              {cards.yellowcards === 1 && <span className="yellow" />}
+              {cards.yellowcards === 2 && <span className="secondYellow" />}
               {cards.redcards > 0 && <span className="red" />}
             </span>
           </div>

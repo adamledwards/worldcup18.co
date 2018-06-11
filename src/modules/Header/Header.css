@@ -157,9 +157,10 @@
     text-align: center;
   }
 }
+
 @media (min-width: 75.5em) {
   .Header {
-    padding-top: 30px;
+    padding-top: 0;
     padding-bottom: 40px;
   }
   .Header-intro {

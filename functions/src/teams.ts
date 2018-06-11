@@ -8,6 +8,7 @@ function parseData(team: SportmonksResponse.TeamsResponse.Datum) {
   return {
     id: team.id,
     name: team.name,
+    short_code: team.short_code,
     key: team.name.toLocaleLowerCase().replace(/\s/g, '-'),
     fifaranking: {
       points: team.fifaranking.data.points,
@@ -36,15 +37,12 @@ export default functions.https.onRequest((req, res) => {
           .firestore()
           .collection('teams')
           .doc(team.name.toLocaleLowerCase().replace(/\s/g, '-'))
-        batch.set(teamRef, parseData(team))
+        batch.update(teamRef, parseData(team))
+
         return [team.id, teamRef]
       })
     })
     .then(teamRefs => {
-      // const promises = teamRefs.map(([id, ref]) => {
-      //   return getSquad(id).then(console.log)
-      // });
-
       return batch.commit()
     })
     .then(() => res.send('done'))

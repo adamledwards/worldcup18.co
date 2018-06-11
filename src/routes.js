@@ -3,6 +3,9 @@ import TeamSelection from './views/TeamSelection'
 import Team from './views/Team'
 import Menu from './views/Menu'
 import Fixtures from './views/Fixtures'
+import Timezones from './views/Timezones'
+import Match from './views/Match'
+import Share from './views/Share'
 import UniversalRouter from 'universal-router'
 import generateUrls from 'universal-router/generateUrls'
 import createHistory from 'history/createBrowserHistory'
@@ -35,6 +38,24 @@ const routes = [
     ModalComponent: Fixtures,
     isModal: true,
   },
+  {
+    name: 'timezones',
+    path: '/timezones',
+    ModalComponent: Timezones,
+    isModal: true,
+  },
+  {
+    name: 'match',
+    path: '/match/:matchId',
+    ModalComponent: Match,
+    isModal: true,
+  },
+  {
+    name: 'share',
+    path: '/share',
+    ModalComponent: Share,
+    isModal: true,
+  },
 ]
 
 function resolveRoute(context, params) {
@@ -48,6 +69,7 @@ function resolveRoute(context, params) {
   if (typeof context.route.ModalComponent === 'function') {
     return {
       ModalComponent: context.route.ModalComponent,
+      path: context.route.path,
       isModal: true,
       params,
     }

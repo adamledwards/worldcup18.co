@@ -46,11 +46,13 @@
 .Modal-close {
   color: currentColor;
   text-decoration: none;
+  transition: color 300 linear;
 }
 
 .Modal-back {
   color: currentColor;
   text-decoration: none;
+  transition: color 300 linear;
 }
 
 .Modal-h2 {

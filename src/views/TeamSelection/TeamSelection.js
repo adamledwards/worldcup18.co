@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import TeamSelect from '../../modules/TeamSelect'
+import teams from '../../teams'
 import Granim from '../../core/Granim'
 
 class TeamSelection extends Component {
@@ -11,7 +12,10 @@ class TeamSelection extends Component {
       defaultStateName: (team && team.key) || void 0,
     }
   }
+
   changeGradientState = gradientState => {
+    const { modalRef } = this.props
+    modalRef.current.updateColours(teams[gradientState])
     this.setState({ gradientState })
   }
   render() {

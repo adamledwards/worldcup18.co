@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Fixture from './Fixture.js'
 import './TodaysFixtures.css'
-import moment from 'moment'
 import { getLatestFixture } from './latestFixtures.js'
 import { withContext } from '../../Context'
 

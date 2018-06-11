@@ -1,14 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import { TweenLite } from 'gsap'
-import 'gsap/CSSPlugin'
 import firebase from 'firebase'
 import 'firebase/firestore'
-import Header from './modules/Header'
-import TodaysFixtures from './modules/TodaysFixtures'
-import FixturesResult from './modules/FixturesResult'
-import Groups from './modules/Groups'
-import TopScorers from './modules/TopScorers'
 import Modal from './modules/Modal'
 import './App.css'
 import routes, { history } from './routes'
@@ -32,17 +25,15 @@ const config = {
 const app = firebase.initializeApp(config)
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      team: null,
-      isModalActive: false,
-      db: firebase.firestore(),
-      route: {
-        Component: () => null,
-      },
-    }
+  state = {
+    team: null,
+    isModalActive: false,
+    db: null,
+    route: {
+      Component: () => null,
+    },
   }
+  modalRef = React.createRef()
 
   componentDidMount() {
     this.unlisten = history.listen((location, action) => {
@@ -50,6 +41,12 @@ class App extends Component {
     })
     const location = history.location
     this.goToRoute(location.pathname)
+    app
+      .firestore()
+      .enablePersistence()
+      .then(() => {
+        this.setState({ db: firebase.firestore() })
+      })
   }
 
   componentDidUpdate() {
@@ -95,12 +92,15 @@ class App extends Component {
     const { route, isModalActive, team } = this.state
     const { Component, params, ModalComponent, isModal } = route
     const db = this.state.db
-
+    if (!db) {
+      return null
+    }
     return (
       <Fragment>
         <Context.Provider value={{ history, db, params }}>
           {Component && <Component db={db} params={params} />}
           <CSSTransition
+            appear
             in={isModal}
             unmountOnExit
             classNames={'Modal'}
@@ -122,8 +122,9 @@ class App extends Component {
                 db={db}
                 params={params}
                 isModalActive={isModalActive}
+                ref={this.modalRef}
               >
-                <ModalComponent team={team} />
+                <ModalComponent modalRef={this.modalRef} team={team} />
               </Modal>
             )}
           </CSSTransition>

@@ -2,19 +2,21 @@ import React, { Component } from 'react'
 import Link from '../../core/Link'
 import './Modal.css'
 
-export default class Modal extends Component {
+class Modal extends Component {
   state = {
     mountChildren: false,
     style: {
       color: '#FFF',
       background: `#000`,
     },
+    afterHover: '#FFF',
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     const team = nextProps.team
 
     if (team) {
       return {
+        afterHover: team.headerTextColour,
         style: {
           color: team.headerTextColour,
           background: `linear-gradient(${team.gradient})`,
@@ -22,12 +24,14 @@ export default class Modal extends Component {
       }
     }
     return {
+      afterHover: '#FFF',
       style: {
         color: '#FFF',
         background: '#000',
       },
     }
   }
+
   componentDidUpdate() {
     const { mountChildren } = this.state
     const { isModalActive } = this.props
@@ -35,8 +39,17 @@ export default class Modal extends Component {
       this.setState({ mountChildren: true })
     }
   }
+
+  updateColours = team => {
+    if (team) {
+      const color = team.headerTextColour
+      this.setState({ style: { color } })
+    } else {
+      this.setState({ style: { color: this.state.afterHover } })
+    }
+  }
+
   render() {
-    const { isModalActive } = this.props
     const { style, mountChildren } = this.state
     return (
       <section className="Modal" style={style}>
@@ -58,3 +71,5 @@ export default class Modal extends Component {
     )
   }
 }
+
+export default Modal

@@ -31,7 +31,9 @@
   color: currentColor;
   text-decoration: none;
 }
-
+.Nav-mobileMenu {
+  color: currentColor;
+}
 .Modal .Navigation li {
   animation: 300ms ease-in 0s 1 forwards MenufadeInUp;
   opacity: 0;
@@ -68,8 +70,90 @@
     margin: 0;
     justify-content: space-between;
   }
+
+  .Navigation a {
+    opacity: 0.5;
+    transform: opacity 300ms ease;
+  }
+  .Navigation a:hover,
+  .Navigation a.active {
+    opacity: 1;
+  }
+  .Navigation a.active {
+    font-weight: bold;
+  }
+
+  .Navigation-wrapper {
+    position: relative;
+  }
+
+  .Navigation-line {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    display: block;
+    transform-origin: left;
+    transition: transform 300ms ease;
+  }
+
+  .Navigation-line span {
+    content: '';
+    width: 1px;
+    margin-top: 2px;
+    height: 1px;
+    background-color: currentColor;
+    bottom: 0;
+    left: 0;
+    display: block;
+    transform-origin: left;
+    transition: transform 300ms ease;
+  }
+
   .Nav-burger {
     display: none;
+  }
+
+  .headroom {
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    left: 0;
+    top: 0;
+    will-change: transform;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    transition: background-color 200ms ease, color 200ms ease,
+      transform 200ms linear;
+  }
+
+  .headroom--pinned {
+    transform: translateY(0);
+    background: #fff;
+    color: #000;
+  }
+
+  .TeamHeader .headroom--not-top.headroom--pinned .Navigation-line span {
+    background-color: #000;
+  }
+  .headroom--top {
+    background: transparent;
+    color: currentColor;
+  }
+
+  .headroom--not-top.headroom--pinned {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  }
+  .headroom--unpinned {
+    transform: translateY(-60px);
+  }
+
+  .nav-spacing {
+    height: 60px;
+    width: 100%;
   }
 }
 

@@ -48,8 +48,7 @@ export function getLatestFixture(db, isTeam) {
       }
       return fixturesRef
         .orderBy('start')
-        .startAt(startMatchRef)
-        [method](arg)
+        .startAt(startMatchRef)[method](arg)
         .get()
     })
 
@@ -80,11 +79,13 @@ export function getLatestFixture(db, isTeam) {
         .get()
     })
 
-  return Promise.all([today, latest, upcoming]).then(([today, latest, upcoming]) => {
-    return {
-      today: today && today.docs.map(d => d.data()),
-      upcoming: upcoming && upcoming.docs.map(d => d.data()),
-      latest: latest && latest.docs.map(d => d.data()),
+  return Promise.all([today, latest, upcoming]).then(
+    ([today, latest, upcoming]) => {
+      return {
+        today: today && today.docs.map(d => d.data()),
+        upcoming: upcoming && upcoming.docs.map(d => d.data()),
+        latest: latest && latest.docs.map(d => d.data()),
+      }
     }
-  })
+  )
 }

@@ -5,12 +5,16 @@ class Clock extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      hour: parseInt(moment().format('h'), 0) / 12 * 360,
-      minute: parseInt(moment().format('m'), 0) / 60 * 360,
+      hour: parseInt(moment().format('h'), 0) / 12,
+      minute: parseInt(moment().format('m'), 0) / 60,
     }
   }
   render() {
     const { hour, minute } = this.state
+    const hourHand = hour * 360
+    const minuterHand = minute * 360
+    const toNextHour = minute * 30
+
     return (
       <svg
         width={416}
@@ -48,14 +52,14 @@ class Clock extends Component {
             stroke="#797A76"
             strokeWidth={4}
             strokeLinecap="round"
-            transform={`rotate(${minute} 208 208)`}
+            transform={`rotate(${minuterHand} 208 208)`}
           />
           <path
             d="M208 208V85"
             stroke="#FFFFFE"
             strokeWidth={4}
             strokeLinecap="round"
-            transform={`rotate(${hour} 208 208)`}
+            transform={`rotate(${hourHand + toNextHour} 208 208)`}
           />
           <path d="M210 208a2 2 0 1 1-4 0 2 2 0 0 1 4 0" fill="#ACADA9" />
         </g>

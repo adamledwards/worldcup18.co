@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { withContext } from '../../Context'
 import { history } from '../../routes'
 
 class Link extends Component {
@@ -15,13 +14,24 @@ class Link extends Component {
   }
 
   render() {
-    const { app, back, ...rest } = this.props
+    const { app, back, forwardRef, onClick, children, ...rest } = this.props
     let action = this.goToLink
     if (back) {
       action = this.goBack
     }
-    return <a onClick={action} style={{ cursor: 'pointer' }} {...rest} />
+    return (
+      <a
+        onClick={onClick || action}
+        ref={forwardRef}
+        style={{ cursor: 'pointer' }}
+        {...rest}
+      >
+        {children}
+      </a>
+    )
   }
 }
 
-export default Link
+export default React.forwardRef((props, ref) => (
+  <Link {...props} forwardRef={ref} />
+))

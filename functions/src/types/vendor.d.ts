@@ -53,6 +53,7 @@ declare namespace SportmonksResponse {
       founded: number
       logo_path: string
       venue_id: number
+      short_code: string
     }
 
     export interface LocalTeam {
@@ -69,6 +70,7 @@ declare namespace SportmonksResponse {
       founded: number
       logo_path: string
       venue_id: number
+      short_code: string
     }
 
     export interface VisitorTeam {
@@ -85,7 +87,11 @@ declare namespace SportmonksResponse {
     export interface Stage {
       data: Data3
     }
-
+    export interface Group {
+      data: {
+        name: string
+      }
+    }
     export interface Data4 {
       id: number
       name: string
@@ -127,6 +133,7 @@ declare namespace SportmonksResponse {
       localTeam: LocalTeam
       visitorTeam: VisitorTeam
       stage: Stage
+      group: Group
       venue: Venue
     }
 
@@ -222,6 +229,7 @@ declare namespace SportmonksResponse {
       id: number
       legacy_id: number
       name: string
+      short_code: string
       twitter?: any
       country_id: number
       national_team: boolean

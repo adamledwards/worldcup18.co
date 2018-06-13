@@ -9,8 +9,8 @@ export default {
   appSettings: {
     date: {
       start: '2018-06-01',
-      end: '2018-07-31'
-    }
+      end: '2018-07-31',
+    },
   },
-  sportmonksApi: new SportmonksApi(functions.config().football.key)
+  sportmonksApi: new SportmonksApi(functions.config().football.key),
 }

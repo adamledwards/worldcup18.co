@@ -35,19 +35,21 @@ export class SquadList extends Component {
           <h2 className="Grid-cell s-7of7 SquadList-header">Squad list</h2>
         </div>
         {Object.keys(roles).map((role, i) => (
-          <div className="SquadList-section">
+          <div className="SquadList-section" key={roles[role]}>
             <div className="SquadList-section-header Grid">
               <h3 className="Grid-cell s-5of7 SquadList-section-role SquadList-mobile">
                 &mdash; {roles[role]}
               </h3>
-              {i === 0 && [
-                <span className="Grid-cell s-1of7 lg-1of14 push-lg-10of14 text-center">
-                  A<span>pps</span>
-                </span>,
-                <span className="Grid-cell s-1of7 lg-1of14 text-center">
-                  G<span>oals</span>
-                </span>,
-              ]}
+              {i === 0 && (
+                <React.Fragment>
+                  <span className="Grid-cell s-1of7 lg-1of14 push-lg-10of14 text-center">
+                    A<span>pps</span>
+                  </span>
+                  <span className="Grid-cell s-1of7 lg-1of14 text-center">
+                    G<span>oals</span>
+                  </span>
+                </React.Fragment>
+              )}
             </div>
             <div className="Grid">
               <h3 className="Grid-cell s-5of7 lg-3of14 push-lg-2of14 SquadList-section-role SquadList-desktop">
@@ -64,8 +66,8 @@ export class SquadList extends Component {
               </span>
             </div>
             {team.squad[role].slice(1).map(props => (
-              <div className="Grid">
-                <Player key={props.id} {...props} />
+              <div className="Grid" key={props.id}>
+                <Player {...props} />
               </div>
             ))}
           </div>

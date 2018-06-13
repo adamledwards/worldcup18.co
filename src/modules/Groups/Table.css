@@ -22,6 +22,7 @@
 
 .Group.selectedTeam .Table.Table-active {
   opacity: 1;
+  display: block;
 }
 
 .Table-row {

@@ -32,7 +32,7 @@ class Calendar extends Component {
   formatData() {
     const { fixtures } = this.props
     return fixtures.reduce((obj, cur) => {
-      const key = moment(cur.start)
+      const key = moment(cur.start.toDate())
         .startOf('day')
         .valueOf()
       if (obj[key]) {
@@ -60,7 +60,7 @@ class Calendar extends Component {
           {fixture.visitorTeam.team_name}{' '}
         </span>
         <span className="Calendar-fixture-time">
-          {moment(fixture.start).format('H:mm')}
+          {moment(fixture.start.toDate()).format('H:mm')}
           <br />
           {fixture.venue}
         </span>

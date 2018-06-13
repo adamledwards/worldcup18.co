@@ -9,7 +9,9 @@ const Fixture = ({ localTeam, start, visitorTeam, venue }) => {
         <h3 className="Fixture-match">
           {localTeam.team_name} vs {visitorTeam.team_name}{' '}
         </h3>
-        <p className="Fixture-timeDate">{moment(start).format('HH:mm / DD-MM-YYYY')}</p>
+        <p className="Fixture-timeDate">
+          {moment(start.toDate()).format('HH:mm / DD-MM-YYYY')}
+        </p>
         <p className="Fixture-venue">{venue}</p>
       </div>
     </div>

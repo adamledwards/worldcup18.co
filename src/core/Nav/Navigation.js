@@ -4,11 +4,6 @@ import Link from '../Link'
 import { withContext } from '../../Context'
 
 class Navigation extends Component {
-  static getDerivedStateFromProps() {
-    return {
-      update: true,
-    }
-  }
   constructor(props) {
     super(props)
     this.linkRef = React.createRef()
@@ -16,7 +11,6 @@ class Navigation extends Component {
     this.state = {
       scaleX: 0,
       x: 0,
-      update: false,
     }
     this.resizeTimer = null
     this.onResize = this.onResize.bind(this)
@@ -44,7 +38,7 @@ class Navigation extends Component {
     if (!this.linkRef.current) return
     const el = this.linkRef.current.getBoundingClientRect()
     const containerEL = this.containerRef.current.getBoundingClientRect()
-    return { x: el.left - containerEL.left, scaleX: el.width, update: false }
+    return { x: el.left - containerEL.left, scaleX: el.width }
   }
 
   onResize() {
@@ -59,9 +53,10 @@ class Navigation extends Component {
     window.addEventListener('resize', this.onResize)
   }
 
-  componentDidUpdate() {
-    if (this.state.update && this.linkRef.current) {
-      this.setState({ ...this.getLinePosition() })
+  componentDidUpdate(prevProps, prevState) {
+    const { x, scaleX } = this.state
+    if (prevState.x !== x && scaleX !== prevState.scaleX) {
+      //this.setState({ ...this.getLinePosition() })
     }
   }
 

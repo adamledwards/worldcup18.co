@@ -5,19 +5,19 @@ import { urls, history } from '../../routes'
 import './Fixtures.css'
 
 class Fixtures extends Component {
-  static getDerivedStateFromProps(nextProps, prevStates) {
-    const { params } = nextProps.app
+  static getDerivedStateFromProps(props, states) {
+    const { params } = props.app
     const date = moment(params.date, 'DD-MM-YYYY')
-    if (date.isValid()) {
+    console.log(date, states.date)
+    if (params.date !== states.dateString) {
       return {
         date,
+        dateString: params.date,
         fixtures: null,
       }
     }
-    return {
-      date: date.isValid(),
-      fixtures: null,
-    }
+
+    return null
   }
   state = {
     fixtures: null,
@@ -31,15 +31,14 @@ class Fixtures extends Component {
   fetchFixtures() {
     const { db } = this.props.app
     const { date } = this.state
-    if (!date) {
+    if (!date.isValid()) {
       return
     }
 
-    db
-      .collection('fixtures')
-      .where('start', '>', date.startOf('day').toDate())
-      .where('start', '<', date.endOf('day').toDate())
-      .orderBy('start')
+    db.collection('fixtures')
+      .where('starting_at', '>', date.startOf('day').unix())
+      .where('starting_at', '<', date.endOf('day').unix())
+      .orderBy('starting_at')
       .get()
       .then(querySnapshot => {
         this.setState({
@@ -70,7 +69,7 @@ class Fixtures extends Component {
           {fixture.localTeam.team_name} vs {fixture.visitorTeam.team_name}
         </span>
         <span className="FixturesScreen-item-time">
-          {moment(fixture.start).format('H:mm')} / {fixture.venue}
+          {moment(fixture.start.toDate()).format('H:mm')} / {fixture.venue}
         </span>
       </div>
     ))

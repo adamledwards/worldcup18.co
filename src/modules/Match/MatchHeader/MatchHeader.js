@@ -3,7 +3,7 @@ import moment from 'moment'
 import './MatchHeader.css'
 
 const MatchHeader = ({ venue, time, localTeam, visitorTeam, group }) => {
-  const dateTime = moment(time)
+  const dateTime = moment(time.toDate())
   return (
     <header className="MatchHeader Grid">
       <h2 className="Grid-cell s-7of7">

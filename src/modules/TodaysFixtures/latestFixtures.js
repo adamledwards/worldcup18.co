@@ -1,10 +1,10 @@
 import moment from 'moment'
 const dateArgs = [
-  'start',
+  'starting_at',
   '>',
   moment()
     .startOf('day')
-    .toDate(),
+    .unix(),
 ]
 
 export function getLatestFixture(db, isTeam) {
@@ -13,11 +13,11 @@ export function getLatestFixture(db, isTeam) {
   const today = fixturesRef
     .where(...dateArgs)
     .where(
-      'start',
+      'starting_at',
       '<',
       moment()
         .endOf('day')
-        .toDate()
+        .unix()
     )
     .get()
     .then(todayRef => {
@@ -29,8 +29,8 @@ export function getLatestFixture(db, isTeam) {
 
   //UpComing
   const upcoming = fixturesRef
-    .where('start', '>', new Date())
-    .orderBy('start')
+    .where('starting_at', '>', moment().unix())
+    .orderBy('starting_at')
     .limit(1)
     .get()
     .then(upcomingRef => {
@@ -39,28 +39,28 @@ export function getLatestFixture(db, isTeam) {
       }
       const startMatchRef = upcomingRef.docs[0]
       let method = 'endAt'
-      let arg = moment(startMatchRef.data().start)
+      let arg = moment(startMatchRef.data().start.toDate())
         .endOf('day')
-        .toDate()
+        .unix()
       if (isTeam) {
         method = 'limit'
         arg = 2
       }
       return fixturesRef
-        .orderBy('start')
+        .orderBy('starting_at')
         .startAt(startMatchRef)[method](arg)
         .get()
     })
 
   const latest = fixturesRef
     .where(
-      'start',
+      'starting_at',
       '<',
       moment()
         .startOf('day')
-        .toDate()
+        .unix()
     )
-    .orderBy('start')
+    .orderBy('starting_at')
     .limit(1)
     .get()
     .then(latestRef => {
@@ -69,12 +69,12 @@ export function getLatestFixture(db, isTeam) {
       }
       const startMatchRef = latestRef.docs[0]
       return fixturesRef
-        .orderBy('start')
+        .orderBy('starting_at')
         .startAt(startMatchRef)
         .endAt(
-          moment(startMatchRef.data().start)
+          moment(startMatchRef.data().start.toDate())
             .endOf('day')
-            .toDate()
+            .unix()
         )
         .get()
     })

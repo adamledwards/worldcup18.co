@@ -25,6 +25,7 @@ function parseData(game: SportmonksResponse.FixturesResponse.Datum) {
       pen: game.scores.localteam_pen_score,
       short_code: game.localTeam.data.short_code,
     },
+    starting_at: game.time.starting_at.timestamp,
     time: game.time,
     venue: game.venue.data.name,
   }
@@ -45,6 +46,7 @@ export default functions.https.onRequest((req, res) => {
     })
     .then((responseFixtures: SportmonksResponse.FixturesResponse.Fixtures) => {
       responseFixtures.data.forEach(game => {
+        if (game.season_id !== 892) return
         const fixtureRef = admin
           .firestore()
           .collection('fixtures')

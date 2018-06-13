@@ -23,12 +23,12 @@ const config = {
 }
 
 const app = firebase.initializeApp(config)
-
+app.firestore().settings({ timestampsInSnapshots: true })
 class App extends Component {
   state = {
     team: null,
     isModalActive: false,
-    db: null,
+    db: firebase.firestore(),
     route: {
       Component: () => null,
     },
@@ -41,12 +41,7 @@ class App extends Component {
     })
     const location = history.location
     this.goToRoute(location.pathname)
-    app
-      .firestore()
-      .enablePersistence()
-      .then(() => {
-        this.setState({ db: firebase.firestore() })
-      })
+    this.setState({ db: firebase.firestore() })
   }
 
   componentDidUpdate() {

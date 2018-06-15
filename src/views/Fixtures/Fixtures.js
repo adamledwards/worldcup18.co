@@ -13,6 +13,7 @@ class Fixtures extends Component {
         date,
         dateString: params.date,
         fixtures: null,
+        lastDate: states.date,
       }
     }
 
@@ -20,7 +21,9 @@ class Fixtures extends Component {
   }
   state = {
     fixtures: null,
+    dateString: '',
     date: false,
+    lastDate: false,
   }
 
   goToFixture(fixture) {
@@ -47,7 +50,10 @@ class Fixtures extends Component {
         })
       })
   }
-
+  shouldComponentUpdate(nextProps, nextState) {
+    const { date } = this.state
+    return date.isValid()
+  }
   componentDidMount() {
     this.fetchFixtures()
   }
@@ -85,7 +91,7 @@ class Fixtures extends Component {
   }
 
   render() {
-    const { fixtures, date } = this.state
+    const { fixtures, date, lastDate } = this.state
     const fixturesOrLoader = fixtures ? this.renderFixtures() : null
     if (!date) {
       return null
@@ -94,7 +100,9 @@ class Fixtures extends Component {
       <div className="Grid FixturesScreen">
         <div className="s-7of7">
           <h2 className="Modal-h2">
-            {date.format('DD MMM YYYY')}
+            {date.isValid()
+              ? date.format('DD MMM YYYY')
+              : lastDate.format('DD MMM YYYY')}
             <br />Fixtures
           </h2>
           <div className="separator">

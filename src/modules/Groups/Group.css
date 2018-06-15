@@ -1,40 +1,51 @@
 .Group {
-    background-color: #1A1A1A;
-    color: white;
-    padding: 138px 0 136px 0;
+  background-color: #1a1a1a;
+  color: white;
+  padding: 157px 0 157px 0;
+  overflow: hidden;
 }
 
 .Group-heading {
-    margin-top: 0;
-    font-size: 2em;
-    line-height: 1.1875;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 2em;
+  line-height: 1.1875;
 }
 
+@media (min-width: 64em) {
+  .Group-heading {
+    margin-bottom: 40px;
+  }
+  .Group-table {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 928px;
+    margin: 0 auto;
+    padding: 0 0.9933774834%;
+    box-sizing: border-box;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+  .Group-table:after {
+    content: '';
+    display: block;
+    width: 26.6234%;
+  }
+  .Group-table .Table {
+    width: 26.62337662%;
+    margin-top: 0;
+  }
+
+  .Group-table .Table .Grid {
+    width: auto;
+  }
+  .Group-table .Table .Grid-cell {
+    padding: 0;
+  }
+}
 @media (min-width: 75.5em) {
-    .Group-table {
-        display: flex;
-        flex-wrap: wrap;
-        width: 1232px;
-        margin: 0 auto;
-        padding: 0 0.9933774834%;
-        box-sizing: border-box;
-        flex-flow: row wrap;
-        justify-content: space-between;
-    }
-    .Group-table:after {
-        content: "";
-        display: block;;
-        width: 26.6234%;
-      }
-    .Group-table .Table {
-        width: 26.62337662%;
-        margin-top: 85px;
-    }
-    
-    .Group-table .Table .Grid {
-        width: auto;
-    }
-    .Group-table .Table .Grid-cell {
-        padding: 0;
-    }
+  .Group-table {
+    width: 1232px;
+  }
 }

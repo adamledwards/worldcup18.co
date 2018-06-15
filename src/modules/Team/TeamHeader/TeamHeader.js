@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import Link from '../../../core/Link'
+import classNames from 'classnames'
 import Nav from '../../../core/Nav'
 import teams from '../../../teams'
 import './TeamHeader.css'
 
 class TeamHeader extends Component {
   state = {
+    animate: false,
     key: null,
     style: {
       color: null,
@@ -29,11 +30,17 @@ class TeamHeader extends Component {
     return null
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ animate: true })
+    }, 1)
+  }
+
   render() {
     const { team } = this.props
-    const { style } = this.state
+    const { style, animate } = this.state
     return (
-      <div className="TeamHeader" style={style}>
+      <div className={classNames('TeamHeader', { animate })} style={style}>
         <Nav />
         <div className="Grid Grid-vertical-center">
           <div className="Grid-cell s-7of7 lg-10of14">
@@ -53,7 +60,7 @@ class TeamHeader extends Component {
               <dd>{team.history}</dd>
               {team.teamWebsite && (
                 <dd className="TeamHeader-website">
-                  <Link href={team.teamWebsite}>Team Website</Link>
+                  <a href={'http://' + team.teamWebsite}>Team Website</a>
                 </dd>
               )}
             </dl>

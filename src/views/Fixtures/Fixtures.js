@@ -8,7 +8,6 @@ class Fixtures extends Component {
   static getDerivedStateFromProps(props, states) {
     const { params } = props.app
     const date = moment(params.date, 'DD-MM-YYYY')
-    console.log(date, states.date)
     if (params.date !== states.dateString) {
       return {
         date,
@@ -24,8 +23,10 @@ class Fixtures extends Component {
     date: false,
   }
 
-  goToFixture(matchId) {
-    history.push(urls('match', { matchId }))
+  goToFixture(fixture) {
+    if (fixture.enabled) {
+      history.push(urls('match', { matchId: fixture.id }))
+    }
   }
 
   fetchFixtures() {
@@ -59,20 +60,28 @@ class Fixtures extends Component {
 
   renderFixtures() {
     const { fixtures } = this.state
-    return fixtures.map(fixture => (
-      <div
-        className="s-7of7 FixturesScreen-item"
-        key={fixture.id}
-        onClick={() => this.goToFixture(fixture.id)}
-      >
-        <span className="FixturesScreen-item-match">
-          {fixture.localTeam.team_name} vs {fixture.visitorTeam.team_name}
-        </span>
-        <span className="FixturesScreen-item-time">
-          {moment(fixture.start.toDate()).format('H:mm')} / {fixture.venue}
-        </span>
-      </div>
-    ))
+
+    return fixtures.map(fixture => {
+      const { time, localTeam, visitorTeam } = fixture
+      const score =
+        time.status !== 'NS'
+          ? `${localTeam.team_name} ${localTeam.score} \u2014 ${
+              visitorTeam.score
+            } ${visitorTeam.team_name}`
+          : `${localTeam.team_name} vs ${visitorTeam.team_name}`
+      return (
+        <div
+          className="s-7of7 FixturesScreen-item"
+          key={fixture.id}
+          onClick={() => this.goToFixture(fixture.id)}
+        >
+          <span className="FixturesScreen-item-match">{score}</span>
+          <span className="FixturesScreen-item-time">
+            {moment(fixture.start.toDate()).format('H:mm')} / {fixture.venue}
+          </span>
+        </div>
+      )
+    })
   }
 
   render() {

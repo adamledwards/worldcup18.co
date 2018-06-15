@@ -34,10 +34,18 @@
   width: 36px;
   height: 80px;
 }
+.Share a {
+  color: currentColor;
+}
 
 @media (min-width: 64em) {
   .Share {
-    margin-top: 130px;
+    margin: 0;
+    top: 0;
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: center;
   }
   .Share ul {
     width: 300px;

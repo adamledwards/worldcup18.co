@@ -5,7 +5,21 @@ const Footer = () => {
     <footer className="Footer">
       <div>
         Design and build by<br />
-        <a>@AshDowie</a> &amp; <a>@AdamLEdwards</a>
+        <a
+          href="https://twitter.com/AshDowie"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          @AshDowie
+        </a>{' '}
+        &amp;{' '}
+        <a
+          href="https://twitter.com/adamledwards"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          @AdamLEdwards
+        </a>
       </div>
     </footer>
   )

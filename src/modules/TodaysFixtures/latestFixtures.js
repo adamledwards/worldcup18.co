@@ -1,24 +1,27 @@
 import moment from 'moment'
+import offlineDb from '../../core/db'
+
 const dateArgs = [
-  'starting_at',
+  'start',
   '>',
   moment()
     .startOf('day')
-    .unix(),
+    .toDate(),
 ]
 
 export function getLatestFixture(db, isTeam) {
   const fixturesRef = db.collection('fixtures')
   // Today
-  const today = fixturesRef
+  const todayPromise = fixturesRef
     .where(...dateArgs)
     .where(
-      'starting_at',
+      'start',
       '<',
       moment()
         .endOf('day')
-        .unix()
+        .toDate()
     )
+    .where('status.TODAY', '==', true)
     .get()
     .then(todayRef => {
       if (todayRef.empty) {
@@ -28,9 +31,10 @@ export function getLatestFixture(db, isTeam) {
     })
 
   //UpComing
-  const upcoming = fixturesRef
-    .where('starting_at', '>', moment().unix())
-    .orderBy('starting_at')
+  const upcomingPromise = fixturesRef
+    .where('start', '>', moment().toDate())
+    .orderBy('start')
+    .where('time.status', '==', 'NS')
     .limit(1)
     .get()
     .then(upcomingRef => {
@@ -41,50 +45,133 @@ export function getLatestFixture(db, isTeam) {
       let method = 'endAt'
       let arg = moment(startMatchRef.data().start.toDate())
         .endOf('day')
-        .unix()
+        .toDate()
       if (isTeam) {
         method = 'limit'
         arg = 2
       }
       return fixturesRef
-        .orderBy('starting_at')
+        .where('time.status', '==', 'NS')
+        .orderBy('start')
         .startAt(startMatchRef)[method](arg)
         .get()
     })
 
-  const latest = fixturesRef
+    const latestPromise = fixturesRef
     .where(
-      'starting_at',
+      'start',
       '<',
       moment()
-        .startOf('day')
-        .unix()
+        .toDate()
     )
-    .orderBy('starting_at')
-    .limit(1)
+    .where('time.status', '==', 'FT')
+    .orderBy('start', 'desc')
+    .limit(4)
     .get()
-    .then(latestRef => {
-      if (latestRef.empty) {
+    .then(todayRef => {
+      if (todayRef.empty) {
         return null
       }
-      const startMatchRef = latestRef.docs[0]
-      return fixturesRef
-        .orderBy('starting_at')
-        .startAt(startMatchRef)
-        .endAt(
-          moment(startMatchRef.data().start.toDate())
-            .endOf('day')
-            .unix()
-        )
-        .get()
+      return todayRef
     })
 
-  return Promise.all([today, latest, upcoming]).then(
+
+  return Promise.all([todayPromise, latestPromise, upcomingPromise]).then(
     ([today, latest, upcoming]) => {
       return {
         today: today && today.docs.map(d => d.data()),
         upcoming: upcoming && upcoming.docs.map(d => d.data()),
         latest: latest && latest.docs.map(d => d.data()),
+      }
+    }
+  )
+}
+
+
+export function getLatestFixtureOffline(db, isTeam) {
+
+  // Today
+
+  const todayPromise = offlineDb.table('fixtures')
+    .where('starting_at')
+    .above(moment().startOf('day').unix())
+    .and(value => {
+      return moment().endOf('day').unix() > value.starting_at
+    })
+    .toArray(todayRef => {
+      console.log(todayRef)
+      if (!todayRef.length) {
+        return null
+      }
+
+      return todayRef
+    })
+
+  //UpComing
+  const latestPromise = offlineDb.table('fixtures')
+    .where('starting_at')
+    .below(moment().unix())
+    .sortBy('starting_at')
+    .then(upcomingRef => {
+      if (!upcomingRef.length) {
+        return null
+      }
+      offlineDb.table('fixtures')
+      .where('starting_at')
+      .above(moment().startOf('day').unix())
+      const startMatchRef = upcomingRef[0]
+      const endDay = moment(startMatchRef.starting_at * 1000)
+        .endOf('day')
+        .unix()
+      return offlineDb.table('fixtures')
+        .where('starting_at')
+        .below(endDay)
+        .toArray(data => {
+          if (!data.length) {
+            return null
+          }
+
+          return data
+        })
+    })
+
+  const upcomingPromise = offlineDb.table('fixtures')
+    .where('starting_at')
+    .above(moment().unix())
+    .sortBy('starting_at')
+    .then(data => {
+      if (!data.length) {
+        return null
+      }
+      console.log(data)
+      return data[0]
+    })
+    .then(latestRef => {
+      if (!latestRef) {
+        return null
+      }
+
+      return offlineDb.table('fixtures')
+        .where('starting_at')
+        .above(moment(latestRef.starting_at * 1000).startOf('day').unix())
+        .and(value => {
+          return moment(latestRef.starting_at * 1000).endOf('day').unix() > value.starting_at
+        })
+        .toArray(arr => arr)
+
+    })
+
+    return Promise.all([todayPromise, latestPromise, upcomingPromise]).then(
+    ([today, latest, upcoming]) => {
+      console.log({
+        today,
+        upcoming,
+        latest,
+      })
+      return {
+        today,
+        upcoming,
+        latest,
       }
     }
   )

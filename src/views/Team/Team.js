@@ -40,8 +40,7 @@ class Team extends Component {
   fetchData() {
     const { db } = this.props
     const { teamName } = this.state
-    db
-      .collection('/teams')
+    db.collection('/teams')
       .doc(teamName)
       .get()
       .then(querySnapshot => {
@@ -58,7 +57,11 @@ class Team extends Component {
     const { querySnapshot, teamName, team } = this.state
 
     if (!team) {
-      return null
+      return (
+        teams[this.props.params.team] && (
+          <AppStyles styles={teams[this.props.params.team]} />
+        )
+      )
     }
     return (
       <Fragment>

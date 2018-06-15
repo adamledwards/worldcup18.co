@@ -6,25 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="194x194" href="%PUBLIC_URL%/favicon-194x194.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="%PUBLIC_URL%/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png">
+  <link rel="mask-icon" href="%PUBLIC_URL%/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
   <meta name="theme-color" content="#000000">
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(
-          registration => {
-            // Registration was successful
-            console.log(
-              'ServiceWorker registration successful with scope: ',
-              registration.scope
-            )
-          },
-          err => {
-            // registration failed :(
-            console.log('ServiceWorker registration failed: ', err)
-          }
-        )
-      })
-    }
+    // if ('serviceWorker' in navigator) {
+    //   window.addEventListener('load', () => {
+    //     navigator.serviceWorker.register('/sw.js').then(
+    //       registration => {
+    //         // Registration was successful
+    //         console.log(
+    //           'ServiceWorker registration successful with scope: ',
+    //           registration.scope
+    //         )
+    //       },
+    //       err => {
+    //         // registration failed :(
+    //         console.log('ServiceWorker registration failed: ', err)
+    //       }
+    //     )
+    //   })
+    // }
 
   </script>
   <!--
@@ -33,7 +41,7 @@
     -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
 
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico?v=2">
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -64,5 +72,15 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 </body>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924807-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924807-1');
+</script>
+
 
 </html>

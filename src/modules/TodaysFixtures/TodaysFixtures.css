@@ -2,7 +2,8 @@
   background: #000000;
   color: #fff;
   padding-top: 0.4375;
-  padding-bottom: 8.0625em;
+  padding-bottom: 157px;
+  min-height: 385px;
 }
 
 .TodaysFixtures h2 {
@@ -21,20 +22,24 @@
   display: block;
 }
 
-@media (min-width: 75.5em) {
+@media (min-width: 64em) {
   .TodaysFixtures {
     display: flex;
-    padding-top: 88px;
+    padding-top: 155px;
   }
   .TodaysFixtures-wrapper {
-    width: 1232px;
+    width: 928px;
     margin: 0 auto;
     padding: 0;
     display: flex;
+    min-height: 300px;
   }
   .TodaysFixtures-wrapper .Grid {
-    width: auto;
+    width: 50%;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
   }
   .TodaysFixtures-wrapper .Grid-cell {
     padding: 0 1.9867549668%;
@@ -47,5 +52,11 @@
   .TodaysFixtures-seperator {
     margin-top: 51px;
     margin-bottom: 47px;
+  }
+}
+
+@media (min-width: 75.5em) {
+  .TodaysFixtures-wrapper {
+    width: 1232px;
   }
 }

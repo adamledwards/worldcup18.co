@@ -4,6 +4,7 @@ import { SportmonksApi } from 'sportmonks'
 export default {
   groups: 'v2.0/standings/season/{id}',
   fixtures: 'v2.0/fixtures/between/{from}/{to}',
+  fixturesByIds: 'v2.0/fixtures/multi/{ids}',
   teams: 'v2.0/teams/season/{id}',
   squad: 'v2.0/squad/season/{id}/team/{team_id}',
   appSettings: {

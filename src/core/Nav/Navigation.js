@@ -49,7 +49,9 @@ class Navigation extends Component {
   }
 
   componentDidMount() {
-    this.setState({ ...this.getLinePosition() })
+    setTimeout(() => {
+      this.setState({ ...this.getLinePosition() })
+    }, 300)
     window.addEventListener('resize', this.onResize)
   }
 

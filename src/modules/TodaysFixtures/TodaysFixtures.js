@@ -3,7 +3,8 @@ import Fixture from './Fixture.js'
 import './TodaysFixtures.css'
 import { getLatestFixture } from './latestFixtures.js'
 import { withContext } from '../../Context'
-
+import Fade from 'react-reveal/Fade'
+import Loader from './loader'
 //Today Fixtures or Upcoming
 //Latest Fixtures or nothing
 
@@ -32,17 +33,35 @@ class TodaysFixtures extends Component {
   renderFixtures(header, data) {
     return (
       <div className="Grid">
-        <h2 className="Grid-cell s-7of7">{header}</h2>
+        <Fade key="readdeal">
+          <h2 className="Grid-cell s-7of7">{header}</h2>
+        </Fade>
         <div className="Grid-cell s-7of7 TodaysFixtures-seperator">
           <span className="bar" />
         </div>
+
         {data.map(props => <Fixture {...props} key={props.id} />)}
+      </div>
+    )
+  }
+
+  renderLoder() {
+    return (
+      <div className="Grid">
+        <Fade bottom key="placeholder">
+          <h2 className="Grid-cell s-7of7">
+            Getting the latest fixtures <Loader />
+          </h2>
+        </Fade>
+        <div className="Grid-cell s-7of7 TodaysFixtures-seperator">
+          <span className="bar" />
+        </div>
       </div>
     )
   }
   render() {
     const { fixtures } = this.state
-    let fixture = null
+    let fixture = this.renderLoder()
     if (fixtures.today) {
       fixture = this.renderFixtures("Today's Fixtures", fixtures.today)
     } else if (fixtures.upcoming) {

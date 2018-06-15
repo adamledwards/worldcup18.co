@@ -68,7 +68,7 @@
 
   .TeamSelect-Grid {
     flex-direction: row;
-    font-size: 1em;
+    font-size: 2em;
     font-weight: normal;
     line-height: 1.75;
     margin: 0;
@@ -93,7 +93,6 @@
   }
 
   .TeamSelect-Grid {
-    font-size: 1.25em;
-    line-height: 2;
+    line-height: 1.5;
   }
 }

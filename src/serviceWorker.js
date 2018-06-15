@@ -1,5 +1,5 @@
 import assets from '../build/asset-manifest.json'
-import Dixie from 'dixie'
+import db from './core/db'
 // importScripts('/__/firebase/5.0.0/firebase-app.js')
 // importScripts('/__/firebase/5.0.0/firebase-messaging.js')
 // importScripts('/__/firebase/init.js')
@@ -9,29 +9,19 @@ const cacheList = {
   fonts: 'fonts-V1',
 }
 
-importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js')
-importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js')
-
-firebase.initializeApp({
-  messagingSenderId: '510292739580',
-})
-const messaging = firebase.messaging()
-
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(cacheList.assets).then(cache => {
-      hydrateDB()
-      return cache.addAll([
-        '/',
-        '/index.html',
-        // assets['main.css'],
-        // assets['main.js'],
-        // '/static/js/bundle.js',
-        'https://fonts.googleapis.com/css?family=Roboto:400,700,900',
-        'https://fonts.googleapis.com/icon?family=Material+Icons',
-      ])
-    })
-  )
+  const cachesPromise = caches.open(cacheList.assets).then(cache => {
+    return cache.addAll([
+      '/',
+      '/index.html',
+      // assets['main.css'],
+      // assets['main.js'],
+      // '/static/js/bundle.js',
+      'https://fonts.googleapis.com/css?family=Roboto:400,700,900',
+      'https://fonts.googleapis.com/icon?family=Material+Icons',
+    ])
+  })
+  event.waitUntil(Promise.all([cachesPromise, hydrateDB()]))
 })
 
 self.addEventListener('fetch', event => {
@@ -49,12 +39,11 @@ self.addEventListener('fetch', event => {
 
 self.addEventListener('activate', event => {
   const keys = Object.keys(cacheList).map(k => cacheList[k])
-  event.waitUntil(
+  return event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames
           .filter(cacheName => {
-            console.log(keys.indexOf(cacheName) === -1)
             return keys.indexOf(cacheName) === -1
           })
           .map(cacheName => {
@@ -66,7 +55,6 @@ self.addEventListener('activate', event => {
 })
 
 function handleFontRequest(request) {
-  console.log(request)
   return caches.open(cacheList.fonts).then(cache =>
     cache.match(request).then(response => {
       if (response) {
@@ -80,31 +68,7 @@ function handleFontRequest(request) {
   )
 }
 
-messaging.setBackgroundMessageHandler(payload => {
-  console.log(
-    '[firebase-messaging-sw.js] Received background message ',
-    payload
-  )
-  // Customize notification here
-  var notificationTitle = 'Background Message Title'
-  var notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/firebase-logo.png',
-  }
-
-  return self.registration.showNotification(
-    notificationTitle,
-    notificationOptions
-  )
-})
-
 function hydrateDB() {
-  const db = new Dixie('worldcup18')
-  db.version(1).stores({
-    fixtures: 'id, localTeamId, localTeamId, start',
-    teams: 'id',
-    group: 'id',
-  })
   return fetch('https://us-central1-worldcup18-d9408.cloudfunctions.net/dump')
     .then(response => {
       return response.json()
@@ -112,22 +76,22 @@ function hydrateDB() {
     .then(data => {
       const { fixtures, teams, groups } = data
       return Promise.all([
-        db.fixtures.bulkAdd(parseFixtures(fixtures)),
-        db.teams.bulkAdd(parseTeams(teams)),
-        db.groups.bulkAdd(parseGroups(groups)),
+        db.fixtures.bulkPut(parseFixtures(fixtures)),
+        db.teams.bulkPut(parseTeams(teams)),
+        db.groups.bulkPut(parseGroups(groups)),
       ])
     })
-    .catch(() => console.log('error'))
+    .catch(e => Promise.reject(e))
 }
 
 function parseFixtures(fixtures) {
   return fixtures.map(fixture => {
     return {
-      id: fixture.id,
+      id: fixture.fsid,
       localTeamId: fixture.localTeam.team_id,
-      vistiorTeamId: fixture.visitorTeam.team_id,
-      start: fixtures.start,
-      value: fixtures,
+      visitorTeamId: fixture.visitorTeam.team_id,
+      starting_at: fixture.starting_at,
+      value: fixture,
     }
   })
 }
@@ -135,7 +99,7 @@ function parseFixtures(fixtures) {
 function parseTeams(teams) {
   return teams.map(team => {
     return {
-      id: team.id,
+      id: team.fsid,
       value: team,
     }
   })
@@ -144,7 +108,7 @@ function parseTeams(teams) {
 function parseGroups(groups) {
   return groups.map(group => {
     return {
-      id: group.id,
+      id: group.fsid,
       value: group,
     }
   })

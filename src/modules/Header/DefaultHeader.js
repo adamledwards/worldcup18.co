@@ -13,7 +13,7 @@ const DefaultHeader = () => {
           <span className="bar" />
         </div>
       </div>
-      <div className="Grid">
+      <div className="Grid Header-subintro-grid ">
         <h2 className="Header-subintro Grid-cell lg-10of14">
           Quadrennial international football tournament
         </h2>

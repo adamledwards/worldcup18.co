@@ -8,10 +8,12 @@
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
     "prettier": "^1.12.1",
-    "react-scripts": "1.1.3"
+    "react-scripts": "1.1.3",
+    "typescript": "^2.9.1"
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "dexie": "^2.0.4",
     "firebase": "^4.12.1",
     "firebase-admin": "^5.11.0",
     "firebase-functions": "^0.9.1",
@@ -19,19 +21,21 @@
     "gsap": "^1.20.4",
     "headroom.js": "^0.9.4",
     "history": "^4.7.2",
-    "is-path-inside": "^2.0.0",
     "moment": "^2.20.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "react-redux": "^5.0.7",
+    "react-reveal": "^1.2.2",
     "react-slick": "^0.23.1",
     "react-transition-group": "^2.3.1",
     "redux": "^4.0.0",
     "slick-carousel": "^1.8.1",
+    "ts-loader": "^3.5.0",
     "universal-router": "^6.0.0",
     "why-did-you-update": "^0.1.1"
   },
   "scripts": {
+    "buildSW": "webpack --config webpack.service.config.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

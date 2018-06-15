@@ -1,12 +1,13 @@
 .SquadList {
-  padding: 120px 0; 
+  padding: 157px 0;
+  background-color: #fff;
 }
 
 .SquadList-header {
   font-size: 2em;
 }
 
-.SquadList-section-header h3{
+.SquadList-section-header h3 {
   margin: 0 0 35px 0;
 }
 
@@ -19,20 +20,21 @@
   margin-top: 50px;
 }
 
-
 .SquadList-desktop {
   display: none;
 }
 
 .SquadList-section-role {
   margin-top: 0;
-  margin-bottom: 0;  
+  margin-bottom: 0;
 }
 
 .SquadList-section-header .Grid-cell span {
   display: none;
 }
-
+.SquadList-section-header {
+  line-height: 2;
+}
 @media (min-width: 64em) {
   .SquadList-mobile {
     display: none;

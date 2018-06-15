@@ -11,8 +11,11 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "cors": "^2.8.4",
     "firebase-admin": "^5.11.0",
     "firebase-functions": "^1.0.4",
+    "lodash.merge": "^4.6.1",
+    "moment": "^2.22.2",
     "normalizr": "^3.2.4",
     "sportmonks": "^1.2.0"
   },

@@ -60,7 +60,7 @@ class TeamSelect extends Component {
           </div>
           <div className="Grid TeamSelect-Grid">
             <div className="Grid-cell">
-              {teamKey.slice(0, teamKey.length / 2).map((team, idx) => {
+              {teamKey.map((team, idx) => {
                 return (
                   <TeamLink
                     hover={this.hover}
@@ -68,19 +68,6 @@ class TeamSelect extends Component {
                     name={teams[team].name}
                     team={team}
                     index={idx}
-                  />
-                )
-              })}
-            </div>
-            <div className="Grid-cell">
-              {teamKey.slice(teamKey.length / 2).map((team, idx) => {
-                return (
-                  <TeamLink
-                    hover={this.hover}
-                    key={teams[team].id}
-                    name={teams[team].name}
-                    team={team}
-                    index={idx + teamKey.length / 2}
                   />
                 )
               })}

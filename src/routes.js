@@ -61,6 +61,7 @@ const routes = [
 function resolveRoute(context, params) {
   if (typeof context.route.Component === 'function') {
     return {
+      name: context.route.name,
       Component: context.route.Component,
       isModal: false,
       params,
@@ -68,6 +69,7 @@ function resolveRoute(context, params) {
   }
   if (typeof context.route.ModalComponent === 'function') {
     return {
+      name: context.route.name,
       ModalComponent: context.route.ModalComponent,
       path: context.route.path,
       isModal: true,

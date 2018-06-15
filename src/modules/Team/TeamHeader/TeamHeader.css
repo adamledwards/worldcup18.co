@@ -18,9 +18,40 @@
 .TeamHeader-intro {
   font-size: 2.5em;
   line-height: 1;
-  margin: 70px 0 0 0;
+  margin: 100px 0 0 0;
 }
 
+.TeamHeader-intro,
+.TeamHeader-ranking {
+  display: block;
+  opacity: 0;
+  transition: opacity 300ms 300ms ease, transform 300ms 300ms ease;
+  transform: translateY(50px);
+}
+
+.animate .TeamHeader-intro,
+.animate .TeamHeader-ranking {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.TeamHeader-info {
+  transition: opacity 300ms 500ms ease;
+  opacity: 0;
+}
+
+.animate .TeamHeader-info {
+  opacity: 1;
+}
+
+.TeamHeader-group {
+  transition: opacity 300ms 700ms ease;
+  opacity: 0;
+}
+
+.animate .TeamHeader-group {
+  opacity: 1;
+}
 .TeamHeader-subintro {
   font-size: 28px;
   font-weight: normal;
@@ -74,7 +105,15 @@ dd.TeamHeader-website {
 .TeamHeader-website a {
   color: currentColor;
 }
+
+.TeamHeader-info {
+  margin-top: 50px;
+}
+
 @media (min-width: 64em) {
+  .TeamHeader-info {
+    margin-top: 0;
+  }
   .TeamHeader {
     min-height: 576px;
     padding-top: 0;

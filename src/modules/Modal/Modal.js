@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
+import { history } from '../../routes'
 import Link from '../../core/Link'
 import './Modal.css'
 
 class Modal extends Component {
-  state = {
-    mountChildren: false,
-    style: {
-      color: '#FFF',
-      background: `#000`,
-    },
-    afterHover: '#FFF',
+  constructor(props) {
+    super(props)
+    this.state = this.initialState(props.team)
+    this.linkProps = history.action === 'POP' ? { href: '/' } : { back: true }
   }
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const team = nextProps.team
 
+  initialState(team) {
     if (team) {
       return {
         afterHover: team.headerTextColour,
@@ -51,16 +48,15 @@ class Modal extends Component {
 
   render() {
     const { style, mountChildren } = this.state
+    const { routeName } = this.props
+
     return (
-      <section className="Modal" style={style}>
+      <section className={`Modal ${routeName}`} style={style}>
         <div className="Modal-container">
           <nav className="Grid Modal-nav">
-            <Link back className="Grid-cell s-1of7 Modal-back">
-              <i className="material-icons">arrow_back</i>
-            </Link>
             <Link
-              href="/"
-              className="Grid-cell s-1of7 push-lg-13of14 lg-1of14 push-s-5of7 Modal-close"
+              {...this.linkProps}
+              className="Grid-cell s-1of7 push-lg-13of14 lg-1of14 Modal-close"
             >
               <i className="material-icons">close</i>
             </Link>

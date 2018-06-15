@@ -2,12 +2,19 @@
 .Table-head {
   font-weight: bold;
   font-size: 1.125em;
-  line-height: 2;
+  line-height: 1.9;
 }
-
+.Table-head,
+.Table-point {
+  text-align: right;
+}
+.Table-point {
+  line-height: 2.025;
+}
 .Table-header {
   font-size: 1.5em;
   line-height: 1.333;
+  margin-top: 157px;
 }
 
 .Table-header:after {
@@ -160,7 +167,30 @@
 
 @media (min-width: 64em) {
   .Group.selectedTeam .Table {
+    display: block;
+  }
+  .Table-header {
+    margin-top: 77px;
+  }
+  .Table-row {
+    transition: opacity 300ms ease, color 300ms ease;
+  }
+  .Group.selectedTeam .Table-header,
+  .Group.selectedTeam .Table-head,
+  .Group.selectedTeam .Table-row {
     opacity: 0.3;
+  }
+  .Table-row-active,
+  .Group.selectedTeam .Table-row.Table-row-active {
+    opacity: 1;
+  }
+
+  .Group.selectedTeam .Table-row:hover {
+    opacity: 1;
+  }
+
+  .Group.selectedTeam .Table.Table-active {
+    opacity: 1;
     display: block;
   }
 }

@@ -335,7 +335,7 @@ export default functions.https.onRequest((req, res) => {
       .firestore()
       .collection('fixtures')
       .doc('placeholder-' + game.id.toString())
-    batch.set(fixtureRef, game)
+    batch.set(fixtureRef, { ...game, time: { status: 'NS' } })
   })
   return batch.commit()
 })

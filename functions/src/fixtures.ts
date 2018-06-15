@@ -28,6 +28,9 @@ function parseData(game: SportmonksResponse.FixturesResponse.Datum) {
     starting_at: game.time.starting_at.timestamp,
     time: game.time,
     venue: game.venue.data.name,
+    status: {
+      TODAY: game.time.status == 'NS' || game.time.status == 'LIVE',
+    },
   }
 }
 
@@ -51,6 +54,8 @@ export default functions.https.onRequest((req, res) => {
           .firestore()
           .collection('fixtures')
           .doc(game.id.toString())
+        batch.set(fixtureRef, parseData(game))
+
         batch.set(fixtureRef, parseData(game))
 
         const localTeamRef = admin

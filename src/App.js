@@ -21,8 +21,13 @@ const config = {
   storageBucket: 'worldcup18-d9408.appspot.com',
   messagingSenderId: '510292739580',
 }
-
 const app = firebase.initializeApp(config)
+
+// const messaging = firebase.messaging()
+// messaging.usePublicVapidKey(
+//   'BCfo6oyU0bSxABzjUnGKNuodS38xQ7AADY0ZTJuuivy-EqSIdPvvrqQIS5sm5S6ZAh3cWPIceY41h_L14nV5o0I'
+// )
+
 app.firestore().settings({ timestampsInSnapshots: true })
 class App extends Component {
   state = {
@@ -90,6 +95,7 @@ class App extends Component {
     if (!db) {
       return null
     }
+
     return (
       <Fragment>
         <Context.Provider value={{ history, db, params }}>
@@ -118,6 +124,7 @@ class App extends Component {
                 params={params}
                 isModalActive={isModalActive}
                 ref={this.modalRef}
+                routeName={route.name}
               >
                 <ModalComponent modalRef={this.modalRef} team={team} />
               </Modal>

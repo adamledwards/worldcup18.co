@@ -17,9 +17,10 @@ class Clock extends Component {
 
     return (
       <svg
-        width={416}
-        height={416}
+        width={300}
+        height={300}
         version={1}
+        viewBox="0,0,416,416"
         xmlnsXlink="http://www.w3.org/1999/xlink"
       >
         <defs>

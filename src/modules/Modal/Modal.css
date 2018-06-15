@@ -7,8 +7,17 @@
   overflow: scroll;
   z-index: 10;
   -webkit-overflow-scrolling: touch;
-
   background: #000;
+}
+
+.Modal.timezones {
+  background: #000 !important;
+  color: #fff !important;
+  overflow: hidden;
+}
+
+.Modal.share {
+  overflow: hidden;
 }
 
 .Modal-enter {
@@ -37,6 +46,7 @@
 .Modal-nav {
   position: relative;
   z-index: 1;
+  justify-content: flex-end;
 }
 .Modal-nav .material-icons {
   font-size: 1.5em;
@@ -80,14 +90,20 @@
     overflow: auto;
   }
   .Modal-container {
+    min-height: 100%;
     padding: 30px 0 0 0;
+  }
+
+  .Modal-nav {
+    position: fixed;
+    z-index: 10;
+    justify-content: flex-start;
   }
 
   .Modal-nav .material-icons {
     font-size: 1.75em;
     line-height: 1.14;
   }
-
   .Modal-back {
     display: none;
   }

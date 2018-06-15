@@ -4,6 +4,7 @@ import './Table.css'
 import teams from '../../teams'
 import { urls } from '../../routes'
 import Link from '../../core/Link'
+import Fade from 'react-reveal/Fade'
 
 export default class Table extends PureComponent {
   constructor(props) {
@@ -46,17 +47,19 @@ export default class Table extends PureComponent {
     const teamInTable = (selectedTeam && teamIds[selectedTeam.id]) || false
 
     return (
-      <div className={classNames('Table', { 'Table-active': teamInTable })}>
-        <div className="Grid">
-          <h3 className="Grid-cell Table-header">{group}</h3>
+      <Fade bottom>
+        <div className={classNames('Table', { 'Table-active': teamInTable })}>
+          <div className="Grid">
+            <h3 className="Grid-cell Table-header">{group}</h3>
+          </div>
+          <div className="Grid Table-head ">
+            <div className="Grid-cell push-s-4of7 s-1of7">PL</div>
+            <div className="Grid-cell s-1of7">GD</div>
+            <div className="Grid-cell s-1of7">Pts</div>
+          </div>
+          {table.map(row => this.renderRow(row))}
         </div>
-        <div className="Grid Table-head ">
-          <div className="Grid-cell push-s-4of7 s-1of7">PL</div>
-          <div className="Grid-cell s-1of7">GD</div>
-          <div className="Grid-cell s-1of7">Pts</div>
-        </div>
-        {table.map(row => this.renderRow(row))}
-      </div>
+      </Fade>
     )
   }
 }

@@ -115,47 +115,74 @@
     display: none;
   }
 
-  .headroom {
-    position: fixed;
-    z-index: 10;
-    right: 0;
-    left: 0;
-    top: 0;
-    will-change: transform;
-    height: 60px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    transition: background-color 200ms ease, color 200ms ease,
-      transform 200ms linear;
-  }
-
-  .headroom--pinned {
-    transform: translateY(0);
-    background: #fff;
-    color: #000;
-  }
-
-  .TeamHeader .headroom--not-top.headroom--pinned .Navigation-line span {
-    background-color: #000;
-  }
-  .headroom--top {
-    background: transparent;
-    color: currentColor;
-  }
-
-  .headroom--not-top.headroom--pinned {
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  }
-  .headroom--unpinned {
-    transform: translateY(-60px);
-  }
-
   .nav-spacing {
     height: 60px;
     width: 100%;
   }
 }
 
+@media (max-width: 64em) {
+  .Header nav.headroom .Grid,
+  .TeamHeader nav.headroom .Grid {
+    width: 100%;
+  }
+}
+
 @media (min-width: 75.5em) {
+}
+
+.Header nav,
+.TeamHeader nav {
+  transform: translateY(-60px);
+}
+
+.Header.animate nav,
+.TeamHeader.animate nav {
+  transform: translateY(0);
+}
+
+.Header nav.headroom,
+.TeamHeader nav.headroom {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: background-color 200ms ease, color 200ms ease,
+    transform 200ms linear;
+}
+
+.Header nav.headroom.headroom--pinned {
+  transform: translateY(0);
+}
+
+.TeamHeader .headroom--not-top.headroom--pinned .Navigation-line span {
+  background-color: #000;
+}
+
+.Header nav.headroom--top,
+.TeamHeader nav.headroom--top {
+  background: transparent;
+  color: currentColor;
+}
+
+.Header nav.headroom--not-top.headroom--pinned,
+.TeamHeader nav.headroom--not-top.headroom--pinned {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.Header nav.headroom.headroom--unpinned,
+.TeamHeader nav.headroom.headroom--unpinned {
+  transform: translateY(-60px);
+}
+.Header nav.headroom.headroom--not-bottom.headroom--not-top.headroom--pinned,
+.TeamHeader
+  nav.headroom.headroom--not-bottom.headroom--not-top.headroom--pinned {
+  background: #fff;
+  color: #000;
 }

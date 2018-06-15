@@ -22,7 +22,7 @@ const IconMap = {
   },
   shotOnGoal: {
     Icon: Icons.ShotsOnGoals,
-    title: 'Shots on goal',
+    title: 'Total Shots',
   },
   shotsOffTarget: {
     Icon: Icons.ShotsOffTarget,
@@ -30,7 +30,7 @@ const IconMap = {
   },
   shotsOnTarget: {
     Icon: Icons.ShotsOnTarget,
-    title: 'Shots off Target',
+    title: 'Shots on Target',
   },
   offside: {
     Icon: Icons.OffSide,

@@ -3,6 +3,8 @@ import moment from 'moment'
 import Link from '../../core/Link'
 import { urls, history } from '../../routes'
 import CalendarHeader from './CalendarHeader'
+import Fade from 'react-reveal/Fade'
+import classNames from 'classnames'
 import settings from '../../settings'
 import './Calendar.css'
 
@@ -44,21 +46,37 @@ class Calendar extends Component {
     }, {})
   }
 
-  goToFixture(matchId) {
-    history.push(urls('match', { matchId }))
+  goToFixture(fixture) {
+    if (fixture.enabled) {
+      history.push(urls('match', { matchId: fixture.id }))
+    }
   }
 
   renderFixture(fixture) {
+    let score = (
+      <span className="Calendar-fixture-match">
+        {fixture.localTeam.team_name} vs<br />
+        {fixture.visitorTeam.team_name}
+      </span>
+    )
+    if (fixture.time.status !== 'NS') {
+      score = (
+        <span className="Calendar-fixture-match">
+          {fixture.localTeam.team_name} {fixture.localTeam.score} &mdash;{' '}
+          {fixture.visitorTeam.score}
+          <br />
+          {fixture.visitorTeam.team_name}
+        </span>
+      )
+    }
+
     return (
       <span
-        className="Calendar-fixture"
+        className={classNames('Calendar-fixture', { active: fixture.enabled })}
         key={fixture.id}
-        onClick={() => this.goToFixture(fixture.id)}
+        onClick={() => this.goToFixture(fixture)}
       >
-        <span className="Calendar-fixture-match">
-          {fixture.localTeam.team_name} vs<br />
-          {fixture.visitorTeam.team_name}{' '}
-        </span>
+        <span className="Calendar-fixture-match">{score}</span>
         <span className="Calendar-fixture-time">
           {moment(fixture.start.toDate()).format('H:mm')}
           <br />
@@ -108,7 +126,9 @@ class Calendar extends Component {
           } `}
         >
           <span className="Calendar-dayofmonth">{nextDay.format('DD')}</span>
-          {fixturesEL}
+          <Fade>
+            <div>{fixturesEL}</div>
+          </Fade>
           {fixturesEL.length > 0 && (
             <Link
               className="Calendar-fixture-link"
@@ -118,12 +138,15 @@ class Calendar extends Component {
         </span>
       )
     }
+
     return calendarEL
   }
 
   render() {
+    const { fixtures } = this.props
+
     return (
-      <div className="Calendar">
+      <div className={classNames('Calendar', { animate: fixtures })}>
         <div className="Grid">{this.renderCalendar()}</div>
       </div>
     )

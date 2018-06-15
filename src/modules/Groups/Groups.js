@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import Table from './Table'
 import { withContext } from '../../Context'
+
 import './Group.css'
 
 class Groups extends Component {
@@ -16,8 +17,7 @@ class Groups extends Component {
   componentDidMount() {
     const { db } = this.props.app
 
-    db
-      .collection('/groupStandings')
+    db.collection('/groupStandings')
       .get()
       .then(querySnapshot => this.setState({ querySnapshot }))
   }
@@ -31,11 +31,13 @@ class Groups extends Component {
         <div className="Grid">
           <h2 className="Group-heading Grid-cell">Group Standings</h2>
         </div>
-        <div className="Group-table">
-          {querySnapshot.docs.map(doc => (
-            <Table key={doc.id} selectedTeam={team} {...doc.data()} />
-          ))}
-        </div>
+        {querySnapshot.docs.length > 0 && (
+          <div className="Group-table">
+            {querySnapshot.docs.map(doc => (
+              <Table key={doc.id} selectedTeam={team} {...doc.data()} />
+            ))}
+          </div>
+        )}
       </div>
     )
   }

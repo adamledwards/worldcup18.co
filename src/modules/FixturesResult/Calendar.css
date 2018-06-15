@@ -47,7 +47,7 @@
   bottom: 0;
   left: 0;
 }
-@media (min-width: 75.5em) {
+@media (min-width: 64em) {
   .Calendar-fixture-link {
     display: none;
   }
@@ -79,6 +79,11 @@
   .Calendar-fixture {
     display: block;
     margin-top: 28px;
+    opacity: 0.6;
+  }
+
+  .Calendar-fixture.active {
+    opacity: 1;
   }
 
   .Calendar-fixture-match {

@@ -7,7 +7,7 @@ const roles = {
   Goalkeeper: 'Goalkeepers',
   Defender: 'Defenders',
   Midfielder: 'Midfielders',
-  Attacker: 'Fowards',
+  Attacker: 'Forwards',
 }
 
 const Player = ({ name, goals, appearences }) => (

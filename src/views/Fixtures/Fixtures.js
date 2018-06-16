@@ -40,9 +40,9 @@ class Fixtures extends Component {
     }
 
     db.collection('fixtures')
-      .where('starting_at', '>', date.startOf('day').unix())
-      .where('starting_at', '<', date.endOf('day').unix())
-      .orderBy('starting_at')
+      .where('start', '>', date.startOf('day').toDate())
+      .where('start', '<', date.endOf('day').toDate())
+      .orderBy('start')
       .get()
       .then(querySnapshot => {
         this.setState({
@@ -96,14 +96,16 @@ class Fixtures extends Component {
     if (!date) {
       return null
     }
+    const today = moment().startOf('day')
+    const selectedDate = date.isValid() ? date : lastDate
+    selectedDate.startOf('day')
     return (
       <div className="Grid FixturesScreen">
         <div className="s-7of7">
           <h2 className="Modal-h2">
-            {date.isValid()
-              ? date.format('DD MMM YYYY')
-              : lastDate.format('DD MMM YYYY')}
-            <br />Fixtures
+            {selectedDate.format('DD MMM YYYY')}
+            <br />
+            {today.diff(selectedDate, 'days') > 0 ? 'Results' : 'Fixtures'}
           </h2>
           <div className="separator">
             <span className="bar" />

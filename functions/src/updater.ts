@@ -3,6 +3,7 @@ import setting from './constants'
 import admin from './admin'
 import * as merge from 'lodash.merge'
 import * as moment from 'moment'
+import { parseGroup } from './groupStanding'
 
 type ParseFixture = {
   id: number
@@ -23,16 +24,14 @@ type ParseFixture = {
     short_code: string
   }
   starting_at: number
-  time: SportmonksResponse.FixturesDetail.Time
+  time: SportmonksResponse.LiveScores.Time
   venue: string
   status: {
     TODAY: boolean
   }
 }
 
-function parseData(
-  game: SportmonksResponse.FixturesDetail.Datum
-): ParseFixture {
+function parseData(game: SportmonksResponse.LiveScores.Datum): ParseFixture {
   return {
     id: game.id,
     stage_id: game.stage_id,
@@ -61,21 +60,26 @@ function parseData(
 }
 
 export default functions.https.onRequest(async (req, res) => {
-  const { sportmonksApi, fixturesByIds } = setting
+  const { sportmonksApi, livescores } = setting
   const batch = admin.firestore().batch()
-  const ids = await getids()
-
-  const responseFixtures = (await sportmonksApi.get(fixturesByIds, {
-    ids: ids.join(),
-    localTeam: true,
-    visitorTeam: true,
-    substitutions: true,
-    goals: true,
-    lineup: true,
-    stats: true,
-    bench: true,
-    venue: true,
-  })) as SportmonksResponse.FixturesDetail.RootObject
+  //const ids = await getids()
+  let responseFixtures: SportmonksResponse.LiveScores.RootObject
+  try {
+    responseFixtures = (await sportmonksApi.get(livescores, {
+      localTeam: true,
+      visitorTeam: true,
+      substitutions: true,
+      goals: true,
+      lineup: true,
+      stats: true,
+      bench: true,
+      venue: true,
+      'group.standings': true,
+    })) as SportmonksResponse.LiveScores.RootObject
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
 
   responseFixtures.data.forEach(game => {
     if (game.season_id !== 892) return
@@ -122,43 +126,20 @@ export default functions.https.onRequest(async (req, res) => {
       .doc(game.id.toString())
 
     batch.update(visitorTeamRef, gameData)
+
+    const groupStandingsRef = admin
+      .firestore()
+      .collection('groupStandings')
+      .doc(game.group.data.name.replace(/\s/g, ''))
+    batch.update(groupStandingsRef, parseGroup(game.group.data))
   })
   await batch.commit()
 
   res.send('done')
 })
 
-function getids() {
-  return admin
-    .firestore()
-    .collection('fixtures')
-    .where(
-      'start',
-      '>',
-      moment()
-        .startOf('day')
-        .toDate()
-    )
-    .where(
-      'start',
-      '<',
-      moment()
-        .endOf('day')
-        .toDate()
-    )
-    .get()
-    .then(todayRef => {
-      const ids = []
-      if (todayRef.empty) {
-        return ids
-      }
-      todayRef.forEach(t => ids.push(t.id))
-      return ids
-    })
-}
-
 function lineUpSorter(
-  data: SportmonksResponse.FixturesDetail.Datum,
+  data: SportmonksResponse.LiveScores.Datum,
   fixtures: ParseFixture
 ) {
   const { visitorTeam, localTeam } = fixtures
@@ -179,7 +160,7 @@ function lineUpSorter(
 }
 
 function goalsSorter(
-  data: SportmonksResponse.FixturesDetail.Datum,
+  data: SportmonksResponse.LiveScores.Datum,
   fixtures: ParseFixture
 ) {
   const { visitorTeam, localTeam } = fixtures
@@ -199,7 +180,7 @@ function goalsSorter(
 }
 
 function subsSorter(
-  data: SportmonksResponse.FixturesDetail.Datum,
+  data: SportmonksResponse.LiveScores.Datum,
   fixtures: ParseFixture
 ) {
   const { visitorTeam, localTeam } = fixtures
@@ -225,7 +206,7 @@ function subsSorter(
 }
 
 function statsSorter(
-  data: SportmonksResponse.FixturesDetail.Datum,
+  data: SportmonksResponse.LiveScores.Datum,
   fixtures: ParseFixture
 ) {
   const { visitorTeam, localTeam } = fixtures
@@ -268,7 +249,7 @@ function statsSorter(
   }
 }
 
-function parseDataDetail(data: SportmonksResponse.FixturesDetail.Datum) {
+function parseDataDetail(data: SportmonksResponse.LiveScores.Datum) {
   const fixtures = parseData(data)
 
   return merge(

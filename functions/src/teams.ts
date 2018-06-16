@@ -47,3 +47,7 @@ export default functions.https.onRequest((req, res) => {
     })
     .then(() => res.send('done'))
 })
+
+export function teamNameToKey(teamName: string) {
+  return teamName.toLocaleLowerCase().replace(/\s/g, '-')
+}

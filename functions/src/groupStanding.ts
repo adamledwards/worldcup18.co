@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions'
+import { teamNameToKey } from './teams'
 import setting from './constants'
 import admin from './admin'
 
@@ -44,10 +45,16 @@ function parseData(row: Standing) {
     points: row.total.points,
     goal_difference: row.total.goal_difference,
     games_played: row.overall.games_played,
-    key: row.team_name.toLocaleLowerCase().replace(/\s/g, '-'),
+    key: teamNameToKey(row.team_name),
   }
 }
 export default functions.https.onRequest((req, res) => {
+  groupStandings()
+    .then(() => res.send('done'))
+    .catch(console.log)
+})
+
+export function groupStandings() {
   const batch = admin.firestore().batch()
   return setting.sportmonksApi
     .get(setting.groups, { id: 892 })
@@ -63,7 +70,7 @@ export default functions.https.onRequest((req, res) => {
           group: group.name,
           table: group.standings.data.map(parseData),
           teamLinks: group.standings.data.reduce((o, d) => {
-            o[d.team_name.toLocaleLowerCase().replace(/\s/g, '-')] = true
+            o[teamNameToKey(d.team_name)] = true
             return o
           }, {}),
           teamIds: group.standings.data.reduce((o, d) => {
@@ -74,9 +81,7 @@ export default functions.https.onRequest((req, res) => {
         table.forEach(team => {
           const teamRef = admin
             .firestore()
-            .doc(
-              'teams/' + team.team_name.toLocaleLowerCase().replace(/\s/g, '-')
-            )
+            .doc('teams/' + teamNameToKey(team.team_name))
           batch.update(teamRef, {
             group: group.name,
           })
@@ -85,6 +90,4 @@ export default functions.https.onRequest((req, res) => {
 
       return batch.commit()
     })
-    .then(() => res.send('done'))
-    .catch(console.log)
-})
+}

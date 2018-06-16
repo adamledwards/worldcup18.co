@@ -7,6 +7,7 @@ function parseSquad(data: SportmonksResponse.SquadResponse.Datum[]) {
     return null
   }
   return data
+    .filter(p => p.position)
     .map(playerData => {
       const name = playerData.player.data.fullname.split(' ')
       return {
@@ -40,7 +41,7 @@ function getSquad(team_id) {
     })
 }
 
-export default functions.https.onRequest((req, res) => {
+export function teamSquads() {
   return admin
     .firestore()
     .collection('teams')
@@ -58,5 +59,23 @@ export default functions.https.onRequest((req, res) => {
       })
       return Promise.all(promises)
     })
-    .then(() => res.send('done'))
+}
+
+export function teamSquad(doc) {
+  return admin
+    .firestore()
+    .collection('teams')
+    .doc(doc)
+    .get()
+    .then(data => {
+      getSquad(data.data().id).then(squad => {
+        return data.ref.update({
+          squad,
+        })
+      })
+    })
+}
+
+export default functions.https.onRequest((req, res) => {
+  return teamSquads().then(() => res.send('done'))
 })

@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
 import setting from './constants'
 import admin from './admin'
+import { teamNameToKey } from './teams'
 
 //https://soccer.sportmonks.com/api/v2.0/fixtures/between/2018-06-01/2018-07-31?api_token=__TOKEN__&include=localTeam,visitorTeam,venue
 
@@ -17,6 +18,7 @@ function parseData(game: SportmonksResponse.FixturesResponse.Datum) {
       score: game.scores.visitorteam_score,
       pen: game.scores.visitorteam_pen_score,
       short_code: game.visitorTeam.data.short_code,
+      key: teamNameToKey(game.visitorTeam.data.name),
     },
     localTeam: {
       team_name: game.localTeam.data.name,
@@ -24,6 +26,7 @@ function parseData(game: SportmonksResponse.FixturesResponse.Datum) {
       score: game.scores.localteam_score,
       pen: game.scores.localteam_pen_score,
       short_code: game.localTeam.data.short_code,
+      key: teamNameToKey(game.localTeam.data.name),
     },
     starting_at: game.time.starting_at.timestamp,
     time: game.time,
@@ -54,9 +57,9 @@ export default functions.https.onRequest((req, res) => {
           .firestore()
           .collection('fixtures')
           .doc(game.id.toString())
-        batch.set(fixtureRef, parseData(game))
+        batch.update(fixtureRef, parseData(game))
 
-        batch.set(fixtureRef, parseData(game))
+        batch.update(fixtureRef, parseData(game))
 
         const localTeamRef = admin
           .firestore()
@@ -67,7 +70,7 @@ export default functions.https.onRequest((req, res) => {
           )
           .doc(game.id.toString())
 
-        batch.set(localTeamRef, parseData(game))
+        batch.update(localTeamRef, parseData(game))
 
         const visitorTeamRef = admin
           .firestore()
@@ -78,7 +81,7 @@ export default functions.https.onRequest((req, res) => {
           )
           .doc(game.id.toString())
 
-        batch.set(visitorTeamRef, parseData(game))
+        batch.update(visitorTeamRef, parseData(game))
       })
       return batch.commit()
     })

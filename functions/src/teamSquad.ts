@@ -9,10 +9,8 @@ function parseSquad(data: SportmonksResponse.SquadResponse.Datum[]) {
   return data
     .filter(p => p.position)
     .map(playerData => {
-      const name = playerData.player.data.fullname.split(' ')
       return {
         id: playerData.player_id,
-        name: `${name[0]} ${name[name.length - 1]}`,
         position: playerData.position.data.name,
         appearences: playerData.appearences,
         goals: playerData.goals,

@@ -61,7 +61,7 @@ function parseData(
 }
 
 export default functions.https.onRequest(async (req, res) => {
-  const { sportmonksApi, appSettings, fixturesByIds } = setting
+  const { sportmonksApi, fixturesByIds } = setting
   const batch = admin.firestore().batch()
   const ids = await getids()
 
@@ -148,7 +148,7 @@ function getids() {
     )
     .get()
     .then(todayRef => {
-      let ids = []
+      const ids = []
       if (todayRef.empty) {
         return ids
       }

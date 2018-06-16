@@ -19,8 +19,6 @@ function pusher(change, context) {
   const localTeamHasScored =
     oldData.localTeam.score !== original.localTeam.score
 
-  if (visitorTeamHasScored || localTeamHasScored) {
-  }
   if (visitorTeamHasScored && localTeamHasScored) {
     console.log('Both Goals since last update')
   }

@@ -4,6 +4,7 @@ import admin from './admin'
 import * as merge from 'lodash.merge'
 import * as moment from 'moment'
 import { parseGroup } from './groupStanding'
+import { teamNameToKey } from './teams'
 
 type ParseFixture = {
   id: number
@@ -15,6 +16,7 @@ type ParseFixture = {
     score: number
     pen: any
     short_code: string
+    key: string
   }
   localTeam: {
     team_name: string
@@ -22,6 +24,7 @@ type ParseFixture = {
     score: number
     pen: any
     short_code: string
+    key: string
   }
   starting_at: number
   time: SportmonksResponse.LiveScores.Time
@@ -42,6 +45,7 @@ function parseData(game: SportmonksResponse.LiveScores.Datum): ParseFixture {
       score: game.scores.visitorteam_score,
       pen: game.scores.visitorteam_pen_score,
       short_code: game.visitorTeam.data.short_code,
+      key: teamNameToKey(game.visitorTeam.data.name),
     },
     localTeam: {
       team_name: game.localTeam.data.name,
@@ -49,12 +53,16 @@ function parseData(game: SportmonksResponse.LiveScores.Datum): ParseFixture {
       score: game.scores.localteam_score,
       pen: game.scores.localteam_pen_score,
       short_code: game.localTeam.data.short_code,
+      key: teamNameToKey(game.visitorTeam.data.name),
     },
     starting_at: game.time.starting_at.timestamp,
     time: game.time,
     venue: game.venue.data.name,
     status: {
-      TODAY: game.time.status == 'NS' || game.time.status == 'LIVE',
+      TODAY:
+        game.time.status == 'NS' ||
+        game.time.status == 'LIVE' ||
+        game.time.status == 'HT',
     },
   }
 }

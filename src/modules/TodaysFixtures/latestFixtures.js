@@ -87,6 +87,25 @@ export function getLatestFixture(db, isTeam) {
   )
 }
 
+export function getLatestFixtureRealTime(db, cb) {
+  const fixturesRef = db.collection('fixtures')
+  // Today
+  return fixturesRef
+    .where(...dateArgs)
+    .where(
+      'start',
+      '<',
+      moment()
+        .endOf('day')
+        .toDate()
+    )
+    .where('status.TODAY', '==', true)
+    .onSnapshot(today => {
+      cb({
+        today: today && today.docs.map(d => d.data()),
+      })
+    })
+}
 
 export function getLatestFixtureOffline(db, isTeam) {
 
@@ -143,7 +162,6 @@ export function getLatestFixtureOffline(db, isTeam) {
       if (!data.length) {
         return null
       }
-      console.log(data)
       return data[0]
     })
     .then(latestRef => {

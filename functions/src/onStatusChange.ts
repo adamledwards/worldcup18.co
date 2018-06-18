@@ -11,6 +11,8 @@ function pusher(change, context) {
     // update top scores
     // update groups
     promiseList.push(groupStandings())
+    promiseList.push(teamSquad(original.localTeam.key))
+    promiseList.push(teamSquad(original.visitorTeam.key))
     console.log('FULL TIME')
   }
 

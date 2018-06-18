@@ -20,7 +20,7 @@ const IconMap = {
     Icon: Icons.Fouls,
     title: 'Fouls',
   },
-  shotOnGoal: {
+  shotsOnGoal: {
     Icon: Icons.ShotsOnGoals,
     title: 'Total Shots',
   },
@@ -47,7 +47,7 @@ const MatchStatItem = ({ team, value, width, active }) => {
         <span className="bar" />
         <span className="mask" style={{ width: `${100 - offset}%` }} />
       </span>
-      <span className="MatchStats-teamStat-value">{value}</span>
+      <span className="MatchStats-teamStat-value">{value || 0}</span>
     </span>
   )
 }
@@ -60,9 +60,13 @@ export default class MatchStats extends Component {
       localTeamValue,
       visitorTeamValue,
       type,
+      active,
     } = this.props
-    const max = Math.max(localTeamValue, visitorTeamValue)
-    const active = Boolean(max)
+    const max = Math.max(
+      parseInt(localTeamValue, 0),
+      parseInt(visitorTeamValue, 0)
+    )
+
     const { Icon, title } = IconMap[type]
     const matchStatsClass = className('MatchStats', { disabled: !active })
     return (
@@ -76,13 +80,13 @@ export default class MatchStats extends Component {
             <MatchStatItem
               team={localTeam}
               value={localTeamValue}
-              width={max / localTeamValue}
+              width={parseInt(localTeamValue, 0) / max}
               active={active}
             />
             <MatchStatItem
               team={visitorTeam}
               value={visitorTeamValue}
-              width={max / visitorTeamValue}
+              width={parseInt(visitorTeamValue, 0) / max}
               active={active}
             />
           </div>

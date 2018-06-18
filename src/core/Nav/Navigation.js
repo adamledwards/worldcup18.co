@@ -55,13 +55,6 @@ class Navigation extends Component {
     window.addEventListener('resize', this.onResize)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { x, scaleX } = this.state
-    if (prevState.x !== x && scaleX !== prevState.scaleX) {
-      //this.setState({ ...this.getLinePosition() })
-    }
-  }
-
   componentWillUnmount() {
     clearTimeout(this.resizeTimer)
     window.removeEventListener('resize', this.onResize)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Fixture from './Fixture.js'
 import './TodaysFixtures.css'
-import { getLatestFixture } from './latestFixtures.js'
+import { getLatestFixture, getLatestFixtureRealTime } from './latestFixtures.js'
 import { withContext } from '../../Context'
 import Fade from 'react-reveal/Fade'
 import Loader from './loader'
@@ -24,10 +24,24 @@ class TodaysFixtures extends Component {
       fixtures = getLatestFixture(teamRef, true)
     } else {
       fixtures = getLatestFixture(db)
+      this.unsubscribe = getLatestFixtureRealTime(teamRef || db, today => {
+        if (today.length) {
+          this.setState({
+            fixtures: {
+              ...this.state.fixtures,
+              ...today,
+            },
+          })
+        }
+      })
     }
     fixtures.then(fixtures => {
       this.setState({ fixtures })
     })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
   }
 
   renderFixtures(header, data) {

@@ -91,6 +91,16 @@
   color: #00df1b;
 }
 
+.MatchSquad-players {
+  transition: opacity 500ms ease, transform 300ms ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.animate .MatchSquad-players {
+  opacity: 1;
+  transform: translateY(0);
+}
 @media (min-width: 64em) {
   .MatchSquad {
     margin: 35px 0 0 0;

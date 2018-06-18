@@ -6,6 +6,7 @@
   font-size: 0.9375em;
   line-height: 1.86;
   margin-top: 27px;
+  position: relative;
 }
 
 .MatchNav span {
@@ -18,13 +19,28 @@
 }
 
 .MatchNav span.active:after {
-  display: block;
-  height: 1px;
-  width: 100%;
-  background-color: #fff;
   content: '';
 }
-
+.MatchTab-line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform-origin: left;
+  transition: transform 300ms ease;
+}
+.MatchTab-line span {
+  display: block;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 1px;
+  background-color: #fff;
+  transform-origin: left;
+  transition: transform 300ms ease;
+}
+.MatchTab-nav-text {
+  display: inline;
+}
 @media (min-width: 64em) {
   .MatchNav {
     margin-top: 4px;

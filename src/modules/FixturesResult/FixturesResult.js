@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Calendar from './Calendar'
+import { getLatestFixtureRealTime } from '../TodaysFixtures/latestFixtures'
 import { withContext } from '../../Context'
 import './FixturesResult.css'
 
@@ -13,8 +14,15 @@ class FixturesResult extends Component {
 
   componentDidMount() {
     const { db } = this.props.app
-    db
-      .collection('fixtures')
+    this.unsubscribe = getLatestFixtureRealTime(db, today => {
+      this.setState({
+        live: this.state.fixtures.map(d => {
+          const index = today.findIndex(t => t.id === d.id)
+          return today[index] || d
+        }),
+      })
+    })
+    db.collection('fixtures')
       .orderBy('start')
       .get()
       .then(querySnapshot => {

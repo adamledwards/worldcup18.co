@@ -40,6 +40,7 @@ const IconMap = {
 
 const MatchStatItem = ({ team, value, width, active }) => {
   const offset = active ? width * 100 : 100
+
   return (
     <span className="MatchStats-teamStat">
       <span className="MatchStats-teamStat-team">{team.short_code}</span>
@@ -62,10 +63,9 @@ export default class MatchStats extends Component {
       type,
       active,
     } = this.props
-    const max = Math.max(
-      parseInt(localTeamValue, 0),
-      parseInt(visitorTeamValue, 0)
-    )
+    const visitorValue = visitorTeamValue || 0
+    const localValue = localTeamValue || 0
+    const max = Math.max(parseInt(localValue, 0), parseInt(visitorValue, 0))
 
     const { Icon, title } = IconMap[type]
     const matchStatsClass = className('MatchStats', { disabled: !active })
@@ -79,14 +79,14 @@ export default class MatchStats extends Component {
           <div className="MatchStats-teamStatWrapper Grid-cell s-5of7 push-s-1of7">
             <MatchStatItem
               team={localTeam}
-              value={localTeamValue}
-              width={parseInt(localTeamValue, 0) / max}
+              value={localValue}
+              width={parseInt(localValue, 0) / max}
               active={active}
             />
             <MatchStatItem
               team={visitorTeam}
-              value={visitorTeamValue}
-              width={parseInt(visitorTeamValue, 0) / max}
+              value={visitorValue}
+              width={parseInt(visitorValue, 0) / max}
               active={active}
             />
           </div>

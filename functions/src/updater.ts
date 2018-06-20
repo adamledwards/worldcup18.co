@@ -54,12 +54,15 @@ function parseData(game: SportmonksResponse.LiveScores.Datum): ParseFixture {
       score: game.scores.localteam_score,
       pen: game.scores.localteam_pen_score,
       short_code: game.localTeam.data.short_code,
-      key: teamNameToKey(game.visitorTeam.data.name),
+      key: teamNameToKey(game.localTeam.data.name),
     },
     starting_at: game.time.starting_at.timestamp,
     time: game.time,
     venue: game.venue.data.name,
-    enabled: game.time.status == 'FT' || game.time.status == 'LIVE',
+    enabled:
+      game.time.status == 'FT' ||
+      game.time.status == 'LIVE' ||
+      game.time.status == 'HT',
     status: {
       TODAY:
         game.time.status == 'NS' ||

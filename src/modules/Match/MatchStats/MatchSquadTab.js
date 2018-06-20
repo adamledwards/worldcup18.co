@@ -5,8 +5,8 @@ import Fade from 'react-reveal/Fade'
 const MatchStatsTab = ({ match, details }) => {
   const { localTeam, visitorTeam } = details
   return (
-    <div className="MatchStats-items">
-      <Fade>
+    <Fade>
+      <div className="MatchStats-items">
         <MatchStats
           localTeam={match.localTeam}
           visitorTeam={match.visitorTeam}
@@ -71,8 +71,8 @@ const MatchStatsTab = ({ match, details }) => {
           visitorTeamValue={visitorTeam.stats.fouls}
           active={Boolean(details)}
         />
-      </Fade>
-    </div>
+      </div>
+    </Fade>
   )
 }
 

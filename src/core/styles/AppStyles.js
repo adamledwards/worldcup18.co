@@ -1,14 +1,13 @@
 import { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-export default class AppStyles extends Component {
+class AppStyles extends Component {
   renderStyles() {
     const style = this.props.styles
     return `
     html, body {
       min-height: 100%;
     }
-
     body {
       background: linear-gradient(${style.gradient})
     }
@@ -24,3 +23,5 @@ export default class AppStyles extends Component {
     )
   }
 }
+
+export default AppStyles

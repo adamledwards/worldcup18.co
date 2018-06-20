@@ -80,13 +80,129 @@
   margin-left: 85.71428571%;
 }
 
+@media (min-width: 48em) {
+  .Grid {
+    width: 48em;
+    margin: 0 auto;
+    padding: 0 0.015625%;
+  }
+
+  .Grid-cell {
+    padding: 0 2.6041666667%;
+  }
+
+  .md-1of14 {
+    width: 7.142857143%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-2of14 {
+    width: 14.28571429%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-3of14 {
+    width: 21.42857143%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-4of14 {
+    width: 28.57142857%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-5of14 {
+    width: 35.71428571%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-6of14 {
+    width: 42.85714286%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-7of14 {
+    width: 50%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-8of14 {
+    width: 57.14285714%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-9of14 {
+    width: 64.28571429%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-10of14 {
+    width: 71.42857143%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-11of14 {
+    width: 78.57142857%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-12of14 {
+    width: 85.71428571%;
+    margin-left: 0;
+    flex: none !important;
+  }
+  .md-13of14 {
+    width: 92.85714286%;
+    margin-left: 0;
+    flex: none !important;
+  }
+
+  .push-md-1of14 {
+    margin-left: 7.142857143%;
+  }
+  .push-md-2of14 {
+    margin-left: 14.28571429%;
+  }
+  .push-md-3of14 {
+    margin-left: 21.42857143%;
+  }
+  .push-md-4of14 {
+    margin-left: 28.57142857%;
+  }
+  .push-md-5of14 {
+    margin-left: 35.71428571%;
+  }
+  .push-md-6of14 {
+    margin-left: 42.85714286%;
+  }
+  .push-md-7of14 {
+    margin-left: 50%;
+  }
+  .push-md-8of14 {
+    margin-left: 57.142857145%;
+  }
+  .push-md-9of14 {
+    margin-left: 64.28571429%;
+  }
+  .push-md-10of14 {
+    margin-left: 71.42857143%;
+  }
+  .push-md-11of14 {
+    margin-left: 78.57142857%;
+  }
+  .push-md-12of14 {
+    margin-left: 85.71428571%;
+  }
+  .push-md-13of14 {
+    margin-left: 92.85714286%;
+  }
+}
 @media (min-width: 64em) {
   .Grid {
     width: 928px;
     margin: 0 auto;
     padding: 0;
   }
-
   .Grid-cell {
     padding: 0 0.9933774834%;
   }
@@ -179,7 +295,7 @@
     margin-left: 50%;
   }
   .push-lg-8of14 {
-    margin-left: 57.14285714;
+    margin-left: 57.14285714%;
   }
   .push-lg-9of14 {
     margin-left: 64.28571429%;

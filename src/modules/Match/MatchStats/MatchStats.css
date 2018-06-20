@@ -102,4 +102,10 @@
   .MatchStats-icon svg {
     transform: scale(1);
   }
+  .MatchStats-teamStat-bar {
+    display: block;
+    position: relative;
+    width: 70%;
+    height: 4px;
+  }
 }

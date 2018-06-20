@@ -2,8 +2,24 @@ import React from 'react'
 import './Fixture.css'
 import moment from 'moment'
 import Fade from 'react-reveal/Fade'
+import classnames from 'classnames'
+import { urls, history } from '../../routes'
 
-const Fixture = ({ localTeam, start, visitorTeam, venue, time }) => {
+const goToFixture = (id, enabled) => {
+  if (enabled) {
+    history.push(urls('match', { matchId: id }))
+  }
+}
+
+const Fixture = ({
+  localTeam,
+  start,
+  visitorTeam,
+  venue,
+  time,
+  enabled,
+  id,
+}) => {
   const score =
     time.status !== 'NS'
       ? `${localTeam.team_name} ${localTeam.score} \u2014 ${
@@ -12,7 +28,10 @@ const Fixture = ({ localTeam, start, visitorTeam, venue, time }) => {
       : `${localTeam.team_name} vs ${visitorTeam.team_name}`
   return (
     <Fade>
-      <div className="Fixture">
+      <div
+        className={classnames('Fixture', { active: enabled })}
+        onClick={() => goToFixture(id, enabled)}
+      >
         <div className="Grid-cell">
           <h3 className="Fixture-match">{score}</h3>
           <p className="Fixture-timeDate">

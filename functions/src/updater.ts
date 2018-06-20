@@ -29,6 +29,7 @@ type ParseFixture = {
   starting_at: number
   time: SportmonksResponse.LiveScores.Time
   venue: string
+  enabled: boolean
   status: {
     TODAY: boolean
   }
@@ -58,6 +59,7 @@ function parseData(game: SportmonksResponse.LiveScores.Datum): ParseFixture {
     starting_at: game.time.starting_at.timestamp,
     time: game.time,
     venue: game.venue.data.name,
+    enabled: game.time.status == 'FT' || game.time.status == 'LIVE',
     status: {
       TODAY:
         game.time.status == 'NS' ||

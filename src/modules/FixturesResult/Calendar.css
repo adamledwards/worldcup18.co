@@ -83,7 +83,14 @@
   }
 
   .Calendar-fixture.active {
+    opacity: 0.8;
+    cursor: pointer;
+    transition: transform 200ms ease;
+  }
+
+  .Calendar-fixture.active:hover {
     opacity: 1;
+    transform: scale(1.01);
   }
 
   .Calendar-fixture-match {

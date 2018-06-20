@@ -192,32 +192,34 @@
   display: none;
 }
 
-@media (min-width: 64em) {
+@media (min-width: 48em) {
   .Header {
     padding-top: 0;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
+  }
+
+  .Header-intro {
+    font-size: 40px;
+    line-height: 44px;
+    margin-top: 124px;
+    margin-bottom: 26px;
+  }
+  .Header-subintro {
+    font-size: 20px;
+    line-height: 1;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .Header-subintro-grid {
     display: block;
   }
-  .Header-intro {
-    font-size: 75px;
-    line-height: 80px;
-    margin-top: 200px;
-    margin-bottom: 30px;
-  }
-  .Header-subintro {
-    font-size: 32px;
-    line-height: 56px;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+
   .Header-date {
     font-weight: normal;
-    font-size: 18px;
+    font-size: 13px;
     text-align: left;
-    margin-top: 50px;
+    margin-top: 90px;
   }
 
   .Header-seperator {
@@ -254,5 +256,30 @@
   }
 
   .LiveScoresHeader-navigation button {
+  }
+}
+
+@media (min-width: 64em) {
+  .Header {
+    padding-top: 0;
+    padding-bottom: 40px;
+  }
+  .Header-intro {
+    font-size: 75px;
+    line-height: 80px;
+    margin-top: 200px;
+    margin-bottom: 30px;
+  }
+  .Header-subintro {
+    font-size: 32px;
+    line-height: 56px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .Header-date {
+    font-weight: normal;
+    font-size: 18px;
+    text-align: left;
+    margin-top: 50px;
   }
 }

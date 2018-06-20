@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
+import classnames from 'classnames'
 import { withContext } from '../../Context'
 import { urls, history } from '../../routes'
 import './Fixtures.css'
@@ -24,6 +25,7 @@ class Fixtures extends Component {
     dateString: '',
     date: false,
     lastDate: false,
+    animate: false,
   }
 
   goToFixture(fixture) {
@@ -45,9 +47,12 @@ class Fixtures extends Component {
       .orderBy('start')
       .get()
       .then(querySnapshot => {
-        this.setState({
-          fixtures: querySnapshot.docs.map(q => q.data()),
-        })
+        this.setState(
+          {
+            fixtures: querySnapshot.docs.map(q => q.data()),
+          },
+          () => setTimeout(() => this.setState({ animate: true }), 1)
+        )
       })
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -79,7 +84,7 @@ class Fixtures extends Component {
         <div
           className="s-7of7 FixturesScreen-item"
           key={fixture.id}
-          onClick={() => this.goToFixture(fixture.id)}
+          onClick={() => this.goToFixture(fixture)}
         >
           <span className="FixturesScreen-item-match">{score}</span>
           <span className="FixturesScreen-item-time">
@@ -91,7 +96,7 @@ class Fixtures extends Component {
   }
 
   render() {
-    const { fixtures, date, lastDate } = this.state
+    const { fixtures, date, lastDate, animate } = this.state
     const fixturesOrLoader = fixtures ? this.renderFixtures() : null
     if (!date) {
       return null
@@ -100,7 +105,7 @@ class Fixtures extends Component {
     const selectedDate = date.isValid() ? date : lastDate
     selectedDate.startOf('day')
     return (
-      <div className="Grid FixturesScreen">
+      <div className={classnames('Grid FixturesScreen', { animate })}>
         <div className="s-7of7">
           <h2 className="Modal-h2">
             {selectedDate.format('DD MMM YYYY')}

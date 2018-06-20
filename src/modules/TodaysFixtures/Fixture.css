@@ -3,6 +3,9 @@
   width: 100%;
 }
 
+.active.Fixture {
+  cursor: pointer;
+}
 .Fixture h3 {
   font-size: 1.25em;
   line-height: 1.875em;

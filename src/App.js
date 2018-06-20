@@ -33,7 +33,7 @@ class App extends Component {
   state = {
     team: null,
     isModalActive: false,
-    db: firebase.firestore(),
+    db: null,
     route: {
       Component: () => null,
     },
@@ -46,18 +46,30 @@ class App extends Component {
     })
     const location = history.location
     this.goToRoute(location.pathname)
-    this.setState({ db: firebase.firestore() })
+    firebase
+      .firestore()
+      .enablePersistence()
+      .then(
+        () => {
+          this.setState({ db: firebase.firestore() })
+        },
+        () => {
+          this.setState({ db: firebase.firestore() })
+        }
+      )
   }
 
   componentDidUpdate() {
     const { isModalActive } = this.state
     const bodyEl = document.getElementsByTagName('body')[0]
     if (isModalActive) {
+      bodyEl.className = 'Modal'
       bodyEl.style.position = 'fixed'
       bodyEl.style.height = '100%'
       bodyEl.style.width = '100%'
       bodyEl.style.overflow = 'hidden'
     } else {
+      bodyEl.className = ''
       bodyEl.style.position = ''
       bodyEl.style.height = ''
       bodyEl.style.width = ''

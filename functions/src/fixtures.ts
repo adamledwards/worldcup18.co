@@ -31,6 +31,7 @@ function parseData(game: SportmonksResponse.FixturesResponse.Datum) {
     starting_at: game.time.starting_at.timestamp,
     time: game.time,
     venue: game.venue.data.name,
+    enabled: game.time.status == 'FT',
     status: {
       TODAY: game.time.status == 'NS' || game.time.status == 'LIVE',
     },

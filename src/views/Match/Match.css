@@ -43,7 +43,7 @@
 }
 @media (min-width: 64em) {
   .MatchNav {
-    margin-top: 4px;
-    font-size: 0.8125em;
+    margin-top: 1em;
+    font-size: 0.937em;
   }
 }

@@ -14,11 +14,11 @@ class FixturesResult extends Component {
 
   componentDidMount() {
     const { db } = this.props.app
-    this.unsubscribe = getLatestFixtureRealTime(db, today => {
+    this.unsubscribe = getLatestFixtureRealTime(db, results => {
       this.setState({
         live: this.state.fixtures.map(d => {
-          const index = today.findIndex(t => t.id === d.id)
-          return today[index] || d
+          const index = results.today.findIndex(t => t.id === d.id)
+          return results.today[index] || d
         }),
       })
     })
@@ -30,6 +30,10 @@ class FixturesResult extends Component {
           fixtures: querySnapshot.docs.map(q => q.data()),
         })
       })
+  }
+
+  componentWillUpdate() {
+    this.unsubscribe && this.unsubscribe()
   }
 
   render() {

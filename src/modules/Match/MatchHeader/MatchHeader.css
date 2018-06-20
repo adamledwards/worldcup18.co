@@ -24,10 +24,12 @@
 @media (min-width: 64em) {
   .MatchHeader h2 {
     font-size: 1.5em;
+    line-height: 1;
   }
   .MatchHeader-detail {
     font-size: 0.8125em;
-    line-height: 2.15;
+    line-height: 1;
+    margin-top: 0.666em;
   }
   .MatchHeader-detail .MatchHeader-divider:last-of-type {
     display: inline;

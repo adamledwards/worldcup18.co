@@ -16,7 +16,7 @@ function parseSquad(data: SportmonksResponse.SquadResponse.Datum[], oldData) {
         p => playerData.player_id === p.id
       )
       const nameObj: { name?: string } = {}
-      if (oldPlayerDetail.name) {
+      if (oldPlayerDetail && oldPlayerDetail.name) {
         nameObj.name = oldPlayerDetail.name
       }
       return {

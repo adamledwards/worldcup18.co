@@ -118,7 +118,6 @@ export function getLatestFixtureOffline(db, isTeam) {
       return moment().endOf('day').unix() > value.starting_at
     })
     .toArray(todayRef => {
-      console.log(todayRef)
       if (!todayRef.length) {
         return null
       }

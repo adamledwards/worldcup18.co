@@ -2,7 +2,9 @@
   padding-bottom: 30px;
 }
 .FixturesScreen-item {
+  opacity: 0;
   transform: translateZ(0);
+  transition: opacity 300ms ease;
 }
 .FixturesScreen h2.Modal-h2 {
   line-height: 1.25;
@@ -20,4 +22,8 @@
 .FixturesScreen-item-time {
   font-size: 0.9em;
   color: #808080;
+}
+
+.animate .FixturesScreen-item {
+  opacity: 1;
 }

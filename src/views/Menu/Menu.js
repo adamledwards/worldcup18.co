@@ -12,6 +12,9 @@ export default class Menu extends Component {
             <span className="bar" />
           </div>
           <Navigation />
+          <div onClick={this.props.pushNotification}>
+            Enabled Push Notifications
+          </div>
         </div>
       </div>
     )

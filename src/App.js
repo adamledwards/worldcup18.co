@@ -6,12 +6,13 @@ import Modal from './modules/Modal'
 import './App.css'
 import routes, { history } from './routes'
 import Context from './Context'
+import Push from './core/utils/push'
 import teams from 'teams.json'
 
-// if (process.env.NODE_ENV !== 'production') {
-//   const { whyDidYouUpdate } = require('why-did-you-update')
-//   whyDidYouUpdate(React)
-// }
+if (process.env.NODE_ENV !== 'production') {
+  const { whyDidYouUpdate } = require('why-did-you-update')
+  whyDidYouUpdate(React)
+}
 
 const config = {
   apiKey: 'AIzaSyAWwEuc4ZzZAbYprl2zmMaJgifNwv608m4',
@@ -23,12 +24,30 @@ const config = {
 }
 const app = firebase.initializeApp(config)
 
-// const messaging = firebase.messaging()
-// messaging.usePublicVapidKey(
-//   'BCfo6oyU0bSxABzjUnGKNuodS38xQ7AADY0ZTJuuivy-EqSIdPvvrqQIS5sm5S6ZAh3cWPIceY41h_L14nV5o0I'
-// )
-
+const push = new Push(firebase.messaging())
+push.messaging.usePublicVapidKey(
+  'BCfo6oyU0bSxABzjUnGKNuodS38xQ7AADY0ZTJuuivy-EqSIdPvvrqQIS5sm5S6ZAh3cWPIceY41h_L14nV5o0I'
+)
 app.firestore().settings({ timestampsInSnapshots: true })
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(
+      registration => {
+        push.messaging.useServiceWorker(registration)
+        console.log(
+          'ServiceWorker registration successful with scope: ',
+          registration.scope
+        )
+      },
+      err => {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err)
+      }
+    )
+  })
+}
+
 class App extends Component {
   state = {
     team: null,
@@ -39,6 +58,7 @@ class App extends Component {
     },
   }
   modalRef = React.createRef()
+  requestPush = push.requestPush.bind(push)
 
   componentDidMount() {
     this.unlisten = history.listen((location, action) => {
@@ -138,7 +158,11 @@ class App extends Component {
                 ref={this.modalRef}
                 routeName={route.name}
               >
-                <ModalComponent modalRef={this.modalRef} team={team} />
+                <ModalComponent
+                  pushNotification={this.requestPush}
+                  modalRef={this.modalRef}
+                  team={team}
+                />
               </Modal>
             )}
           </CSSTransition>

@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { history } from '../../routes'
 
 class Link extends Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.href !== this.props.href
+  }
   goToLink = e => {
     e.preventDefault()
     const { href } = this.props

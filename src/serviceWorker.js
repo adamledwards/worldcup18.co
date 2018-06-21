@@ -1,9 +1,31 @@
 import assets from '../build/asset-manifest.json'
-import db from './core/db'
-// importScripts('/__/firebase/5.0.0/firebase-app.js')
-// importScripts('/__/firebase/5.0.0/firebase-messaging.js')
-// importScripts('/__/firebase/init.js')
+importScripts('https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js')
+importScripts('https://www.gstatic.com/firebasejs/5.0.0/firebase-messaging.js')
+importScripts('https://www.gstatic.com/firebasejs/5.0.0/firebase.js')
 //update
+
+firebase.initializeApp({
+  messagingSenderId: '510292739580',
+})
+const messaging = firebase.messaging()
+messaging.setBackgroundMessageHandler(payload => {
+  console.log(
+    '[firebase-messaging-sw.js] Received background message ',
+    payload
+  )
+  // Customize notification here
+  var notificationTitle = 'Background Message Title'
+  var notificationOptions = {
+    body: 'Background Message body.',
+    icon: '/firebase-logo.png',
+  }
+
+  return self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  )
+})
+
 const cacheList = {
   assets: 'assets-V6-dev',
   fonts: 'fonts-V1',
@@ -13,7 +35,6 @@ self.addEventListener('install', event => {
   const cachesPromise = caches.open(cacheList.assets).then(cache => {
     return cache.addAll([
       '/',
-      '/index.html',
       // assets['main.css'],
       // assets['main.js'],
       // '/static/js/bundle.js',
@@ -21,16 +42,22 @@ self.addEventListener('install', event => {
       'https://fonts.googleapis.com/icon?family=Material+Icons',
     ])
   })
-  event.waitUntil(Promise.all([cachesPromise, hydrateDB()]))
+  event.waitUntil(cachesPromise)
 })
 
 self.addEventListener('fetch', event => {
+  if (
+    event.request.cache === 'only-if-cached' &&
+    event.request.mode !== 'same-origin'
+  ) {
+    return event.respondWith(fetch(event.request))
+  }
+
   const url = new URL(event.request.url)
   if (url.host === 'fonts.gstatic.com') {
-    event.respondWith(handleFontRequest(event.request))
-    return
+    return event.respondWith(handleFontRequest(event.request))
   }
-  event.respondWith(
+  return event.respondWith(
     caches.match(event.request).then(response => {
       return response || fetch(event.request)
     })
@@ -68,48 +95,48 @@ function handleFontRequest(request) {
   )
 }
 
-function hydrateDB() {
-  return fetch('https://us-central1-worldcup18-d9408.cloudfunctions.net/dump')
-    .then(response => {
-      return response.json()
-    })
-    .then(data => {
-      const { fixtures, teams, groups } = data
-      return Promise.all([
-        db.fixtures.bulkPut(parseFixtures(fixtures)),
-        db.teams.bulkPut(parseTeams(teams)),
-        db.groups.bulkPut(parseGroups(groups)),
-      ])
-    })
-    .catch(e => Promise.reject(e))
-}
+// function hydrateDB() {
+//   return fetch('https://us-central1-worldcup18-d9408.cloudfunctions.net/dump')
+//     .then(response => {
+//       return response.json()
+//     })
+//     .then(data => {
+//       const { fixtures, teams, groups } = data
+//       return Promise.all([
+//         db.fixtures.bulkPut(parseFixtures(fixtures)),
+//         db.teams.bulkPut(parseTeams(teams)),
+//         db.groups.bulkPut(parseGroups(groups)),
+//       ])
+//     })
+//     .catch(e => Promise.reject(e))
+// }
 
-function parseFixtures(fixtures) {
-  return fixtures.map(fixture => {
-    return {
-      id: fixture.fsid,
-      localTeamId: fixture.localTeam.team_id,
-      visitorTeamId: fixture.visitorTeam.team_id,
-      starting_at: fixture.starting_at,
-      value: fixture,
-    }
-  })
-}
+// function parseFixtures(fixtures) {
+//   return fixtures.map(fixture => {
+//     return {
+//       id: fixture.fsid,
+//       localTeamId: fixture.localTeam.team_id,
+//       visitorTeamId: fixture.visitorTeam.team_id,
+//       starting_at: fixture.starting_at,
+//       value: fixture,
+//     }
+//   })
+// }
 
-function parseTeams(teams) {
-  return teams.map(team => {
-    return {
-      id: team.fsid,
-      value: team,
-    }
-  })
-}
+// function parseTeams(teams) {
+//   return teams.map(team => {
+//     return {
+//       id: team.fsid,
+//       value: team,
+//     }
+//   })
+// }
 
-function parseGroups(groups) {
-  return groups.map(group => {
-    return {
-      id: group.fsid,
-      value: group,
-    }
-  })
-}
+// function parseGroups(groups) {
+//   return groups.map(group => {
+//     return {
+//       id: group.fsid,
+//       value: group,
+//     }
+//   })
+// }

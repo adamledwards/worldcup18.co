@@ -58,7 +58,6 @@ class App extends Component {
     },
   }
   modalRef = React.createRef()
-  requestPush = push.requestPush.bind(push)
 
   componentDidMount() {
     this.unlisten = history.listen((location, action) => {
@@ -159,7 +158,7 @@ class App extends Component {
                 routeName={route.name}
               >
                 <ModalComponent
-                  pushNotification={this.requestPush}
+                  push={push}
                   modalRef={this.modalRef}
                   team={team}
                 />

@@ -10,8 +10,8 @@ function parseData(game: SportmonksResponse.FixturesResponse.Datum) {
     id: game.id,
     stage_id: game.stage_id,
     start: new Date(game.time.starting_at.timestamp * 1000),
-    stage: game.stage.data.name,
-    group: game.group.data.name,
+    stage: (game.stage && game.stage.data.name) || null,
+    group: (game.group && game.group.data.name) || null,
     visitorTeam: {
       team_name: game.visitorTeam.data.name,
       team_id: game.visitorTeam.data.id,
@@ -54,13 +54,14 @@ export default functions.https.onRequest((req, res) => {
     .then((responseFixtures: SportmonksResponse.FixturesResponse.Fixtures) => {
       responseFixtures.data.forEach(game => {
         if (game.season_id !== 892) return
+
         const fixtureRef = admin
           .firestore()
           .collection('fixtures')
           .doc(game.id.toString())
-        batch.update(fixtureRef, parseData(game))
+        batch.set(fixtureRef, parseData(game), { merge: true })
 
-        batch.update(fixtureRef, parseData(game))
+        batch.set(fixtureRef, parseData(game), { merge: true })
 
         const localTeamRef = admin
           .firestore()
@@ -71,7 +72,7 @@ export default functions.https.onRequest((req, res) => {
           )
           .doc(game.id.toString())
 
-        batch.update(localTeamRef, parseData(game))
+        batch.set(localTeamRef, parseData(game), { merge: true })
 
         const visitorTeamRef = admin
           .firestore()
@@ -82,7 +83,7 @@ export default functions.https.onRequest((req, res) => {
           )
           .doc(game.id.toString())
 
-        batch.update(visitorTeamRef, parseData(game))
+        batch.set(visitorTeamRef, parseData(game), { merge: true })
       })
       return batch.commit()
     })

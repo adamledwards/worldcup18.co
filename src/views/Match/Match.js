@@ -107,6 +107,7 @@ class Match extends Component {
           time={match.start}
           venue={match.venue}
           group={match.group}
+          matchTime={match.time}
         />
         <nav className="Grid MatchNav" ref={this.containerRef}>
           <span

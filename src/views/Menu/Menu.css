@@ -17,3 +17,14 @@
     opacity: 1;
   }
 }
+
+.Push {
+  margin: 50px 0 0 0;
+}
+.Push > div {
+  display: flex;
+  align-items: center;
+}
+.Push .material-icons {
+  margin-right: 10px;
+}

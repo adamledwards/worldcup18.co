@@ -1,33 +1,15 @@
 import assets from '../build/asset-manifest.json'
-importScripts('https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js')
-importScripts('https://www.gstatic.com/firebasejs/5.0.0/firebase-messaging.js')
-importScripts('https://www.gstatic.com/firebasejs/5.0.0/firebase.js')
-//update
+importScripts('/__/firebase/5.0.0/firebase-app.js')
+importScripts('/__/firebase/5.0.0/firebase-messaging.js')
+importScripts('/__/firebase/init.js')
 
 firebase.initializeApp({
   messagingSenderId: '510292739580',
 })
 const messaging = firebase.messaging()
-messaging.setBackgroundMessageHandler(payload => {
-  console.log(
-    '[firebase-messaging-sw.js] Received background message ',
-    payload
-  )
-  // Customize notification here
-  var notificationTitle = 'Background Message Title'
-  var notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/firebase-logo.png',
-  }
-
-  return self.registration.showNotification(
-    notificationTitle,
-    notificationOptions
-  )
-})
 
 const cacheList = {
-  assets: 'assets-V6-dev',
+  assets: 'assets-V2',
   fonts: 'fonts-V1',
 }
 
@@ -35,9 +17,8 @@ self.addEventListener('install', event => {
   const cachesPromise = caches.open(cacheList.assets).then(cache => {
     return cache.addAll([
       '/',
-      // assets['main.css'],
-      // assets['main.js'],
-      // '/static/js/bundle.js',
+      assets['main.css'],
+      assets['main.js'],
       'https://fonts.googleapis.com/css?family=Roboto:400,700,900',
       'https://fonts.googleapis.com/icon?family=Material+Icons',
     ])
@@ -50,7 +31,7 @@ self.addEventListener('fetch', event => {
     event.request.cache === 'only-if-cached' &&
     event.request.mode !== 'same-origin'
   ) {
-    return event.respondWith(fetch(event.request))
+    return
   }
 
   const url = new URL(event.request.url)

@@ -24,12 +24,12 @@ class TodaysFixtures extends Component {
       fixtures = getLatestFixture(teamRef, true)
     } else {
       fixtures = getLatestFixture(db)
-      this.unsubscribe = getLatestFixtureRealTime(teamRef || db, today => {
-        if (today.length) {
+      this.unsubscribe = getLatestFixtureRealTime(teamRef || db, rt => {
+        if (rt.today.length) {
           this.setState({
             fixtures: {
               ...this.state.fixtures,
-              ...today,
+              ...{ today: rt.today },
             },
           })
         }

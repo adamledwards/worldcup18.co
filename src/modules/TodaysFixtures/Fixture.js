@@ -11,6 +11,24 @@ const goToFixture = (id, enabled) => {
   }
 }
 
+const statusFormat = (mt, dateTime) => {
+  const added = mt.added_time ? `+ ${mt.added_time}` : ''
+  switch (mt.status) {
+    case 'FT': {
+      return 'Full Time'
+    }
+    case 'HT': {
+      return 'Half Time'
+    }
+    case 'LIVE': {
+      return `Live ${mt.minute + added} mins`
+    }
+    default: {
+      return dateTime.format('HH:mm / DD-MM-YYYY')
+    }
+  }
+}
+
 const Fixture = ({
   localTeam,
   start,
@@ -35,7 +53,7 @@ const Fixture = ({
         <div className="Grid-cell">
           <h3 className="Fixture-match">{score}</h3>
           <p className="Fixture-timeDate">
-            {moment(start.toDate()).format('HH:mm / DD-MM-YYYY')}
+            {statusFormat(time, moment(start.toDate()))}
           </p>
           <p className="Fixture-venue">{venue}</p>
         </div>

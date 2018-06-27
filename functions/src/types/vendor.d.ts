@@ -1352,4 +1352,97 @@ declare namespace SportmonksResponse {
       meta: Meta
     }
   }
+
+  export namespace TopScorer {
+    export interface Datum {
+      position: number
+      player_id: number
+      team_id: number
+      stage_id: number
+      goals: number
+      penalty_goals: number
+    }
+
+    export interface Goalscorers {
+      data: Datum[]
+    }
+
+    export interface Datum2 {
+      position: number
+      player_id: number
+      team_id: number
+      stage_id: number
+      assists: number
+    }
+
+    export interface Assistscorers {
+      data: Datum2[]
+    }
+
+    export interface Datum3 {
+      position: number
+      player_id: number
+      team_id: number
+      stage_id: number
+      yellowcards: number
+      redcards: number
+    }
+
+    export interface Cardscorers {
+      data: Datum3[]
+    }
+
+    export interface Data {
+      id: number
+      name: string
+      league_id: number
+      is_current_season: boolean
+      current_round_id: number
+      current_stage_id: number
+      goalscorers: Goalscorers
+      assistscorers: Assistscorers
+      cardscorers: Cardscorers
+    }
+
+    export interface StartedAt {
+      date: string
+      timezone_type: number
+      timezone: string
+    }
+
+    export interface TrialEndsAt {
+      date: string
+      timezone_type: number
+      timezone: string
+    }
+
+    export interface Subscription {
+      started_at: StartedAt
+      trial_ends_at: TrialEndsAt
+      ends_at?: any
+    }
+
+    export interface Plan {
+      name: string
+      price: string
+      request_limit: string
+    }
+
+    export interface Sport {
+      id: number
+      name: string
+      current: boolean
+    }
+
+    export interface Meta {
+      subscription: Subscription
+      plan: Plan
+      sports: Sport[]
+    }
+
+    export interface RootObject {
+      data: Data
+      meta: Meta
+    }
+  }
 }

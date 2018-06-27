@@ -2,7 +2,8 @@ import * as functions from 'firebase-functions'
 import { SportmonksApi } from 'sportmonks'
 
 export default {
-  livescores: 'v2.0/livescores',
+  topScorer: 'v2.0/topscorers/season/{id}',
+  livescores: 'v2.0/livescores/season/{id}',
   groups: 'v2.0/standings/season/{id}',
   fixtures: 'v2.0/fixtures/between/{from}/{to}',
   fixturesByIds: 'v2.0/fixtures/multi/{ids}',

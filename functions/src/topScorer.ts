@@ -1,15 +1,18 @@
 import * as functions from 'firebase-functions'
 import setting from './constants'
 import admin from './admin'
+import { bucket } from 'firebase-functions/lib/providers/storage'
 
-function getTopScorers() {
+export function getTopScorers() {
   const { sportmonksApi, topScorer } = setting
   return sportmonksApi
     .get(topScorer, {
       id: 892,
     })
     .then((scorerResponse: SportmonksResponse.TopScorer.RootObject) => {
-      const goalscorers = scorerResponse.data.goalscorers.data.slice(0, 10)
+      const goalscorers = scorerResponse.data.goalscorers.data
+        .sort((a, b) => b.goals - a.goals)
+        .slice(0, 10)
       return {
         goalscorers,
         querySet: admin.firestore().collection('teams'),
@@ -30,7 +33,7 @@ function getTopScorers() {
           return obj
         }, {})
 
-      return result.goalscorers.map(p => {
+      return result.goalscorers.sort((a, b) => b.goals - a.goals).map(p => {
         return {
           team: teams[p.team_id].team,
           ...teams[p.team_id].players[p.player_id],

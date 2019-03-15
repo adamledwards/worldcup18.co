@@ -1,7 +1,8 @@
 import * as functions from 'firebase-functions'
 import { groupStandings } from './groupStanding'
-import { teamSquad } from './teamSquad'
+import { teamSquad, teamSquads } from './teamSquad'
 import { sendMessage } from './subscribe'
+import { getTopScorers } from './topScorer'
 
 const push = (title: string, body: string) => {
   const message = {
@@ -37,9 +38,9 @@ function pusher(change, context) {
     // update top scores
     // update groups
     promiseList.push(groupStandings())
-    promiseList.push(teamSquad(original.localTeam.key))
-    promiseList.push(teamSquad(original.visitorTeam.key))
     console.log('FULL TIME')
+    promiseList.push(getTopScorers())
+    promiseList.push(teamSquads())
 
     title = 'Draw'
     if (original.localTeam.score > original.visitorTeam.score) {
@@ -65,6 +66,10 @@ function pusher(change, context) {
 
   if (visitorTeamHasScored && localTeamHasScored) {
     console.log('Both Goals since last update')
+  }
+
+  if (visitorTeamHasScored || localTeamHasScored) {
+    promiseList.push(getTopScorers())
   }
 
   if (localTeamHasScored) {

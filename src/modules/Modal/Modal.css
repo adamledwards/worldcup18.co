@@ -10,6 +10,10 @@
   background: #000;
 }
 
+.Modal * {
+  box-sizing: border-box;
+}
+
 .Modal.timezones {
   background: #000 !important;
   color: #fff !important;
@@ -83,6 +87,11 @@
   100% {
     opacity: 1;
   }
+}
+.match .Modal-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 @media (min-width: 64em) {

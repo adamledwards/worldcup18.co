@@ -57,31 +57,33 @@ export function getLatestFixture(db, isTeam) {
         .get()
     })
 
-    const latestPromise = fixturesRef
-    .where(
-      'start',
-      '<',
-      moment()
-        .toDate()
-    )
+    const latestPromiseNormal = fixturesRef
     .where('time.status', '==', 'FT')
     .orderBy('start', 'desc')
     .limit(4)
     .get()
-    .then(todayRef => {
-      if (todayRef.empty) {
-        return null
-      }
-      return todayRef
-    })
 
+
+    const latestPromisePEN = fixturesRef
+    .where('time.status', '==', 'FT_PEN')
+    .orderBy('start', 'desc')
+    .limit(4)
+    .get()
+
+
+    const latestPromise = Promise.all([latestPromiseNormal, latestPromisePEN])
+    .then(([data, data2]) => {
+      data.docs.map(d => d.data())
+      data2.docs.map(d => d.data())
+      return [...data.docs.map(d => d.data()) , ...data2.docs.map(d => d.data())].sort((a,b) => a.start.toDate() < b.start.toDate()).slice(0,4)
+    })
 
   return Promise.all([todayPromise, latestPromise, upcomingPromise]).then(
     ([today, latest, upcoming]) => {
       return {
         today: today && today.docs.map(d => d.data()),
         upcoming: upcoming && upcoming.docs.map(d => d.data()),
-        latest: latest && latest.docs.map(d => d.data()),
+        latest,
       }
     }
   )

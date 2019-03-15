@@ -1,5 +1,8 @@
 .Match {
   padding-bottom: 70px;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .MatchNav {

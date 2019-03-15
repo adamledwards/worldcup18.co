@@ -3,9 +3,11 @@ import classNames from 'classnames'
 import MatchHeader from '../../modules/Match/MatchHeader'
 import MatchStatsTab from '../../modules/Match/MatchStats'
 import MatchSquad from '../../modules/Match/MatchSquad'
+import MatchGoals from '../../modules/Match/MatchGoals'
 import { withContext } from '../../Context'
 
 import './Match.css'
+import { fail } from 'assert'
 
 class Match extends Component {
   constructor(props) {
@@ -14,7 +16,7 @@ class Match extends Component {
       matchId: props.app.params.matchId,
       match: null,
       detail: null,
-      toggleNav: false,
+      toggleNav: null,
       scaleX: 0,
       x: 0,
     }
@@ -107,18 +109,34 @@ class Match extends Component {
           time={match.start}
           venue={match.venue}
           group={match.group}
+          stage={match.stage}
           matchTime={match.time}
         />
         <nav className="Grid MatchNav" ref={this.containerRef}>
           <span
-            onClick={() => this.setState({ toggleNav: false })}
-            className={classNames('Grid-cell s-3of7 lg-2of14', {
-              active: !toggleNav,
+            onClick={() => this.setState({ toggleNav: null })}
+            className={classNames('Grid-cell s-2of7 lg-2of14', {
+              active: toggleNav === null,
             })}
           >
             <span
               className="MatchTab-nav-text"
-              ref={!toggleNav ? this.linkRef : null}
+              ref={toggleNav === null ? this.linkRef : null}
+              onMouseOver={this.hoverOn}
+              onMouseLeave={this.hoverOut}
+            >
+              Goals
+            </span>
+          </span>
+          <span
+            onClick={() => this.setState({ toggleNav: false })}
+            className={classNames('Grid-cell s-2of7 lg-2of14', {
+              active: toggleNav === false,
+            })}
+          >
+            <span
+              className="MatchTab-nav-text"
+              ref={toggleNav === false ? this.linkRef : null}
               onMouseOver={this.hoverOn}
               onMouseLeave={this.hoverOut}
             >
@@ -127,13 +145,13 @@ class Match extends Component {
           </span>
           <span
             onClick={() => this.setState({ toggleNav: true })}
-            className={classNames('Grid-cell s-3of7 lg-2of14', {
-              active: toggleNav,
+            className={classNames('Grid-cell s-2of7 lg-2of14', {
+              active: toggleNav === true,
             })}
           >
             <span
               className="MatchTab-nav-text"
-              ref={toggleNav ? this.linkRef : null}
+              ref={toggleNav === true ? this.linkRef : null}
               onMouseOver={this.hoverOn}
               onMouseLeave={this.hoverOut}
             >
@@ -148,9 +166,13 @@ class Match extends Component {
           </div>
         </nav>
         {details &&
-          !toggleNav && <MatchSquad match={match} details={details} />}
+          toggleNav === null && <MatchGoals match={match} details={details} />}
         {details &&
-          toggleNav && <MatchStatsTab details={details} match={match} />}
+          toggleNav === false && <MatchSquad match={match} details={details} />}
+        {details &&
+          toggleNav === true && (
+            <MatchStatsTab details={details} match={match} />
+          )}
       </div>
     )
   }

@@ -47,6 +47,10 @@
   bottom: 0;
   left: 0;
 }
+
+.Calendar-fixture-pen {
+  font-size: 0.8em;
+}
 @media (min-width: 64em) {
   .Calendar-fixture-link {
     display: none;

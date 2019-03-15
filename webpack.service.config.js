@@ -4,6 +4,6 @@ module.exports = {
   entry: './src/serviceWorker.js',
   output: {
     filename: 'sw.js',
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'build'),
   },
 }

@@ -12,7 +12,6 @@ class Home extends Component {
     return (
       <Fragment>
         <Header />
-        <TodaysFixtures />
         <FixturesResult />
         <Groups />
         <TopScorers />

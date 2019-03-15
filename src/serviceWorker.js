@@ -1,15 +1,17 @@
+//SWv2
 import assets from '../build/asset-manifest.json'
 importScripts('/__/firebase/5.0.0/firebase-app.js')
 importScripts('/__/firebase/5.0.0/firebase-messaging.js')
 importScripts('/__/firebase/init.js')
 
-firebase.initializeApp({
-  messagingSenderId: '510292739580',
-})
+// firebase.initializeApp({
+//   messagingSenderId: '510292739580',
+// })
+
 const messaging = firebase.messaging()
 
 const cacheList = {
-  assets: 'assets-V2',
+  assets: 'assets-V10',
   fonts: 'fonts-V1',
 }
 

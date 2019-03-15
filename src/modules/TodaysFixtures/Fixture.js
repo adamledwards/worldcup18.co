@@ -4,6 +4,7 @@ import moment from 'moment'
 import Fade from 'react-reveal/Fade'
 import classnames from 'classnames'
 import { urls, history } from '../../routes'
+import { penalty } from '../../core/utils/match'
 
 const goToFixture = (id, enabled) => {
   if (enabled) {
@@ -11,21 +12,55 @@ const goToFixture = (id, enabled) => {
   }
 }
 
-const Fixture = ({
-  localTeam,
-  start,
-  visitorTeam,
-  venue,
-  time,
-  enabled,
-  id,
-}) => {
-  const score =
-    time.status !== 'NS'
-      ? `${localTeam.team_name} ${localTeam.score} \u2014 ${
-          visitorTeam.score
-        } ${visitorTeam.team_name}`
-      : `${localTeam.team_name} vs ${visitorTeam.team_name}`
+const statusFormat = (mt, dateTime) => {
+  const added = mt.added_time ? `+ ${mt.added_time}` : ''
+
+  switch (mt.status) {
+    case 'FT': {
+      return 'Full Time'
+    }
+    case 'HT': {
+      return 'Half Time'
+    }
+    case 'PEN_LIVE': {
+      return 'Penalties'
+    }
+    case 'LIVE': {
+      return `Live ${mt.minute + added} mins`
+    }
+    case 'FT_PEN':
+    case 'AET': {
+      return 'Full Time AET'
+    }
+    default: {
+      return dateTime.format('HH:mm / DD-MM-YYYY')
+    }
+  }
+}
+
+const Score = props => {
+  const { localTeam, visitorTeam, time } = props
+  let score = `${localTeam.team_name} vs ${visitorTeam.team_name}`
+
+  if (time.status === 'FT_PEN' || time.status === 'PEN_LIVE') {
+    score = (
+      <React.Fragment>
+        {localTeam.team_name} {localTeam.score} &mdash; {visitorTeam.score}{' '}
+        {visitorTeam.team_name} AET
+        <span className="penalty">{penalty(props)}</span>
+      </React.Fragment>
+    )
+  } else if (time.status !== 'NS') {
+    score = `${localTeam.team_name} ${localTeam.score} \u2014 ${
+      visitorTeam.score
+    } ${visitorTeam.team_name}`
+  }
+  return score
+}
+
+const Fixture = props => {
+  const { localTeam, start, visitorTeam, venue, time, enabled, id } = props
+
   return (
     <Fade>
       <div
@@ -33,9 +68,11 @@ const Fixture = ({
         onClick={() => goToFixture(id, enabled)}
       >
         <div className="Grid-cell">
-          <h3 className="Fixture-match">{score}</h3>
+          <h3 className="Fixture-match">
+            <Score {...props} />
+          </h3>
           <p className="Fixture-timeDate">
-            {moment(start.toDate()).format('HH:mm / DD-MM-YYYY')}
+            {statusFormat(time, moment(start.toDate()))}
           </p>
           <p className="Fixture-venue">{venue}</p>
         </div>

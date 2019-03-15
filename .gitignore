@@ -62,3 +62,7 @@ typings/
 .next
 
 .vscode/
+build/
+
+
+.runtimeconfig.json

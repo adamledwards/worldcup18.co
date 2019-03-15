@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import Link from '../../core/Link'
+import { penalty } from '../../core/utils/match'
 import { urls, history } from '../../routes'
 import CalendarHeader from './CalendarHeader'
 import Fade from 'react-reveal/Fade'
@@ -59,11 +60,29 @@ class Calendar extends Component {
         {fixture.visitorTeam.team_name}
       </span>
     )
-    if (fixture.time.status !== 'NS') {
+
+    if (
+      fixture.time.status === 'FT_PEN' ||
+      fixture.time.status === 'PEN_LIVE'
+    ) {
+      score = (
+        <React.Fragment>
+          <span className="Calendar-fixture-match">
+            {fixture.localTeam.team_name} {fixture.localTeam.score} &mdash;{' '}
+            {fixture.visitorTeam.score}
+            <br />
+            {fixture.visitorTeam.team_name} AET
+            <br />
+          </span>
+          <span className="Calendar-fixture-pen">({penalty(fixture)})</span>
+        </React.Fragment>
+      )
+    } else if (fixture.time.status !== 'NS') {
       score = (
         <span className="Calendar-fixture-match">
           {fixture.localTeam.team_name} {fixture.localTeam.score} &mdash;{' '}
           {fixture.visitorTeam.score}
+          {fixture.time.status == 'AET' ? ' AET' : ''}
           <br />
           {fixture.visitorTeam.team_name}
         </span>

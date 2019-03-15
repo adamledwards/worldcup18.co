@@ -40,7 +40,7 @@ export const unsubscribe = functions.https.onRequest(async (req, res) => {
   })
 })
 
-function sendMessage(notification: Notification): Promise<any> {
+export function sendMessage(notification: Notification): Promise<any> {
   return admin
     .messaging()
     .send(notification)

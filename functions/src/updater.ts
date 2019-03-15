@@ -59,15 +59,9 @@ function parseData(game: SportmonksResponse.LiveScores.Datum): ParseFixture {
     starting_at: game.time.starting_at.timestamp,
     time: game.time,
     venue: game.venue.data.name,
-    enabled:
-      game.time.status == 'FT' ||
-      game.time.status == 'LIVE' ||
-      game.time.status == 'HT',
+    enabled: !!game.lineup.data.length,
     status: {
-      TODAY:
-        game.time.status == 'NS' ||
-        game.time.status == 'LIVE' ||
-        game.time.status == 'HT',
+      TODAY: !(game.time.status == 'FT' || game.time.status == 'FT_PEN'),
     },
   }
 }
@@ -96,6 +90,7 @@ export default functions.https.onRequest(async (req, res) => {
 
   responseFixtures.data.forEach(game => {
     if (game.season_id !== 892) return
+
     const gameData = parseData(game)
     const gameDataDetail = parseDataDetail(game)
 
@@ -140,11 +135,13 @@ export default functions.https.onRequest(async (req, res) => {
 
     batch.update(visitorTeamRef, gameData)
 
-    const groupStandingsRef = admin
-      .firestore()
-      .collection('groupStandings')
-      .doc(game.group.data.name.replace(/\s/g, ''))
-    batch.update(groupStandingsRef, parseGroup(game.group.data))
+    if (game.group) {
+      const groupStandingsRef = admin
+        .firestore()
+        .collection('groupStandings')
+        .doc(game.group.data.name.replace(/\s/g, ''))
+      batch.update(groupStandingsRef, parseGroup(game.group.data))
+    }
   })
   await batch.commit()
 

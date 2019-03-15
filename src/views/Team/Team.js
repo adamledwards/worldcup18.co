@@ -67,7 +67,7 @@ class Team extends Component {
       <Fragment>
         <AppStyles styles={teams[teamName]} />
         <TeamHeader team={team} />
-        <TodaysFixtures teamRef={querySnapshot.ref} />
+        {/* <TodaysFixtures teamRef={querySnapshot.ref} /> */}
         <SquadList team={team} />
         <Groups team={team} />
         <Footer />

@@ -12,6 +12,7 @@
     "typescript": "^2.9.1"
   },
   "dependencies": {
+    "auto-bind": "^1.2.1",
     "classnames": "^2.2.5",
     "dexie": "^2.0.4",
     "firebase": "^4.12.1",

@@ -69,6 +69,24 @@ class Fixtures extends Component {
     }
   }
 
+  status(mt, dateTime) {
+    switch (mt.status) {
+      case 'FT': {
+        return 'Full Time'
+      }
+      case 'HT': {
+        return 'Half Time'
+      }
+      case 'LIVE': {
+        const added = mt.added_time ? `+ ${mt.added_time}` : ''
+        return `Live ${mt.minute + added} mins`
+      }
+      default: {
+        return dateTime.format('HH:mm')
+      }
+    }
+  }
+
   renderFixtures() {
     const { fixtures } = this.state
 
@@ -88,7 +106,8 @@ class Fixtures extends Component {
         >
           <span className="FixturesScreen-item-match">{score}</span>
           <span className="FixturesScreen-item-time">
-            {moment(fixture.start.toDate()).format('H:mm')} / {fixture.venue}
+            {this.status(time, moment(fixture.start.toDate()))} /{' '}
+            {fixture.venue}
           </span>
         </div>
       )

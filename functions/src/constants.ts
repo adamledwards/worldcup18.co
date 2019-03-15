@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions'
 import { SportmonksApi } from 'sportmonks'
 
 export default {
+  topScorer: 'v2.0/topscorers/season/{id}',
   livescores: 'v2.0/livescores',
   groups: 'v2.0/standings/season/{id}',
   fixtures: 'v2.0/fixtures/between/{from}/{to}',
@@ -10,7 +11,7 @@ export default {
   squad: 'v2.0/squad/season/{id}/team/{team_id}',
   appSettings: {
     date: {
-      start: '2018-06-01',
+      start: '2018-07-01',
       end: '2018-07-31',
     },
   },

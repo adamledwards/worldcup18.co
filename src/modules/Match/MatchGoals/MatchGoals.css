@@ -1,0 +1,88 @@
+.match .MatchGoals-wrapper,
+.match .MatchGoals-penalty {
+  opacity: 1;
+}
+
+.MatchGoals-wrapper,
+.MatchGoals-penalty {
+  opacity: 0;
+}
+
+.MatchGoals {
+  opacity: 0;
+  flex-grow: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.MatchGoals-wrapper {
+  display: flex;
+  transform: translateY(-25%);
+}
+
+.MatchGoals-team {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.MatchGoals-players {
+  display: block;
+  line-height: 1.5;
+}
+
+.MatchGoals-item {
+  display: flex;
+  flex-direction: row;
+}
+.MatchGoals-wrapper .MatchGoals-item:nth-child(3) {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.MatchGoals-team {
+  margin: 0 20px 10px 0;
+}
+.MatchGoals-wrapper .MatchGoals-item:nth-child(3) .MatchGoals-team {
+  margin: 0 0 0 20px;
+}
+
+.MatchGoals-text {
+}
+
+.MatchGoals-separator {
+  margin: 0 17px;
+}
+.MatchGoals-separator,
+.MatchGoals-goals {
+  line-height: 1;
+  font-size: 1.75em;
+  font-weight: bold;
+}
+.MatchGoals-separator {
+  line-height: 0.9;
+}
+
+.MatchGoals-penalty {
+  display: block;
+}
+
+@media (min-width: 64em) {
+  .MatchGoals-team {
+    margin: 0 40px 10px 0;
+  }
+  .MatchGoals-wrapper .MatchGoals-item:nth-child(3) .MatchGoals-team {
+    margin: 0 0 0 40px;
+  }
+
+  .MatchGoals-separator,
+  .MatchGoals-goals {
+    font-size: 3.75em;
+  }
+
+  .MatchGoals-team {
+    font-size: 2.5em;
+  }
+}

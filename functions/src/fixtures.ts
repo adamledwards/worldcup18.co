@@ -10,8 +10,8 @@ function parseData(game: SportmonksResponse.FixturesResponse.Datum) {
     id: game.id,
     stage_id: game.stage_id,
     start: new Date(game.time.starting_at.timestamp * 1000),
-    stage: game.stage.data.name,
-    group: game.group.data.name,
+    stage: (game.stage && game.stage.data.name) || null,
+    group: null,
     visitorTeam: {
       team_name: game.visitorTeam.data.name,
       team_id: game.visitorTeam.data.id,
@@ -30,10 +30,10 @@ function parseData(game: SportmonksResponse.FixturesResponse.Datum) {
     },
     starting_at: game.time.starting_at.timestamp,
     time: game.time,
-    venue: game.venue.data.name,
-    enabled: game.time.status == 'FT',
+    venue: game.venue ? game.venue.data.name : 'TBC',
+    enabled: game.time.status != 'NS',
     status: {
-      TODAY: game.time.status == 'NS' || game.time.status == 'LIVE',
+      TODAY: !(game.time.status == 'FT' || game.time.status == 'FT_PEN'),
     },
   }
 }
@@ -48,19 +48,19 @@ export default functions.https.onRequest((req, res) => {
       localTeam: true,
       visitorTeam: true,
       venue: true,
-      group: true,
       stage: true,
     })
     .then((responseFixtures: SportmonksResponse.FixturesResponse.Fixtures) => {
       responseFixtures.data.forEach(game => {
         if (game.season_id !== 892) return
+
         const fixtureRef = admin
           .firestore()
           .collection('fixtures')
           .doc(game.id.toString())
-        batch.update(fixtureRef, parseData(game))
+        batch.set(fixtureRef, parseData(game), { merge: true })
 
-        batch.update(fixtureRef, parseData(game))
+        batch.set(fixtureRef, parseData(game), { merge: true })
 
         const localTeamRef = admin
           .firestore()
@@ -71,7 +71,7 @@ export default functions.https.onRequest((req, res) => {
           )
           .doc(game.id.toString())
 
-        batch.update(localTeamRef, parseData(game))
+        batch.set(localTeamRef, parseData(game), { merge: true })
 
         const visitorTeamRef = admin
           .firestore()
@@ -82,9 +82,10 @@ export default functions.https.onRequest((req, res) => {
           )
           .doc(game.id.toString())
 
-        batch.update(visitorTeamRef, parseData(game))
+        batch.set(visitorTeamRef, parseData(game), { merge: true })
       })
       return batch.commit()
     })
     .then(() => res.send('done'))
+    .catch(console.log)
 })
